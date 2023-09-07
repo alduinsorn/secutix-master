@@ -1,0 +1,398 @@
+{
+    "2023": {
+        "january": [
+            {
+                "title": "PayUZA - Elevated Error rate",
+                "service": "PayUZA",
+                "identified_datetime": "2023-01-31 15:09",
+                "resolved_datetime": "2023-01-31 00:15",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PayUZA starting at 15:09 CET.  We have contacted PayUZA and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Swish - Degraded performance in payment processing",
+                "service": "We have identified an issue with Swish payment processing starting at 09:52",
+                "identified_datetime": "2023-01-31 09:52",
+                "resolved_datetime": "2023-01-31 18:20",
+                "specific_bank": "We",
+                "raw": "We have identified an issue with Swish payment processing starting at 09:52 CET.  This may cause authorization requests to be pending.  Our engineering team is engaged in resolution.  "
+            },
+            {
+                "title": "JCB - Elevated Refusal rate",
+                "service": "JCB",
+                "identified_datetime": "2023-01-31 14:50",
+                "resolved_datetime": "2023-01-31 15:57",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through JCB starting at 14:50 CET.  We have contacted JCB and their engineers are working on resolving the issue.  "
+            },
+            {
+                "title": "PayULatam - Elevated Error rate",
+                "service": "PayULatam",
+                "identified_datetime": "2023-01-30 02:00",
+                "resolved_datetime": "2023-01-30 03:10",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PayULatam starting at 02:00 CET.  We have contacted PayULatam and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "iDeal - Elevated Error rate",
+                "service": "iDeal for the following",
+                "identified_datetime": null,
+                "resolved_datetime": "2023-01-29 15:26",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal for the following banks:  - Knab  This issue began at 14:50 CEST.  The iDeal availability site confirms these banks are impacted. This can be found at: https://availability.ideal.nl/ We have contacted iDeal and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Payment processing issue in India",
+                "service": "merchants connecting to our India endpoints since 05:00",
+                "identified_datetime": "2023-01-29 05:00",
+                "resolved_datetime": "2023-01-29 08:40",
+                "specific_bank": "We",
+                "raw": "We are currently experiencing severely degraded performance for merchants connecting to our India endpoints since 05:00 CET.  Our technical teams are actively working on urgently resolving this issue.  "
+            },
+            {
+                "title": "ONEY - Elevated Error rate",
+                "service": "ONEY",
+                "identified_datetime": "2023-01-29 00:00",
+                "resolved_datetime": "2023-01-29 02:10",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through ONEY starting at 00:00 CET.  We have contacted 00:00 and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "AdyenElo - Elevated Error rate",
+                "service": "Elo",
+                "identified_datetime": "2023-01-28 03:00",
+                "resolved_datetime": "2023-01-28 12:45",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Elo starting at 03:00 CET.  We have contacted Elo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "AdyenIdeal - Elevated Error rate",
+                "service": "AdyenIdeal",
+                "identified_datetime": "2023-01-26 08:00",
+                "resolved_datetime": "2023-01-26 21:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through AdyenIdeal starting at 08:00 CET.  We have contacted AdyenIdeal and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Banorte - Elevated Error rate",
+                "service": "Banorte",
+                "identified_datetime": "2023-01-26 18:00",
+                "resolved_datetime": "2023-01-26 19:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Banorte starting at 18:00 CET.  We have contacted Banorte and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Econtext - Elevated Error rate",
+                "service": "Econtext",
+                "identified_datetime": null,
+                "resolved_datetime": "2023-01-25 10:20",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Econtext starting at 8:40 CEST.  We have contacted Econtext and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Banorte - Elevated Error rate",
+                "service": "Banorte",
+                "identified_datetime": "2023-01-24 21:12",
+                "resolved_datetime": "2023-01-24 23:10",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Banorte starting at 21:12 CET.  We have contacted Banorte and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "iDeal - Elevated Error rate",
+                "service": "iDeal",
+                "identified_datetime": null,
+                "resolved_datetime": "2023-01-24 03:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal starting at 2:30 CEST.  We are in contact with iDeal and will provide an update as soon as it becomes available.  This is acknowledged by iDeal at their site:https://availability.ideal.nl/ "
+            },
+            {
+                "title": "iDeal - Elevated Error rate",
+                "service": "iDeal",
+                "identified_datetime": "2023-01-21 20:00",
+                "resolved_datetime": "2023-01-21 03:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal starting at 20:00 CET.  We will contact iDeal and we will provide an update as soon as it becomes available.  This is acknowledged by iDeal at their site:https://availability.ideal.nl/ "
+            },
+            {
+                "title": "Mastercard in Brazil - Elevated Error rate",
+                "service": "Mastercard in Brazil (via AdyenMasterCard_SMS_BR_16205)",
+                "identified_datetime": "2023-01-20 08:40",
+                "resolved_datetime": "2023-01-20 03:45",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Mastercard in Brazil (via AdyenMasterCard_SMS_BR_16205) starting at 08:40 CET.  We have contacted Mastercard and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Idempotency - errors starting at 15:57 CET in US region",
+                "service": "our idempotency service in the US region since 15:57 CET. As a result, merchants using this service may be seeing an elevated error rate for idempotent",
+                "identified_datetime": "2023-01-19 15:57",
+                "resolved_datetime": "2023-01-19 16:16",
+                "specific_bank": "We",
+                "raw": "We are currently experiencing degraded performance for our idempotency service in the US region since 15:57 CET. As a result, merchants using this service may be seeing an elevated error rate for idempotent calls.  Our technical teams are actively working on urgently resolving this issue.  We will provide a new update in the next 30 minutes.  Please follow new updates through our Status page (www.adyen.com/status)."
+            },
+            {
+                "title": "Mastercard 3D Secure - Elevated error rate",
+                "service": "Mastercard 3D Secure authentications beginning at 14:50",
+                "identified_datetime": "2023-01-17 14:50",
+                "resolved_datetime": "2023-01-17 16:05",
+                "specific_bank": "We",
+                "raw": "We identified an issue outside of our platform resulting in elevated error rate for Mastercard 3D Secure authentications beginning at 14:50 CET.  We have contacted Mastercard and we will provide an update as soon as it becomes available.  For more information on how this issue may be affecting your processing, please refer to our FAQ (https://www.adyen.help/hc/en-us/articles/360022088740).  "
+            },
+            {
+                "title": "Dotpay - Offer conversion issues",
+                "service": "We have been informed of issues with Dotpay starting at 07:50",
+                "identified_datetime": "2023-01-17 07:50",
+                "resolved_datetime": "2023-01-17 08:20",
+                "specific_bank": "We",
+                "raw": "We have been informed of issues with Dotpay starting at 07:50 CET.  This may cause offers to remain open until cancelled.  We are in contact with Dotpay and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "PixIndirect - Offer conversion issues",
+                "service": "We have been informed of issues with PixIndirect starting at 10:30",
+                "identified_datetime": "2023-01-16 10:30",
+                "resolved_datetime": "2023-01-16 12:30",
+                "specific_bank": "We",
+                "raw": "We have been informed of issues with PixIndirect starting at 10:30 CET.  This may cause offers to remain open until cancelled. No payment errors are expected as the request is never sent to Adyen.  We are in contact with PixIndirect and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "iDEAL - Elevated Error rate",
+                "service": "iDeal",
+                "identified_datetime": "2023-01-15 20:30",
+                "resolved_datetime": "2023-01-15 22:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal starting at 20:30 CET, impacting mainly SNS Bank, ASN Bank, and RegioBank.  We have contacted iDEAL and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Elo - Elevated Error rate",
+                "service": "Elo",
+                "identified_datetime": "2023-01-15 10:10",
+                "resolved_datetime": "2023-01-15 11:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Elo starting at 10:10 CET.  We have contacted Elo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "VISA network tokens - Elevated response times",
+                "service": "VISA network tokens. Merchants using this service may be experiencing elevated response times since 01:50",
+                "identified_datetime": "2023-01-15 01:50",
+                "resolved_datetime": "2023-01-15 05:40",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform impacting authorisation requests processed through VISA network tokens. Merchants using this service may be experiencing elevated response times since 01:50 CET.  We have reached out to VISA to further investigate this issue. We will provide an update as soon as it becomes available.  Please note that payment processing is not impacted by this issue, as failed network tokens authorisation requests are automatically re-submitted using card details.  "
+            },
+            {
+                "title": "iDeal - Elevated Error rate",
+                "service": "iDeal",
+                "identified_datetime": null,
+                "resolved_datetime": "2023-01-14 19:20",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal starting at 17.16 CET.  Please follow any updates through iDeal's status page. (https://beschikbaarheid.ideal.nl/)"
+            },
+            {
+                "title": "Interac - Elevated Error rate",
+                "service": "Interac",
+                "identified_datetime": "2023-01-13 20:40",
+                "resolved_datetime": "2023-01-13 22:24",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Interac starting at 20:40 CET.  We have contacted Interac and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Dotpay - Offer conversion issues",
+                "service": "We have been informed of issues with Dotpay starting at 00:30",
+                "identified_datetime": "2023-01-13 00:30",
+                "resolved_datetime": "2023-01-13 05:30",
+                "specific_bank": "We",
+                "raw": "We have been informed of issues with Dotpay starting at 00:30 CET.  This may cause offers to remain open until cancelled.  We are in contact with Dotpay and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "MasterCard Network Tokens - Elevated Error rate",
+                "service": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Merchants using this service may be experiencing elevated error rates since 19:40",
+                "identified_datetime": "2023-01-12 19:40",
+                "resolved_datetime": "2023-01-12 23:00",
+                "specific_bank": "We",
+                "raw": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Merchants using this service may be experiencing elevated error rates since 19:40 CET.  We have contacted Mastercard and we will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "Banorte - Elevated Error rate",
+                "service": "Banorte",
+                "identified_datetime": "2023-01-12 17:48",
+                "resolved_datetime": "2023-01-12 20:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Banorte starting at 17:48 CET.  We have contacted Banorte and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "MoMo - Elevated Error rate",
+                "service": "MoMo",
+                "identified_datetime": "2023-01-12 10:05",
+                "resolved_datetime": "2023-01-12 10:40",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through MoMo starting at 10:05 CET.  We have contacted MoMo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Banorte - Elevated Error rate",
+                "service": "Banorte",
+                "identified_datetime": "2023-01-12 00:30",
+                "resolved_datetime": "2023-01-12 02:20",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Banorte starting at 00:30 CET.  We have contacted Banorte and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "MasterCard Network Tokens - Elevated Error rate",
+                "service": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Merchants using this service may be experiencing elevated error rates since 21:20",
+                "identified_datetime": "2023-01-11 21:20",
+                "resolved_datetime": "2023-01-11 07:00",
+                "specific_bank": "We",
+                "raw": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Merchants using this service may be experiencing elevated error rates since 21:20 CET.  We have contacted Mastercard and we will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "MoMo - Elevated Error rate",
+                "service": "MoMo",
+                "identified_datetime": "2023-01-11 14:06",
+                "resolved_datetime": "2023-01-11 16:40",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through MoMo starting at 14:06 CET.  We have contacted MoMo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "SantanderBrazil - Elevated Error rate",
+                "service": "SantanderBrazil",
+                "identified_datetime": "2023-01-11 09:42",
+                "resolved_datetime": "2023-01-11 09:58",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through SantanderBrazil starting at 09:42 CET.  We have contacted Santander and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "AdyenIdeal - Elevated Error rate",
+                "service": "AdyenIdeal",
+                "identified_datetime": "2023-01-10 20:00",
+                "resolved_datetime": "2023-01-10 22:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through AdyenIdeal starting at 20:00 CET.  We have contacted Ideal and we will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "Cielo - Elevated Error rate",
+                "service": "Cielo",
+                "identified_datetime": "2023-01-10 17:10",
+                "resolved_datetime": "2023-01-10 18:20",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Cielo starting at 17:10 CET.  We have contacted Cielo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Delay in the processing of modifications",
+                "service": "We have identified an issue resulting in a delay in the processing of modifications (such as refunds, captures and cancellations) since 14:40",
+                "identified_datetime": "2023-01-10 14:40",
+                "resolved_datetime": null,
+                "specific_bank": "We",
+                "raw": "We have identified an issue resulting in a delay in the processing of modifications (such as refunds, captures and cancellations) since 14:40 CET.  Our engineering team is involved and working on a solution. We will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "MoMo - Elevated Error rate",
+                "service": "MoMo",
+                "identified_datetime": "2023-01-10 11:29",
+                "resolved_datetime": "2023-01-10 12:03",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through MoMo starting at 11:29 CET.  We have contacted MoMo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "iDeal - Elevated Error rate",
+                "service": "iDeal, affecting RegioBank, SNS Bank and ASN Bank",
+                "identified_datetime": "2023-01-10 00:55",
+                "resolved_datetime": "2023-01-10 04:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through iDeal, affecting RegioBank, SNS Bank and ASN Bank starting at 00:55 CET.  We have contacted iDeal and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "AdyenMasterCard_US_WF_14021 - Elevated Error rate",
+                "service": "AdyenMasterCard_US_WF_14021",
+                "identified_datetime": "2023-01-09 22:00",
+                "resolved_datetime": "2023-01-09 22:45",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through AdyenMasterCard_US_WF_14021 starting at 22:00 CET/CEST.  We have contacted Mastercard and we will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "MasterCard network tokens - Elevated Error rate",
+                "service": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Our teams have appropriately escalated to Mastercard to request feedback and a root cause",
+                "identified_datetime": null,
+                "resolved_datetime": "2023-01-09 09:30",
+                "specific_bank": "We",
+                "raw": "We have identified an issue outside our platform that is currently impacting Network Token Provisioning services. Our teams have appropriately escalated to Mastercard to request feedback and a root cause analysis.  Merchants using this service may be experiencing elevated error rates since 18:00 CET. We will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "PayULatam - Elevated Error rate",
+                "service": "PayULatam",
+                "identified_datetime": "2023-01-09 18:45",
+                "resolved_datetime": "2023-01-09 21:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PayULatam starting at 18:45 CET.  We have contacted PayULatam and we will provide an update as soon as it becomes available."
+            },
+            {
+                "title": "Oney - Elevated Error rate",
+                "service": "Oney",
+                "identified_datetime": "2023-01-07 15:40",
+                "resolved_datetime": "2023-01-07 17:35",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Oney starting at 15:40 CET.  We have contacted Oney and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "PixIndirect - Elevated Error rate",
+                "service": "PixIndirect",
+                "identified_datetime": "2023-01-05 17:10",
+                "resolved_datetime": "2023-01-05 20:00",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PixIndirect starting at 17:10 CET.  We have contacted PixIndirect and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "PayUAPAC - Elevated Error rate",
+                "service": "PayUAPAC",
+                "identified_datetime": "2023-01-05 17:09",
+                "resolved_datetime": "2023-01-05 21:30",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PayUAPAC starting at 17:09 CET.  We have contacted PayUAPAC and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Test environment - Degraded performance",
+                "service": "The Adyen Test environment is experiencing a degradation in performance as of 14:49 CET. Adyen engineers are working to resolve the",
+                "identified_datetime": "2023-01-05 14:49",
+                "resolved_datetime": "2023-01-05 15:16",
+                "specific_bank": "The",
+                "raw": "The Adyen Test environment is experiencing a degradation in performance as of 14:49 CET. Adyen engineers are working to resolve the issue.  Users may experience higher response times on the Test environment as a result, as well as increased Errors.  Note that this issue does not impact the Live environment and payment processing.  "
+            },
+            {
+                "title": "WeChatPay - Elevated Error rate",
+                "service": "WeChatPay",
+                "identified_datetime": "2023-01-04 20:48",
+                "resolved_datetime": "2023-01-04 21:54",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through WeChatPay starting at 20:48 CET.  We have contacted WeChatPay and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "PayUZA - Elevated Error rate",
+                "service": "PayUZA",
+                "identified_datetime": "2023-01-03 00:58",
+                "resolved_datetime": "2023-01-03 01:56",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through PayUZA starting at 00:58 CET.  We have contacted PayUZA and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Elo Brazil - Elevated Error rate",
+                "service": "Elo Brazil",
+                "identified_datetime": "2023-01-01 04:20",
+                "resolved_datetime": "2023-01-01 06:15",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Elo Brazil starting at 04:20 CET.  We have contacted Elo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "Elo Brazil (Debit) - Elevated Error rate",
+                "service": "Elo Brazil (Debit)",
+                "identified_datetime": "2023-01-01 04:20",
+                "resolved_datetime": "2023-01-01 06:15",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Elo Brazil (Debit) starting at 04:20 CET.  We have contacted Elo and we will provide an update as soon as it becomes available.  "
+            },
+            {
+                "title": "ElavonViaConex - Elevated Error rate",
+                "service": "ElavonViaConex",
+                "identified_datetime": "2023-01-01 02:00",
+                "resolved_datetime": "2023-01-01 05:05",
+                "specific_bank": null,
+                "raw": "We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through ElavonViaConex starting at 02:00 CET.  We have contacted ElavonViaConex and we will provide an update as soon as it becomes available.  "
+            }
+        ]
+    }
+}
