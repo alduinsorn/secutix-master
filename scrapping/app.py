@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 # Personal files
 from classes import Incident
 
-TIME_REGEX = '[0-9]{2}:[0-9]{2}'
+TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])[:.][0-5][0-9](?:[A-Za-z]{3-4})?\b'
 INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
 INPUT_TIME_FORMAT = '%H:%M'
 OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
@@ -42,13 +42,17 @@ def parse_url(driver, url, wait_time=2):
     try:
         driver.get(url)
 
-        # besoin de cliquer sur un bouton pour afficher tout les incidents
-        button_show_all = driver.find_element(By.XPATH, '//button[contains(@class, "ds-button-link ds-button-link--primary ds-button-link--green")]')   
+        try:
+            # besoin de cliquer sur un bouton pour afficher tout les incidents
+            button_show_all = driver.find_element(By.XPATH, '//button[contains(@class, "ds-button-link ds-button-link--primary ds-button-link--green")]')   
 
-        if button_show_all:
-            button_show_all.click()
-            time.sleep(wait_time) # sleep require or page isn't complete
-    
+            if button_show_all:
+                button_show_all.click()
+                time.sleep(wait_time) # sleep require or page isn't complete
+        except Exception as e:
+            print("No element for this month")
+            
+
         content = driver.page_source
         soup = BeautifulSoup(content, 'lxml')
 
@@ -61,8 +65,8 @@ def parse_url(driver, url, wait_time=2):
 
 def parse_time_in_desc(elem_desc, incident_obj, part_type):
     time_str = re.search(TIME_REGEX, elem_desc)
-    if not time_str: print("Error time not found inside the description"); return
-    time_str = time_str.group()
+    if not time_str: print("Error time not found inside the description\n", elem_desc, "\n"); return #input(); return
+    time_str = time_str.group().replace('.', ':') # sometimes they have miss typed
 
     parsed_datetime = datetime.datetime.strptime(incident_obj.card_datetime, INPUT_DATETIME_FORMAT)
     time_var = datetime.datetime.strptime(time_str, INPUT_TIME_FORMAT)
@@ -143,7 +147,13 @@ def scrap_adyen_history(driver):
                 incident_obj = Incident()
 
                 for id_part, part in enumerate(parts):
-                    part_title = part.find("span", {"class": ["ds-margin-left-12", "ds-text", "ds-font-weight-bold", "ds-color-black"]}).text
+                    part_title = part.find("span", {"class": ["ds-margin-left-12", "ds-text", "ds-font-weight-bold", "ds-color-black"]})
+
+                    if not part_title:
+                        print("Error, no text inside this part")
+                        continue
+                    
+                    part_title = part_title.text
                     # print("\npart_title", part_title)
                     
                     match id_part:
@@ -155,8 +165,10 @@ def scrap_adyen_history(driver):
                         
                         case _: # all the others (Resolved, Identified, Updated)
                             ############### TODO changer cela pour etre proof
-                            elem_desc = part.find("p").text # ATTENTION CAR PARFOIS L'HEURE N'EST PAS DANS LA PREMIÈRE BALISE <p>
+                            elem_desc = part.find("p") # ATTENTION CAR PARFOIS L'HEURE N'EST PAS DANS LA PREMIÈRE BALISE <p>
                             
+                            if not elem_desc: print(f"Error no <p> in the part. \n{part_title}\n");continue
+                            elem_desc = elem_desc.text
                             
                             elem_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
                             elem_date = ' '.join(elem_date.split()[:-1]) # remove the CEST or other
