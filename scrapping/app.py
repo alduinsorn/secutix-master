@@ -4,7 +4,6 @@ import os
 import time
 import re
 import datetime
-from enum import Enum
 
 # Scrapper module
 from selenium import webdriver
@@ -13,17 +12,8 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
 # Personal files
-from classes import Incident
+from utils import *
 
-TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])[:.][0-5][0-9](?:[A-Za-z]{3-4})?\b'
-INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
-INPUT_TIME_FORMAT = '%H:%M'
-OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
-
-class PartType(Enum):
-    RESOLVED = 1
-    IDENTIFIED = 2
-    UPDATED = 3
 
 def setup_driver(headless=True):
     options = webdriver.FirefoxOptions()
@@ -63,9 +53,16 @@ def parse_url(driver, url, wait_time=2):
     return content, soup
 
 
+def find_right_tag_containing_time(elem_desc_all, incident_obj, part_type):
+    for desc in elem_desc_all:
+        if parse_time_in_desc(desc.text, incident_obj, part_type):
+            return
+
+    print("Error no time in every text part")
+
 def parse_time_in_desc(elem_desc, incident_obj, part_type):
     time_str = re.search(TIME_REGEX, elem_desc)
-    if not time_str: print("Error time not found inside the description\n", elem_desc, "\n"); return #input(); return
+    if not time_str: print("Error time not found inside the description\n", elem_desc, "\n"); return False
     time_str = time_str.group().replace('.', ':') # sometimes they have miss typed
 
     parsed_datetime = datetime.datetime.strptime(incident_obj.card_datetime, INPUT_DATETIME_FORMAT)
@@ -81,16 +78,15 @@ def parse_time_in_desc(elem_desc, incident_obj, part_type):
     new_datetime_str = new_datetime.strftime(OUTPUT_DATETIME_FORMAT)
 
     match part_type:
-        case PartType.RESOLVED:
+        case PartType.RESOLVED.value:
             incident_obj.resolved_datetime = new_datetime_str
-        case PartType.IDENTIFIED:
+        case PartType.IDENTIFIED.value:
             incident_obj.identified_datetime = new_datetime_str
         case _:
             print("Error: Unknown PartType passed to the function - ", part_type)
 
 
-def parse_desc_info(elem_desc, incident_obj):
-    elem_desc_list = elem_desc.split()
+def retrieve_error_rate(elem_desc_list, incident_obj):
     # contains the service, get all the text between the two words. Sometimes the service contains multiple "words"
     id_through = elem_desc_list.index("through") if "through" in elem_desc_list else -1
     id_starting = elem_desc_list.index("starting") if "starting" in elem_desc_list else -1
@@ -102,7 +98,8 @@ def parse_desc_info(elem_desc, incident_obj):
         # contains the service
         id_for = elem_desc_list.index("for") if "for" in elem_desc_list else -1
         id_transactions = elem_desc_list.index("transactions") if "transactions" in elem_desc_list else -1
-        # contains the bank
+
+        # contains the bank(s) -> can have multiple bank specified
         id_by = elem_desc_list.index("by") if "by" in elem_desc_list else -1
 
         elem_service = ' '.join(e for e in elem_desc_list[id_for+1:id_transactions])
@@ -110,9 +107,53 @@ def parse_desc_info(elem_desc, incident_obj):
 
         incident_obj.service = elem_service
         incident_obj.specific_bank = elem_bank  
+    
+
+def retrieve_offer_conversion():
+    
+    pass
 
 
-def scrap_adyen_history(driver):
+def parse_desc_info(elem_desc_all, incident_obj):
+    return
+    for elem_desc in elem_desc_all[:1]:        
+        elem_desc_list = elem_desc.split()
+
+        match incident_obj.incident_type.value:
+            case IncidentType.ERROR_RATE.value: # this also take the REFUSAL_RATE and RESPONSE_TIME
+                retrieve_error_rate(elem_desc_list, incident_obj)
+            case IncidentType.OFFER_CONVERSION.value:
+                pass
+            case IncidentType.RESOLVED.value:
+                pass
+            case IncidentType.DEGRADED_PERFORMANCE.value:
+                pass
+            case IncidentType.OTHER.value:
+                pass
+
+    
+
+
+def check_incident_type(part_title, incident_obj):
+    part_title_lowered = part_title.lower()
+    incident_obj.incident_type = IncidentType.OTHER # by default we set the Incident as OTHER
+
+    for i in IncidentType:
+        if i.title.lower() in part_title_lowered:
+            incident_obj.incident_type = i 
+
+
+def retrieve_raw_desc(part, incident_obj, part_type):
+    all_elem_desc = part.find_all("p")
+    raw = f"{part_type.title}("
+    for elem in all_elem_desc:
+        if "https://status.adyen.com" not in elem.text: 
+            raw += elem.text
+    raw += ")\n"
+    incident_obj.raw += raw
+
+
+def scrap_adyen_history(driver, save=False):
     # url_history_adyen = "status.adyen.com/incident-history#2023" # only a summary
 
     months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
@@ -135,7 +176,7 @@ def scrap_adyen_history(driver):
             incidents_cards = soup.find_all('div', class_='card')
             print("Number of incidents", len(incidents_cards))
 
-            for card in incidents_cards:
+            for id_card, card in enumerate(incidents_cards):
                 # get the different parts of the incident, contains the Title, Resolved, Identified parts
                 parts = card.find_all(lambda tag: tag.name == 'span' and tag.get('class') == ['status-item', 'ds-width-full'])
                 
@@ -153,43 +194,45 @@ def scrap_adyen_history(driver):
                         print("Error, no text inside this part")
                         continue
                     
+                    # part_title can contains : ["title of the incident", "resolved", "identified", "updated"]
                     part_title = part_title.text
                     # print("\npart_title", part_title)
+                    check_incident_type(part_title, incident_obj)
                     
                     match id_part:
-                        case 0: # title of the card, the incident
+                        case PartType.TITLE.value: # title of the card, the incident
                             incident_date = part.find("span", {"class": ["ds-text-small", "ds-color-grey-450"]}).text
 
                             incident_obj.title = part_title
                             incident_obj.card_datetime = ' '.join(incident_date.split()[:-1]) # remove the CEST or other
                         
-                        case _: # all the others (Resolved, Identified, Updated)
-                            ############### TODO changer cela pour etre proof
-                            elem_desc = part.find("p") # ATTENTION CAR PARFOIS L'HEURE N'EST PAS DANS LA PREMIÈRE BALISE <p>
-                            
-                            if not elem_desc: print(f"Error no <p> in the part. \n{part_title}\n");continue
-                            elem_desc = elem_desc.text
-                            
+                        case PartType.IDENTIFIED.value: # all the others (Resolved, Identified, Updated)
+                            elem_desc_all = part.find_all("p") # we get all the <p> balises in the case that the informations aren't in the first <p>
+
+                            if len(elem_desc_all) == 0: # sometimes the Resolved part has no text -> no an error
+                                print(f"No <p> in the part: {part_title} - card_id : {id_card}\n")
+                                continue
+
                             elem_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
                             elem_date = ' '.join(elem_date.split()[:-1]) # remove the CEST or other
                             
-                            match part_title:
-                                case "Identified":
-                                    all_elem_desc = part.find_all("p")
-                                    raw = ""
-                                    for elem in all_elem_desc:
-                                        if "Status Page" not in elem.text: 
-                                            raw += elem.text
-                                    incident_obj.raw = raw
-                                    
-                                    parse_time_in_desc(elem_desc, incident_obj, PartType.IDENTIFIED)
-                                    parse_desc_info(elem_desc, incident_obj)
+                            retrieve_raw_desc(part, incident_obj, PartType.IDENTIFIED)
+                            find_right_tag_containing_time(elem_desc_all, incident_obj, PartType.IDENTIFIED.value)
+                            parse_desc_info(elem_desc_all, incident_obj)
 
-                                case "Resolved":
-                                    parse_time_in_desc(elem_desc, incident_obj, PartType.RESOLVED)
-                                case _:
-                                    pass # Updated is useless
-                                
+                        case PartType.RESOLVED.value:
+                            elem_desc = part.find("p")
+
+                            if not elem_desc:
+                                print(f"No <p> in the part Resolved. \n{part_title} - card_id : {id_card}\n")
+                                continue
+                            
+                            elem_desc = elem_desc.text
+
+                            parse_time_in_desc(elem_desc, incident_obj, PartType.RESOLVED.value)
+                            retrieve_raw_desc(part, incident_obj, PartType.RESOLVED)
+                            
+                        case _: pass # Updated not taken into account
                 
                 incidents_dict[year][month].append(incident_obj)
             
@@ -197,8 +240,9 @@ def scrap_adyen_history(driver):
     json_output = json.dumps(incidents_dict, indent=4, default=Incident._to_dict)
     print(json_output)
 
-    with open("incidents.json", 'w') as output_file:
-        json.dump(incidents_dict, output_file, indent=4, default=Incident._to_dict)
+    if save:
+        with open("incidents.json", 'w') as output_file:
+            json.dump(incidents_dict, output_file, indent=4, default=Incident._to_dict)
 
 
 my_driver = setup_driver(True)
