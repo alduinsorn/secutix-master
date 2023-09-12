@@ -3,9 +3,8 @@ import nltk
 from nltk import ne_chunk, pos_tag, word_tokenize
 from nltk.tree import Tree
 
-
 class Incident:
-    def __init__(self, title=None, service=None, identified_datetime=None, resolved_datetime=None, raw="",banks=[], card_datetime=None, incident_type=None):
+    def __init__(self, title="Unknown", service=None, identified_datetime=None, resolved_datetime=None, raw="",banks=[], card_datetime=None, incident_type=None):
 
         self.title = title
         self.service = service
@@ -20,8 +19,8 @@ class Incident:
         incident_dict = {
             "title": self.title,
             "service": self.service,
-            "identified_datetime": self.identified_datetime,
-            "resolved_datetime": self.resolved_datetime,
+            "identified_datetime": str(self.identified_datetime),
+            "resolved_datetime": str(self.resolved_datetime),
             "banks": self.banks,
             "raw": self.raw,
             "card_datetime": self.card_datetime
@@ -32,6 +31,7 @@ class Incident:
                 "title" : self.incident_type.title
             }
         return incident_dict
+    
     
     def __str__(self):
         attributes = self._to_dict()
@@ -76,6 +76,9 @@ class IncidentType(Enum):
         obj.title = title
         return obj
 
+
+
+
 def download_nltk_data():
     try:
         nltk.data.find('maxent_ne_chunker')
@@ -87,8 +90,6 @@ def download_nltk_data():
         nltk.download('words')
         nltk.download('punkt')
         nltk.download('averaged_perceptron_tagger')
-
-
 
 def extract_proper_names(text):
     # Tokenize the words into sentences
