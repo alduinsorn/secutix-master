@@ -75,17 +75,16 @@ def retrieve_raw_desc(part, incident_obj, part_title):
     # print("raw", raw)
 
 def search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title):
-    new_datetime_str = datetime.datetime.strptime(elem_date, INPUT_DATETIME_FORMAT)
+    # General datetime from the part
+    
+    parsed_datetime = elem_date if isinstance(elem_date, datetime.datetime) else datetime.datetime.strptime(elem_date, INPUT_DATETIME_FORMAT)
+    datetime_arr = []
+    
     for desc in elem_desc_all:
         time_str = re.search(TIME_REGEX, desc.text)
         if not time_str: continue # search in the different <p> tags
         time_str = time_str.group().replace('.', ':').replace(" ", "") # sometimes they have miss typed
 
-        # Datetime normalization 
-        ''' TODO 
-        TRY CATCH REQUIRED OR ALL APP CRASHES
-        '''
-        parsed_datetime = datetime.datetime.strptime(elem_date, INPUT_DATETIME_FORMAT)
         time_var = datetime.datetime.strptime(time_str, INPUT_TIME_FORMAT)
         
         new_datetime = datetime.datetime(
@@ -96,25 +95,27 @@ def search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title):
             minute=time_var.minute
         )
         new_datetime_str = new_datetime.strftime(OUTPUT_DATETIME_FORMAT)
+        datetime_arr.append(new_datetime_str)
 
     # if not datetime found inside the <p> tags we take the part datetime
+    #       take into account multiple time -> depend on the IncidentType
     match part_title:
         case PartType.RESOLVED.title:
-            incident_obj.resolved_datetime = new_datetime_str
+            incident_obj.resolved_datetime = parsed_datetime if len(datetime_arr) == 0 else datetime_arr
         case PartType.IDENTIFIED.title:
-            incident_obj.identified_datetime = new_datetime_str
+            incident_obj.identified_datetime = parsed_datetime if len(datetime_arr) == 0 else datetime_arr
         case _:
             # print("Error: Unknown PartType passed to the function - ", part_title)
             pass # do nothing because the Updated aren't relevant in our case
     
 
-'''TODO finish the code in this part'''
+'''TODO finish the code in this part -> verify that this code works (check regex) (check if the return type is correct)'''
 def search_date_in_desc(elem_desc_all):
-    date_pattern = r'\d{1,2}(?:st|nd|rd|th)?(?: of)? (?:January|February|March|April|May|June|July|August|September|October|November|December)[,\.]? \d{4}'
     parsed_dates = []
     for elem_desc in elem_desc_all:
         # search for the date in text -> can vary a lot
-        date_matches = re.findall(date_pattern, elem_desc.text, re.IGNORECASE)
+        date_matches = re.findall(DATE_REGEX_1, elem_desc.text, re.IGNORECASE)
+        date_matches.extend(re.findall(DATE_REGEX_2, elem_desc.text, re.IGNORECASE))
         for date_match in date_matches:
             parsed_date = parse(date_match, fuzzy=True)
             parsed_dates.append(parsed_date)
@@ -128,59 +129,16 @@ def get_word_index(text_list, word):
 def extract_word(text_list, id_start, id_end):
     return ' '.join(e for e in text_list[id_start+1:id_end])
 
-def process_classic_case(id, desc_word_list, incident_obj, word):
-    id_word = get_word_index(desc_word_list, word)
-    if id_word >= 0:
-        elem_service = extract_word(desc_word_list, id, id_word)
-        incident_obj.service = elem_service
-
-def process_for_by_case(id_1, id_2, desc_word_list, incident_obj):
-    id_transactions = get_word_index(desc_word_list, "transactions")
-    if id_transactions >= 0:
-        incident_obj.service = extract_word(desc_word_list, id_2, id_transactions)
-    
-    id_account = get_word_index(desc_word_list, "account")
-    id_cardholders = get_word_index(desc_word_list, "cardholders")
-    if id_account >= 0 and id_cardholders >= 0:
-        id_end = id_account if id_account >= 0 else id_cardholders
-        incident_obj.banks.append(extract_word(desc_word_list, id_1, id_end))
-
 def search_service_n_bank(elem_desc_all, incident_obj):
-    keyword_actions = {
-        "through": process_classic_case,
-        "for_by": process_for_by_case,
-        "with": process_classic_case
-    }
-            
-    for i, elem_desc in enumerate(elem_desc_all):
-        desc_word_list = elem_desc.text.split()
-        
-        # cas 1 contient mot clé "through"
-        id_through = get_word_index(desc_word_list, "through")
-        
-        # cas 2 contient mot clé "for" et "by" ce qui fournit le service et la banque
-        id_for = get_word_index(desc_word_list, "for")
-        id_by = get_word_index(elem_desc_all, "by")
-        
-        # cas 3 contient mot clé "with"
-        id_with = get_word_index(elem_desc_all, "with")
-        
-        if id_through != -1 and "through" in keyword_actions:
-            keyword_actions['through'](id_through, desc_word_list, incident_obj, "through")
-        elif id_for != -1 and id_by != -1 and "for_by" in keyword_actions:
-            keyword_actions['for_by'](id_for, id_by, desc_word_list, incident_obj)
-        if id_with != -1 and "with" in keyword_actions:
-            keyword_actions['with'](id_with, desc_word_list, incident_obj, "with")
-        
+    for elem_desc in elem_desc_all:
         # Add all proper names in the bank arrray -> should do everything -> service and bank
         proper_names = extract_proper_names(elem_desc.text)
-        for bank in proper_names:
-            if bank.strip() != incident_obj.service:
-                incident_obj.banks.append(bank.strip())
-        incident_obj.banks = list(dict.fromkeys(incident_obj.banks))
+        for name in proper_names:
+            incident_obj.services.append(name.strip())
+    incident_obj.services = list(dict.fromkeys(incident_obj.services))
         
 def recover_part_infos(part, part_title, incident_obj):
-    elem_desc_all = part.find_all("p") 
+    elem_desc_all = part.find_all("p")
     if len(elem_desc_all) == 0: # sometimes the Resolved part has no text -> not an error
         print(f"No <p> in the part: {part_title}\n")
         return False
@@ -191,8 +149,8 @@ def recover_part_infos(part, part_title, incident_obj):
     if not elem_date:
         elem_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
         elem_date = extract_word(elem_date.split(), -1, -1) # remove 'CEST'
-    else:
-        print("Date found inside the desc:", elem_date); input()
+    # else:
+    #     print("Date found inside the desc:", elem_date); input()
 
     search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title)
     retrieve_raw_desc(part, incident_obj, part_title)
@@ -200,8 +158,7 @@ def recover_part_infos(part, part_title, incident_obj):
     match part_title:
         case PartType.IDENTIFIED.title:
             search_service_n_bank(elem_desc_all, incident_obj)
-            
-
+    
     return True
 
 
@@ -213,7 +170,7 @@ def retrieve_offer_conversion():
 
 # Main function deciding of what we gonna do with the given part
 def process_incident_details(part, part_title, incident_obj):
-    recover_part_infos(part, part_title, incident_obj)            
+    recover_part_infos(part, part_title, incident_obj)
     # if incident_obj.incident_type.value in [IncidentType.ERROR_RATE.value, IncidentType.REFUSAL_RATE.value, IncidentType.RESPONSE_TIME.value]:
     # elif incident_obj.incident_type.value == IncidentType.OFFER_CONVERSION.value:
     #     pass
@@ -261,7 +218,7 @@ def scrap_adyen_history(driver, save=False):
                     print("No incident or useless one")
                     break
 
-                incident_obj = Incident(banks=[]) # force to reset the banks
+                incident_obj = Incident(services=[]) # force to reset the banks
                 # print(incident_obj)
 
                 for id_part, part in enumerate(parts):
@@ -280,14 +237,10 @@ def scrap_adyen_history(driver, save=False):
                         incident_obj.title = part_title
                         incident_obj.card_datetime = ' '.join(incident_date.split()[:-1]) # remove the CEST or other
                         assign_incident_type(part_title, incident_obj)
-                        
-                        
-                        
-                        # print("After title :", str(incident_obj))
                         continue
                     
                     process_incident_details(part, part_title, incident_obj)
-                # print(incident_obj)
+                
                 incidents_dict[year][month].append(incident_obj)
     
     input("Continue...")

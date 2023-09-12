@@ -3,25 +3,35 @@ import nltk
 from nltk import ne_chunk, pos_tag, word_tokenize
 from nltk.tree import Tree
 
+TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])\s*[:.]\s*[0-5][0-9](?:[A-Za-z]{3-4})?'
+DATE_REGEX_1 = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\s*\b'
+DATE_REGEX_2 = r'\b\d{1,2}(?:st|nd|rd|th)?\s*(?:of)?\s*(?:January|February|March|April|May|June|July|August|September|October|November|December)\b'
+
+INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
+INPUT_TIME_FORMAT = '%H:%M'
+OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
+
+
+
+
+
 class Incident:
-    def __init__(self, title="Unknown", service=None, identified_datetime=None, resolved_datetime=None, raw="",banks=[], card_datetime=None, incident_type=None):
+    def __init__(self, title="Unknown", services=[], identified_datetime=None, resolved_datetime=None, raw="", card_datetime=None, incident_type=None):
 
         self.title = title
-        self.service = service
+        self.services = services
         self.identified_datetime = identified_datetime
         self.resolved_datetime = resolved_datetime
         self.raw = raw
-        self.banks = banks
         self.card_datetime = card_datetime
         self.incident_type = incident_type
 
     def _to_dict(self):
         incident_dict = {
             "title": self.title,
-            "service": self.service,
+            "services": self.services,
             "identified_datetime": str(self.identified_datetime),
             "resolved_datetime": str(self.resolved_datetime),
-            "banks": self.banks,
             "raw": self.raw,
             "card_datetime": self.card_datetime
         }
@@ -41,12 +51,6 @@ class Incident:
         json_str += "}"
         return json_str
     
-
-
-TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])\s*[:.]\s*[0-5][0-9](?:[A-Za-z]{3-4})?'
-INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
-INPUT_TIME_FORMAT = '%H:%M'
-OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 
 class PartType(Enum):
     TITLE = (0, "Title")
