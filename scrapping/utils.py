@@ -2,6 +2,19 @@ from enum import Enum
 import nltk
 from nltk import ne_chunk, pos_tag, word_tokenize
 from nltk.tree import Tree
+from nltk.tokenize import word_tokenize
+
+from time import sleep
+
+# Scrapper module
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from bs4 import BeautifulSoup
+
+import datetime
+import re
+from dateutil.parser import parse
+
 
 TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])\s*[:.]\s*[0-5][0-9](?:[A-Za-z]{3-4})?'
 DATE_REGEX_1 = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\s*\b'
@@ -11,12 +24,12 @@ INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
 INPUT_TIME_FORMAT = '%H:%M'
 OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 
-
+MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 
 
 
 class Incident:
-    def __init__(self, title="Unknown", services=[], identified_datetime=None, resolved_datetime=None, raw="", card_datetime=None, incident_type=None):
+    def __init__(self, title="Unknown", services=[], identified_datetime=[], resolved_datetime=[], raw="", card_datetime=None, incident_type=None):
 
         self.title = title
         self.services = services
@@ -30,10 +43,10 @@ class Incident:
         incident_dict = {
             "title": self.title,
             "services": self.services,
-            "identified_datetime": str(self.identified_datetime),
-            "resolved_datetime": str(self.resolved_datetime),
+            "identified_datetime": self.identified_datetime,
+            "resolved_datetime": self.resolved_datetime,
             "raw": self.raw,
-            "card_datetime": self.card_datetime
+            "card_datetime": str(self.card_datetime)
         }
         if self.incident_type:
             incident_dict["incident_type"] = {
@@ -80,8 +93,65 @@ class IncidentType(Enum):
         obj.title = title
         return obj
 
+    def get_incident_type(part_title):
+        part_title_lowered = part_title.lower()
+        
+        for i in IncidentType:
+            if i.title.lower() in part_title_lowered:
+                return i
+        return IncidentType.OTHER
 
 
+
+class DatetimeUtils:
+    # Function that search any times given in the description like "12:15 CEST" and then assign it to the correct datetime attribut
+    def search_times(elem_desc_all, elem_date):
+        # General datetime from the part
+        general_parsed_datetime = elem_date if isinstance(elem_date, datetime.datetime) else datetime.datetime.strptime(elem_date, INPUT_DATETIME_FORMAT)
+        datetime_arr = []
+        
+        # For every <p> tag in the part description
+        for desc in elem_desc_all:
+            times_arr = re.findall(TIME_REGEX, desc.text) # get all the time
+            for time_str in times_arr:
+                time_found = DatetimeUtils.clean_time(time_str, general_parsed_datetime)
+                if time_found:
+                    datetime_arr.append(time_found)
+
+        datetime_arr = list(set(datetime_arr))
+        return [datetime.datetime.strftime(general_parsed_datetime, INPUT_DATETIME_FORMAT)] if len(datetime_arr) == 0 else datetime_arr
+
+    def clean_time(time_str, general_parsed_datetime):
+        if not time_str: return None
+        time_str = time_str.replace('.', ':').replace(" ", "") # sometimes they have miss typed
+
+        time_var = datetime.datetime.strptime(time_str, INPUT_TIME_FORMAT)
+        
+        new_datetime = datetime.datetime(
+            year = general_parsed_datetime.year,
+            month = general_parsed_datetime.month,
+            day = general_parsed_datetime.day,
+            hour = time_var.hour,
+            minute = time_var.minute
+        )
+        return new_datetime.strftime(OUTPUT_DATETIME_FORMAT)
+
+    def search_dates(elem_desc_all):
+        parsed_dates = []
+        for elem_desc in elem_desc_all:
+            # search for the date in text -> can vary a lot
+            date_matches = re.findall(DATE_REGEX_1, elem_desc.text, re.IGNORECASE)
+            date_matches.extend(re.findall(DATE_REGEX_2, elem_desc.text, re.IGNORECASE))
+            for date_match in date_matches:
+                parsed_date = parse(date_match, fuzzy=True)
+                parsed_dates.append(parsed_date)
+        
+        return parsed_dates
+
+    def convert_to_date(text, date_format):
+        return datetime.datetime.strptime(text, date_format)
+
+##### NLP Part #####
 
 def download_nltk_data():
     try:
@@ -89,13 +159,16 @@ def download_nltk_data():
         nltk.data.find('words')
         nltk.data.find('punkt')
         nltk.data.find('averaged_perceptron_tagger')
+        nltk.data.find('stopwords')
     except LookupError:
         nltk.download('maxent_ne_chunker')
         nltk.download('words')
         nltk.download('punkt')
         nltk.download('averaged_perceptron_tagger')
+        nltk.download('stopwords')
 
-def extract_proper_names(text):
+# Extract the minimum
+def extract_proper_names_nltk(text):
     # Tokenize the words into sentences
     proper_names = []
     
@@ -108,3 +181,108 @@ def extract_proper_names(text):
             proper_names.append(name)
     
     return proper_names
+
+import spacy
+nlp = spacy.load("en_core_web_sm")
+def extract_proper_names_spacy(text):
+    proper_names = []
+    
+    doc = nlp(text)
+    
+    for entity in doc.ents:
+        if entity.label_ in ["PERSON", "ORG"]:
+            proper_names.append(entity.text)
+
+    return proper_names
+
+
+
+import re
+import nltk
+from nltk.corpus import stopwords
+
+# Assurez-vous d'avoir téléchargé la liste des stopwords
+nltk.download('stopwords')
+
+# Fonction pour extraire les noms propres
+def extract_proper_names(text):
+    proper_names = []
+    
+    # Tokenisez le texte en mots
+    words = re.findall(r'\b\w+\b', text)
+    
+    # Récupérez la liste des stopwords
+    stop_words = set(stopwords.words('english'))  # Vous pouvez ajuster la langue selon votre texte
+    
+    prev_word_was_upper = False
+    current_name = ""
+
+    for word in words:
+        # Vérifiez si le mot contient au moins une lettre en majuscule et n'est pas un stopword
+        if any(letter.isupper() for letter in word) and word.lower() not in stop_words:
+            # Si le mot précédent n'était pas une majuscule, commencez un nouveau nom propre
+            if not prev_word_was_upper:
+                current_name = word
+            else:
+                # Si le mot précédent était une majuscule, concaténez-le avec le mot actuel
+                current_name += ' ' + word
+            prev_word_was_upper = True
+        else:
+            # Si le mot actuel n'est pas une majuscule, ajoutez le nom propre courant à la liste (s'il existe)
+            if current_name:
+                proper_names.append(current_name)
+                current_name = ""
+            prev_word_was_upper = False
+    
+    # Assurez-vous d'ajouter le dernier nom propre à la liste s'il existe
+    if current_name:
+        proper_names.append(current_name)
+    
+    return proper_names
+
+
+
+##### Generic function ######
+
+def get_word_index(text_list, word):
+    return text_list.index(word) if word in text_list else -1
+
+def extract_word(text_list, id_start, id_end):
+    return ' '.join(e for e in text_list[id_start+1:id_end])
+
+
+
+##### General scrapper functions #####
+
+def setup_driver(headless=True):
+    options = webdriver.FirefoxOptions()
+    if headless:
+        options.add_argument('--headless')    
+    
+    driver = webdriver.Firefox(options=options)
+
+    return driver
+
+
+def clean_services_found(services, words_often_found):
+    cleaned_services = []
+    seen_services = set()
+    
+    for service in services:
+        lowercase_service = service.lower()
+        if lowercase_service not in seen_services and service not in words_often_found:
+            cleaned_services.append(service)
+            seen_services.add(lowercase_service)
+    
+    return cleaned_services
+
+
+def search_services(elem_desc_all: list):
+    services = []
+    for elem_desc in elem_desc_all:
+        # Add all proper names in the bank arrray -> should do everything -> service and bank
+        proper_names = extract_proper_names(elem_desc.text)
+        for name in proper_names:
+            services.append(name.strip())
+
+    return services

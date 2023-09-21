@@ -1,264 +1,281 @@
-# General import
-import json
-import os
-import time
-import re
-import datetime
+# # General import
+# import json
+# import os
+# import re
 
-# Scrapper module
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from bs4 import BeautifulSoup
-
-# Personal files
-from utils import *
-
-from dateutil.parser import parse
+# import time
+# import datetime
+# from calendar import month_name
+# from dateutil.parser import parse
 
 
+# # Scrapper module
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from bs4 import BeautifulSoup
 
-def setup_driver(headless=True):
-    options = webdriver.FirefoxOptions()
-    if headless:
-        options.add_argument('--headless')    
+# # Personal files
+# from utils import *
+
+
+# ##### General scrapper functions #####
+
+# def setup_driver(headless=True):
+#     options = webdriver.FirefoxOptions()
+#     if headless:
+#         options.add_argument('--headless')    
     
-    driver = webdriver.Firefox(options=options)
+#     driver = webdriver.Firefox(options=options)
 
-    return driver
+#     return driver
 
-def parse_url(driver, url, wait_time=2):
-    driver.implicitly_wait(wait_time)
-    content = None; soup = None
+# def parse_url(driver, url, wait_time=2):
+#     driver.implicitly_wait(wait_time)
+#     content = None; soup = None
 
-    try:
-        driver.get(url)
+#     try:
+#         driver.get(url)
 
-        try:
-            # besoin de cliquer sur un bouton pour afficher tout les incidents
-            button_show_all = driver.find_element(By.XPATH, '//button[contains(@class, "ds-button-link ds-button-link--primary ds-button-link--green")]')   
+#         try:
+#             # besoin de cliquer sur un bouton pour afficher tout les incidents
+#             button_show_all = driver.find_element(By.XPATH, '//button[contains(@class, "ds-button-link ds-button-link--primary ds-button-link--green")]')   
 
-            if button_show_all:
-                button_show_all.click()
-                time.sleep(wait_time) # sleep require or page isn't complete
-        except Exception as e:
-            print("No element for this month")
+#             if button_show_all:
+#                 button_show_all.click()
+#                 time.sleep(wait_time) # sleep require or page isn't complete
+#         except Exception as e:
+#             print("No element for this month")
             
 
-        content = driver.page_source
-        soup = BeautifulSoup(content, 'lxml')
+#         content = driver.page_source
+#         soup = BeautifulSoup(content, 'lxml')
 
-    except Exception as e:
-        print(f"Error: {e}")
-        exit()
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         exit()
 
-    return content, soup
+#     return content, soup
 
+
+
+# ##### Data retrieving for Adyen #####
+
+# def clean_services_found(incident_obj, words_often_found):
+#     words_often_found = ['CEST', 'CET', 'Adyen Support']
     
-def assign_incident_type(part_title, incident_obj):
-    part_title_lowered = part_title.lower()
-    incident_obj.incident_type = IncidentType.OTHER # by default we set the Incident as OTHER
-
-    for i in IncidentType:
-        if i.title.lower() in part_title_lowered:
-            incident_obj.incident_type = i
-            return
-
-def retrieve_raw_desc(part, incident_obj, part_title):
-    all_elem_desc = part.find_all("p")
-    raw = f"{part_title}("
-    for elem in all_elem_desc:
-        if "https://status.adyen.com" not in elem.text: 
-            raw += elem.text
-    raw += ")\n"
-    incident_obj.raw += raw
-    # print("raw", raw)
-
-def search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title):
-    # General datetime from the part
+#     cleaned_services = []
+#     seen_services = set()
     
-    parsed_datetime = elem_date if isinstance(elem_date, datetime.datetime) else datetime.datetime.strptime(elem_date, INPUT_DATETIME_FORMAT)
-    datetime_arr = []
+#     for service in incident_obj.services:
+#         lowercase_service = service.lower()
+#         if lowercase_service not in seen_services and service not in words_often_found:
+#             cleaned_services.append(service)
+#             seen_services.add(lowercase_service)
     
-    for desc in elem_desc_all:
-        time_str = re.search(TIME_REGEX, desc.text)
-        if not time_str: continue # search in the different <p> tags
-        time_str = time_str.group().replace('.', ':').replace(" ", "") # sometimes they have miss typed
+#     incident_obj.services = cleaned_services
 
-        time_var = datetime.datetime.strptime(time_str, INPUT_TIME_FORMAT)
+# def search_service_n_bank(elem_desc_all, incident_obj):
+#     for elem_desc in elem_desc_all:
+#         # Add all proper names in the bank arrray -> should do everything -> service and bank
+#         proper_names = extract_proper_names(elem_desc.text)
+#         for name in proper_names:
+#             incident_obj.services.append(name.strip())
+    
+#     clean_services_found(incident_obj)    
+
+
+# ### Date and time function associated
+
+
+
+
+# def recover_part_infos(part, part_title, incident_obj):
+#     '''
+#     Main function that recover the different informations needed by calling the appropriate functions
+    
+#     Parameters:
+#         part (BeautifulSoup): The part HTML, can be search.
+#         part_title (str): The title of the part.
+#         incident_obj (Incident): The letters sequence to convert.
+
+#     Returns:
+#         bool: The part contains or not information (<p> tag).
+#     '''
+#     elem_desc_all = part.find_all("p")
+#     if len(elem_desc_all) == 0: # sometimes the Resolved part has no text -> not an error, just discard it
+#         print(f"No <p> in the part: {part_title}\n")
+#         return False
+    
+#     # Check if the date of the incident is in the description or take the part global time
+#     elem_date = search_date_in_desc(elem_desc_all)
+#     # Need to get the part date to find the year or always the today year
+#     part_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
+#     part_date = extract_word(part_date.split(), -1, -1) # remove 'CEST'
+#     part_date = datetime.datetime.strptime(part_date, INPUT_DATETIME_FORMAT) # create a datetime object
+    
+#     if not elem_date:
+#         elem_date = part_date
+#     else:
+#         elem_date = datetime.datetime(
+#             year = part_date.year,
+#             month = elem_date.month,
+#             day = elem_date.day,
+#             hour = elem_date.hour,
+#             minute = elem_date.minute
+#         )
+    
+#     search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title)
+#     retrieve_raw_desc(part, incident_obj, part_title)
+#     search_service_n_bank(elem_desc_all, incident_obj)
+    
+#     return True
+
+# ### The two main function of the Adyen scrapping
+
+# def scrap_adyen_months(id_month_start, id_month_end, year, incidents_dict, driver):
+#     count_empty_month = 0
+#     incidents_dict[year] = {}
+#     for id_month in range(id_month_start, id_month_end):
         
-        new_datetime = datetime.datetime(
-            year=parsed_datetime.year,
-            month=parsed_datetime.month,
-            day=parsed_datetime.day,
-            hour=time_var.hour,
-            minute=time_var.minute
-        )
-        new_datetime_str = new_datetime.strftime(OUTPUT_DATETIME_FORMAT)
-        datetime_arr.append(new_datetime_str)
-
-    # if not datetime found inside the <p> tags we take the part datetime
-    #       take into account multiple time -> depend on the IncidentType
-    match part_title:
-        case PartType.RESOLVED.title:
-            incident_obj.resolved_datetime = parsed_datetime if len(datetime_arr) == 0 else datetime_arr
-        case PartType.IDENTIFIED.title:
-            incident_obj.identified_datetime = parsed_datetime if len(datetime_arr) == 0 else datetime_arr
-        case _:
-            # print("Error: Unknown PartType passed to the function - ", part_title)
-            pass # do nothing because the Updated aren't relevant in our case
-    
-
-'''TODO finish the code in this part -> verify that this code works (check regex) (check if the return type is correct)'''
-def search_date_in_desc(elem_desc_all):
-    parsed_dates = []
-    for elem_desc in elem_desc_all:
-        # search for the date in text -> can vary a lot
-        date_matches = re.findall(DATE_REGEX_1, elem_desc.text, re.IGNORECASE)
-        date_matches.extend(re.findall(DATE_REGEX_2, elem_desc.text, re.IGNORECASE))
-        for date_match in date_matches:
-            parsed_date = parse(date_match, fuzzy=True)
-            parsed_dates.append(parsed_date)
-    
-    # if multiple dates, choose the 1st -> shouldn't happen
-    return parsed_dates[0] if len(parsed_dates) > 0 else False
-
-def get_word_index(text_list, word):
-    return text_list.index(word) if word in text_list else -1
-
-def extract_word(text_list, id_start, id_end):
-    return ' '.join(e for e in text_list[id_start+1:id_end])
-
-def search_service_n_bank(elem_desc_all, incident_obj):
-    for elem_desc in elem_desc_all:
-        # Add all proper names in the bank arrray -> should do everything -> service and bank
-        proper_names = extract_proper_names(elem_desc.text)
-        for name in proper_names:
-            incident_obj.services.append(name.strip())
-    incident_obj.services = list(dict.fromkeys(incident_obj.services))
+#         month = MONTHS[id_month]
         
-def recover_part_infos(part, part_title, incident_obj):
-    elem_desc_all = part.find_all("p")
-    if len(elem_desc_all) == 0: # sometimes the Resolved part has no text -> not an error
-        print(f"No <p> in the part: {part_title}\n")
-        return False
-    
-    # Check if the date is written in the description or take the part time
-    elem_date = search_date_in_desc(elem_desc_all)
-    
-    if not elem_date:
-        elem_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
-        elem_date = extract_word(elem_date.split(), -1, -1) # remove 'CEST'
-    # else:
-    #     print("Date found inside the desc:", elem_date); input()
+#         url = f"{ADYEN_BASE_URL}/{month}-{year}"
+#         print("Currently scrapping URL:", url)
+#         _, soup = parse_url(driver, url)
+        
+#         # contains the incident cards for the month
+#         incidents_cards = soup.find_all('div', class_='card')
+#         print("Number of incidents", len(incidents_cards))
+        
+#         # nothing in this page, skip it -> avoid aving empty months inside the json
+#         if len(incidents_cards) == 0: 
+#             count_empty_month += 1
+#             continue
+        
+#         incidents_dict[year][month] = []
 
-    search_assign_datetime(elem_desc_all, elem_date, incident_obj, part_title)
-    retrieve_raw_desc(part, incident_obj, part_title)
-    
-    match part_title:
-        case PartType.IDENTIFIED.title:
-            search_service_n_bank(elem_desc_all, incident_obj)
-    
-    return True
-
-
-def retrieve_offer_conversion():
-    
-    pass
-
-
-
-# Main function deciding of what we gonna do with the given part
-def process_incident_details(part, part_title, incident_obj):
-    recover_part_infos(part, part_title, incident_obj)
-    # if incident_obj.incident_type.value in [IncidentType.ERROR_RATE.value, IncidentType.REFUSAL_RATE.value, IncidentType.RESPONSE_TIME.value]:
-    # elif incident_obj.incident_type.value == IncidentType.OFFER_CONVERSION.value:
-    #     pass
-    # elif incident_obj.incident_type.value == IncidentType.RESOLVED.value:
-    #     pass
-    # elif incident_obj.incident_type.value == IncidentType.DEGRADED_PERFORMANCE.value:
-    #     pass
-    # elif incident_obj.incident_type.value == IncidentType.OTHER.value:
-    #     pass
-
-
-def scrap_adyen_history(driver, save=False):
-    # url_history_adyen = "status.adyen.com/incident-history#2023" # only a summary
-
-    months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-    # months = ["april"]
-    
-    years = [2023] # can add more but enough for now
-    base_url = "https://status.adyen.com/incident-history"
-
-    incidents_dict = {}
-
-    # go through each pages and get the incidents
-    for year in years:
-        incidents_dict[year] = {}
-        for month in months:
-            incidents_dict[year][month] = []
-            url = f"{base_url}/{month}-{year}"
-            print("URL", url)
-            _, soup = parse_url(driver, url)
+#         for id_card, card in enumerate(incidents_cards):
+#             # print(f"\nCard id : {id_card}")
             
-            # contains the incident cards for the month
-            incidents_cards = soup.find_all('div', class_='card')
-            print("Number of incidents", len(incidents_cards))
+#             # get the different parts of the incident (Title, Resolved, Identified)
+#             parts = card.find_all(lambda tag: tag.name == 'span' and tag.get('class') == ['status-item', 'ds-width-full'])
+            
+#             # we don't keep this for now -> and avoid error
+#             if len(parts) < 1:
+#                 print("No incident or useless one")
+#                 break
 
-            # for id_card, card in enumerate(incidents_cards[int(len(incidents_cards)*0.5):int(len(incidents_cards)*0.66)]):
-            for id_card, card in enumerate(incidents_cards):
-                print(f"\nCard id : {id_card}")
+#             incident_obj = Incident(services=[], identified_datetime=[], resolved_datetime=[]) # force to reset or cache do some shit
+
+#             for id_part, part in enumerate(parts):
+#                 part_title = part.find("span", {"class": ["ds-margin-left-12", "ds-text", "ds-font-weight-bold", "ds-color-black"]})
+
+#                 if not part_title:
+#                     print("Error, no text inside this part")
+#                     continue
                 
-                # get the different parts of the incident, contains the Title, Resolved, Identified parts
-                parts = card.find_all(lambda tag: tag.name == 'span' and tag.get('class') == ['status-item', 'ds-width-full'])
+#                 part_title = part_title.text
                 
-                # we don't keep this for now -> and avoid error
-                if len(parts) < 1:
-                    print("No incident or useless one")
-                    break
+#                 if id_part == 0: # title of the incident, always the first part
+#                     incident_date = part.find("span", {"class": ["ds-text-small", "ds-color-grey-450"]}).text
 
-                incident_obj = Incident(services=[]) # force to reset the banks
-                # print(incident_obj)
-
-                for id_part, part in enumerate(parts):
-                    part_title = part.find("span", {"class": ["ds-margin-left-12", "ds-text", "ds-font-weight-bold", "ds-color-black"]})
-
-                    if not part_title:
-                        print("Error, no text inside this part")
-                        continue
-                    
-                    # part_title can contains : ["title of the incident", "resolved", "identified", "updated"]
-                    part_title = part_title.text
-                    
-                    if id_part == 0: # always true - # title of the card, the incident
-                        incident_date = part.find("span", {"class": ["ds-text-small", "ds-color-grey-450"]}).text
-
-                        incident_obj.title = part_title
-                        incident_obj.card_datetime = ' '.join(incident_date.split()[:-1]) # remove the CEST or other
-                        assign_incident_type(part_title, incident_obj)
-                        continue
-                    
-                    process_incident_details(part, part_title, incident_obj)
+#                     incident_obj.title = part_title
+#                     incident_obj.card_datetime = extract_word(incident_date.split(), -1, -1) # remove the CEST or other time zone
+#                     assign_incident_type(part_title, incident_obj)
+#                     continue
                 
-                incidents_dict[year][month].append(incident_obj)
+#                 recover_part_infos(part, part_title, incident_obj)
+            
+#             incidents_dict[year][month].append(incident_obj)
+        
+        
+#     return count_empty_month
+
+# def scrap_adyen_history(driver, save=True):
+#     start_time = time.time()
     
-    input("Continue...")
-    json_output = json.dumps(incidents_dict, indent=4, default=Incident._to_dict)
-    print(json_output)
+#     script_dir = os.path.dirname(os.path.abspath(__file__))
+#     data_dir = os.path.join(script_dir, "data")
+#     filename = "adyen_incidents.json"
+#     data_file = os.path.join(data_dir, filename)
+    
+#     incidents_dict = {}
+#     try:
+#         with open(data_file, 'r') as f:
+#             incidents_dict = json.load(f)
+            
+#     except Exception as e:
+#         print("No json file found:", e)
 
-    if save:
-        with open("incidents.json", 'w') as output_file:
-            json.dump(incidents_dict, output_file, indent=4, default=Incident._to_dict)
+#     today_year = int(datetime.datetime.now().strftime('%Y'))
+#     today_month_name = datetime.datetime.now().strftime('%B')
+#     id_today_month = list(month_name).index(today_month_name)    
+
+#     if len(incidents_dict) == 0: # never scrapped
+#         continue_scrapping = True
+#         current_year = today_year
+#         while continue_scrapping:
+#             count_empty_months = scrap_adyen_months(0, 12, current_year, incidents_dict, driver)
+#             if count_empty_months >= 12: # if we have a complete year without any incidents -> we believe that we scrapped everything
+#                 continue_scrapping = False
+                
+#             current_year -= 1
+    
+#     else:
+#         years = incidents_dict.keys()
+#         last_year_scrapped = max([int(y) for y in years])
+        
+#         months = incidents_dict[str(last_year_scrapped)].keys()
+#         id_last_month = max([MONTHS.index(m) for m in months])
+
+#         if today_year == last_year_scrapped:
+#             scrap_adyen_months(id_last_month, id_today_month, today_year, incidents_dict, driver)
+#         elif abs(today_year - last_year_scrapped) == 1:
+#             scrap_adyen_months(0, id_today_month, today_year, incidents_dict, driver)
+#             scrap_adyen_months(id_last_month, 12, last_year_scrapped, incidents_dict, driver)
+#         else:
+#             scrap_adyen_months(0, id_today_month, today_year, incidents_dict, driver)
+            
+#             # get every years between today and last scrapping
+#             for i in range(1, abs(today_year - last_year_scrapped)): 
+#                 year_to_scrap = today_year - i # compute the year to scrap depending on the today year and the number of years between today and the last scrapping 
+#                 scrap_adyen_history(0, 12, year_to_scrap, incidents_dict, driver)
+            
+#             scrap_adyen_months(id_last_month, 12, last_year_scrapped, incidents_dict, driver)
+    
+    
+#     execution_time = time.time() - start_time
+#     # compute the number of element inside the dictionnary
+#     incidents_count = 0
+#     for year, months in incidents_dict.items():
+#         for month, incidents in months.items():
+#             incidents_count += len(incidents)
+    
+#     print(f"""Scrapping finished:
+#           - Time taken:                {int(execution_time // 60)} min {int(execution_time % 60)} sec. 
+#           - Total number of incidents: {incidents_count}""")
+
+#     if save:
+#         print("Starting exporting data into JSON file.")
+#         with open(data_file, 'w') as output_file:
+#             json.dump(incidents_dict, output_file, indent=4, default=Incident._to_dict)
 
 
 
-''' Program init '''
-# setup selenium driver
-my_driver = setup_driver(True)
-# Download the NLTK named entity recognition dataset if not already downloaded
+# ''' Program init '''
+# # setup selenium driver
+# my_driver = setup_driver(headless=True)
+# # Download the NLTK named entity recognition dataset if not already downloaded on the machine
+# download_nltk_data()
+
+# scrap_adyen_history(my_driver)
+
+
+from utils import setup_driver, download_nltk_data
+from adyen_scrapper import AdyenScrapper
+
+my_driver = setup_driver()
 download_nltk_data()
-    
 
-
-scrap_adyen_history(my_driver, True)
+adyen_scrapper = AdyenScrapper(my_driver)
+adyen_scrapper._scrap_adyen_history()
