@@ -4,8 +4,3 @@ pip3 install selenium
 pip3 install numpy
 
 pip3 install nltk
-pip install spacy
-python -m spacy download en_core_web_sm
-
-
-python -m spacy download en_core_web_trf

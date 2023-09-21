@@ -1,15 +1,9 @@
 from enum import Enum
 import nltk
-from nltk import ne_chunk, pos_tag, word_tokenize
-from nltk.tree import Tree
-from nltk.tokenize import word_tokenize
-
-from time import sleep
+from nltk.corpus import stopwords
 
 # Scrapper module
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
 
 import datetime
 import re
@@ -155,59 +149,10 @@ class DatetimeUtils:
 
 def download_nltk_data():
     try:
-        nltk.data.find('maxent_ne_chunker')
-        nltk.data.find('words')
-        nltk.data.find('punkt')
-        nltk.data.find('averaged_perceptron_tagger')
         nltk.data.find('stopwords')
     except LookupError:
-        nltk.download('maxent_ne_chunker')
-        nltk.download('words')
-        nltk.download('punkt')
-        nltk.download('averaged_perceptron_tagger')
         nltk.download('stopwords')
 
-# Extract the minimum
-def extract_proper_names_nltk(text):
-    # Tokenize the words into sentences
-    proper_names = []
-    
-    nltk_results = ne_chunk(pos_tag(word_tokenize(text[1:-1])))
-    for nltk_res in nltk_results:
-        if type(nltk_res) == Tree:
-            name = ''
-            for nltk_res_leaf in nltk_res.leaves():
-                name += nltk_res_leaf[0] + ' '
-            proper_names.append(name)
-    
-    return proper_names
-
-def extract_proper_names_spacy(text):
-    import spacy
-    import time
-    # nlp = spacy.load("en_core_web_sm") # 5min pour scrapper
-    nlp = spacy.load("en_core_web_trf") # 30 min pour scrapper -> il faut changer la logique de la fonction search_services() pour envoyer un texte plus long pour que nlp soit appeler 1x avec tout le texte
-
-    # start_time = time.time()
-    proper_names = []
-    
-    doc = nlp(text)
-    
-    for entity in doc.ents:
-        if entity.label_ in ["PERSON", "ORG"]:
-            proper_names.append(entity.text)
-
-    # print(f"Proper names extracted in {time.time() - start_time} seconds")
-    return proper_names
-
-
-
-import re
-import nltk
-from nltk.corpus import stopwords
-
-# Assurez-vous d'avoir téléchargé la liste des stopwords
-nltk.download('stopwords')
 
 # Fonction pour extraire les noms propres fait maison
 def extract_proper_names(text):
