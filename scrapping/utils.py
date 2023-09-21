@@ -2,6 +2,7 @@ from enum import Enum
 import nltk
 from nltk.corpus import stopwords
 
+
 # Scrapper module
 from selenium import webdriver
 
