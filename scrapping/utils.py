@@ -182,9 +182,13 @@ def extract_proper_names_nltk(text):
     
     return proper_names
 
-import spacy
-nlp = spacy.load("en_core_web_sm")
 def extract_proper_names_spacy(text):
+    import spacy
+    import time
+    # nlp = spacy.load("en_core_web_sm") # 5min pour scrapper
+    nlp = spacy.load("en_core_web_trf") # 30 min pour scrapper -> il faut changer la logique de la fonction search_services() pour envoyer un texte plus long pour que nlp soit appeler 1x avec tout le texte
+
+    # start_time = time.time()
     proper_names = []
     
     doc = nlp(text)
@@ -193,6 +197,7 @@ def extract_proper_names_spacy(text):
         if entity.label_ in ["PERSON", "ORG"]:
             proper_names.append(entity.text)
 
+    # print(f"Proper names extracted in {time.time() - start_time} seconds")
     return proper_names
 
 
@@ -204,37 +209,32 @@ from nltk.corpus import stopwords
 # Assurez-vous d'avoir téléchargé la liste des stopwords
 nltk.download('stopwords')
 
-# Fonction pour extraire les noms propres
+# Fonction pour extraire les noms propres fait maison
 def extract_proper_names(text):
     proper_names = []
     
-    # Tokenisez le texte en mots
+    # Tokenize text
     words = re.findall(r'\b\w+\b', text)
-    
-    # Récupérez la liste des stopwords
-    stop_words = set(stopwords.words('english'))  # Vous pouvez ajuster la langue selon votre texte
+    stop_words = set(stopwords.words('english'))  
     
     prev_word_was_upper = False
     current_name = ""
 
     for word in words:
-        # Vérifiez si le mot contient au moins une lettre en majuscule et n'est pas un stopword
         if any(letter.isupper() for letter in word) and word.lower() not in stop_words:
-            # Si le mot précédent n'était pas une majuscule, commencez un nouveau nom propre
+            # allow to get the proper noun if it has multiple word in it
             if not prev_word_was_upper:
                 current_name = word
             else:
-                # Si le mot précédent était une majuscule, concaténez-le avec le mot actuel
                 current_name += ' ' + word
             prev_word_was_upper = True
         else:
-            # Si le mot actuel n'est pas une majuscule, ajoutez le nom propre courant à la liste (s'il existe)
             if current_name:
                 proper_names.append(current_name)
                 current_name = ""
             prev_word_was_upper = False
     
-    # Assurez-vous d'ajouter le dernier nom propre à la liste s'il existe
+    # Add the last proper noun found (combined)
     if current_name:
         proper_names.append(current_name)
     
