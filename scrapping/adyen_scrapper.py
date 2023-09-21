@@ -1,18 +1,15 @@
 import json
 import os
 
-import time
-import datetime
-from calendar import month_name
+from time import sleep, time as get_time
+from datetime import datetime
 
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from time import sleep
 
-from utils import IncidentType, Incident, DatetimeUtils, PartType 
-from utils import search_services, extract_word, clean_services_found
-from utils import MONTHS, INPUT_DATETIME_FORMAT
-
+from utils.utils import IncidentType, Incident, PartType, extract_word 
+from utils.nlp_utils import search_services, clean_services_found
+from utils.datetime_utils import DatetimeUtils, MONTHS, INPUT_DATETIME_FORMAT
 
 class AdyenScrapper:
     def __init__(self, driver, filename="adyen_incidents.json", json_export=True, common_words_found=['CEST', 'CET', 'Adyen Support', 'Status Page', 'Please']):
@@ -27,7 +24,7 @@ class AdyenScrapper:
         
     ### The 3 main functions ###
     def _scrap_adyen_history(self):
-        start_time = time.time()
+        start_time = get_time()
         
         script_dir = os.path.dirname(os.path.abspath(__file__))
         data_dir = os.path.join(script_dir, "data")
@@ -40,14 +37,13 @@ class AdyenScrapper:
         except Exception as e:
             print("No JSON file found, start the scrapping from the beginning")
 
-        today_year = int(datetime.datetime.now().strftime('%Y'))
-        today_month_name = datetime.datetime.now().strftime('%B')
-        id_today_month = list(month_name).index(today_month_name)    
 
+        today = DatetimeUtils.get_today_date()
+        id_today_month = DatetimeUtils.get_month_id(today)
         
         if len(self.incidents_dict) == 0: # Never scrapped
             continue_scrapping = True
-            current_year = today_year
+            current_year = today.year
             while continue_scrapping:
                 count_empty_months = self._scrap_adyen_months(0, 12, current_year)
                 if count_empty_months >= 12: # if we have a complete year without any incidents -> we consider that we scrapped everything
@@ -62,23 +58,23 @@ class AdyenScrapper:
             months = self.incidents_dict[str(last_year_scrapped)].keys()
             id_last_month = max([MONTHS.index(m) for m in months])
 
-            if today_year == last_year_scrapped: # Possibility 1: scrap only in the same year
-                self._scrap_adyen_months(id_last_month, id_today_month, today_year)
-            elif abs(today_year - last_year_scrapped) == 1: # Possibility 2: scrap between two years
-                self._scrap_adyen_months(0, id_today_month, today_year)
+            if today.year == last_year_scrapped: # Possibility 1: scrap only in the same year
+                self._scrap_adyen_months(id_last_month, id_today_month, today.year)
+            elif abs(today.year - last_year_scrapped) == 1: # Possibility 2: scrap between two years
+                self._scrap_adyen_months(0, id_today_month, today.year)
                 self._scrap_adyen_months(id_last_month, 12, last_year_scrapped)
             else: # Possibility 3: scrap multiple year considering start and end months
-                self._scrap_adyen_months(0, id_today_month, today_year)
+                self._scrap_adyen_months(0, id_today_month, today.year)
                 
                 # get every years between today and last scrapping
-                for i in range(1, abs(today_year - last_year_scrapped)): 
-                    year_to_scrap = today_year - i # compute the year to scrap depending on the today year and the number of years between today and the last scrapping 
+                for i in range(1, abs(today.year - last_year_scrapped)): 
+                    year_to_scrap = today.year - i # compute the year to scrap depending on the today year and the number of years between today and the last scrapping 
                     self._scrap_adyen_months(0, 12, year_to_scrap)
                 
                 self._scrap_adyen_months(id_last_month, 12, last_year_scrapped)
         
         
-        execution_time = time.time() - start_time
+        execution_time = get_time() - start_time
         # compute the number of element inside the dictionnary
         incidents_count = 0
         for year, months in self.incidents_dict.items():
@@ -181,7 +177,7 @@ class AdyenScrapper:
         dates_found = DatetimeUtils.search_dates(elem_desc_all) 
         if len(dates_found) > 0:
             elem_date = dates_found[0] # take the first date found, discards other for now
-            elem_date = datetime.datetime(
+            elem_date = datetime(
                 year = part_date.year,
                 month = elem_date.month,
                 day = elem_date.day,

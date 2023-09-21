@@ -1235,8 +1235,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-02-15 13:02",
-                    "2023-02-15 11:17"
+                    "2023-02-15 11:17",
+                    "2023-02-15 13:02"
                 ],
                 "raw": "Resolved(Due to an issue which has already been resolved, on February 15th between 11:17 CET and 13:02 CET terminals connecting to our European endpoints may have experienced intermittent connectivity issues affecting processing over the Cloud Terminal API.  Our engineering team continues to monitor performance and will provide a new update if required.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\n",
                 "card_datetime": "February 15 2023, 14:09",
@@ -1327,8 +1327,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-02-13 17:00",
-                    "2023-02-13 16:46"
+                    "2023-02-13 16:46",
+                    "2023-02-13 17:00"
                 ],
                 "raw": "Resolved(There was an elevated error rate over Visa in Europe between 16:46 - 17:00 CET. Performance is back to normal now. We will continue monitoring and provide a new update if required.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "February 13 2023, 17:14",
@@ -2201,8 +2201,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-03-22 08:18",
-                    "2023-03-22 08:30"
+                    "2023-03-22 08:30",
+                    "2023-03-22 08:18"
                 ],
                 "raw": "Resolved(We have identified and resolved an issue resulting in performance degradation for Adyen for Platforms between 08:18 and 08:30 CET.  During this timeframe, requests to CAL endpoints were intermittently returning errors and merchants may have noticed increased latency for these requests.  We will continue monitoring closely and provide a new update if required.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "March 22 2023, 08:56",
@@ -3520,8 +3520,8 @@
                     "PayULatam"
                 ],
                 "identified_datetime": [
-                    "2023-04-13 09:00",
-                    "2023-04-13 05:00"
+                    "2023-04-13 05:00",
+                    "2023-04-13 09:00"
                 ],
                 "resolved_datetime": [
                     "2023-04-13 07:00"
@@ -5618,8 +5618,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-06-26 15:05",
-                    "2023-06-26 13:10"
+                    "2023-06-26 13:10",
+                    "2023-06-26 15:05"
                 ],
                 "raw": "Resolved(We have identified an issue starting at 13:10 CEST affecting a subset of transactions authenticated through 3DS Redirect integration on Web.  The issue has been resolved as of 15:05 CEST.  During this timeframe, merchants making use of this integration type may have experienced an increase in shopper drop-off rate during the checkout process.  We will continue to monitor and provide a new update if required.  For more information regarding the possible 3DS integration types, please visit: https://docs.adyen.com/online-payments/3d-secure#implementation-options)\n",
                 "card_datetime": "June 26 2023, 16:40",
@@ -8032,8 +8032,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-07-14 09:46",
-                    "2023-07-14 10:05"
+                    "2023-07-14 10:05",
+                    "2023-07-14 09:46"
                 ],
                 "raw": "Resolved(We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through eContext starting at 09:46 CEST.  The issue seems now to be resolved as of 10:05 CEST. We will continue monitoring and provide further updates if required.  Please follow new updates through our Status Page (https://status.adyen.com).)\n",
                 "card_datetime": "July 14 2023, 10:07",
@@ -8872,8 +8872,8 @@
                     "2023-08-23 00:00"
                 ],
                 "resolved_datetime": [
-                    "2023-08-23 03:30",
-                    "2023-08-23 00:00"
+                    "2023-08-23 00:00",
+                    "2023-08-23 03:30"
                 ],
                 "raw": "Resolved(Due to an issue which has now been resolved, Adyen Test environment experienced degraded performance between 00:00 CEST and 03:30 CEST.  Note that this issue did not impact the Live environment.  We will continue monitoring and provide updates, if required.)\nIdentified(The Adyen Test environment is experiencing a degradation in performance as of 00:00 CEST. Adyen engineers are working to resolve the issue.  Users may experience higher response times on the Test environment as a result, as well as increased Errors.  Note that this issue does not impact the Live environment and payment processing.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "August 23 2023, 03:09",
@@ -9761,8 +9761,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-09-20 15:00",
-                    "2023-09-20 20:30"
+                    "2023-09-20 20:30",
+                    "2023-09-20 15:00"
                 ],
                 "raw": "Resolved(We experienced degraded performance for merchants using our checkout services on September 20th, between 15:00 and 20:30 CEST as the result of a change in CORS policy.  Our technical teams have resolved the issue and performance has returned to normal.  Please reach out to your Adyen point of contact or visit help.adyen.com/contact in case of any questions.)\n",
                 "card_datetime": "September 20 2023, 20:51",
@@ -9780,8 +9780,8 @@
                     "Payments"
                 ],
                 "identified_datetime": [
-                    "2023-09-20 09:06",
-                    "2023-09-20 08:55"
+                    "2023-09-20 08:55",
+                    "2023-09-20 09:06"
                 ],
                 "resolved_datetime": [
                     "September 20 2023, 11:11"
@@ -10668,8 +10668,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2023-09-04 08:51",
-                    "2023-09-04 08:49"
+                    "2023-09-04 08:49",
+                    "2023-09-04 08:51"
                 ],
                 "raw": "Resolved(We have identified an issue starting at 08:49 CEST, resulting in partial degradation for tokenization and recurring services.  Our engineering team identified this issue and resolved it by 08:51 CEST.  During this time, customers might have experienced elevated response times for recurring requests as well as errors when submitting modification requests for aliases and recurrent payments.  Customers impacted may retry any recurring request that failed during this timeframe.  We will continue monitoring the situation and provide a new update, if required.  You can also follow new updates through our Status Page (https://status.adyen.com))\n",
                 "card_datetime": "September 04 2023, 09:01",
@@ -11403,8 +11403,8 @@
                     "2022-01-11 03:00"
                 ],
                 "resolved_datetime": [
-                    "2022-01-11 06:00",
-                    "2022-01-11 03:00"
+                    "2022-01-11 03:00",
+                    "2022-01-11 06:00"
                 ],
                 "raw": "Resolved(Please ignore the previous system message. Elevated Error rate is due to ongoing/planned maintenance.  The maintenance will last from 03:00 to 06:00 CET time, no Swish transactions can be made during that time period.  Sorry for the inconvenience caused.  Please follow new updates through our Status Page (www.adyen.com/status).)\nIdentified(We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through ACQUIRER starting at 03:00 CET.  We have contacted Swish and we will provide an update as soon as it becomes available.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "January 11 2022, 04:45",
@@ -12474,9 +12474,9 @@
                     "CET BCMC"
                 ],
                 "identified_datetime": [
-                    "2022-03-22 19:49",
+                    "2022-03-22 22:00",
                     "2022-03-22 19:00",
-                    "2022-03-22 22:00"
+                    "2022-03-22 19:49"
                 ],
                 "resolved_datetime": [
                     "2022-03-22 22:02"
@@ -13194,8 +13194,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2022-03-03 15:40",
-                    "2022-03-03 14:40"
+                    "2022-03-03 14:40",
+                    "2022-03-03 15:40"
                 ],
                 "raw": "Resolved(We have identified an issue resulting in a degraded conversion rate for transactions processed through Pix starting around 14:40 CET and getting back to normal rates around 15:40 CET.  We will continue monitoring and provide a new update if required. Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "March 03 2022, 15:54",
@@ -14755,8 +14755,8 @@
                     "Time CEST May"
                 ],
                 "identified_datetime": [
-                    "2022-05-23 22:00",
-                    "2022-05-23 18:00"
+                    "2022-05-23 18:00",
+                    "2022-05-23 22:00"
                 ],
                 "resolved_datetime": [
                     "May 23 2022, 22:40"
@@ -17358,8 +17358,8 @@
                     "Mastercard Europe"
                 ],
                 "identified_datetime": [
-                    "2022-08-15 23:56",
-                    "2022-08-15 19:04"
+                    "2022-08-15 19:04",
+                    "2022-08-15 23:56"
                 ],
                 "resolved_datetime": [
                     "August 18 2022, 02:59"
@@ -17440,8 +17440,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2022-08-13 16:00",
-                    "2022-08-13 19:20"
+                    "2022-08-13 19:20",
+                    "2022-08-13 16:00"
                 ],
                 "raw": "Resolved(On August 13th, we identified an increase of error rate responses for Mastercard Australia and Mastercard Singapore.  This was a result of a data center provider initiating a scheduled maintenance. This resulted in an increase of error responses between 16:00-19:20 CEST.  We have since adjusted our routing logic to account for this event and no further errors have been identified.  We will continue to actively monitor. If you have any questions please reach us at: support@adyen.com)\n",
                 "card_datetime": "August 13 2022, 20:13",
@@ -17658,8 +17658,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2022-08-09 11:24",
-                    "2022-08-09 11:06"
+                    "2022-08-09 11:06",
+                    "2022-08-09 11:24"
                 ],
                 "raw": "Resolved(Following an issue which has now been resolved, a subset of merchants connecting to Adyen\u2019s European endpoints may have experienced increased response times and elevated error rates between 11:06 and 11:24 CEST.  The issue was a result of connectivity issues towards a specific machine. Once the affected machine was identified and removed from load balancing the elevated response times and error rates were mitigated.  Adyen engineers continue to monitor the situation and will post an update if necessary.)\n",
                 "card_datetime": "August 09 2022, 14:06",
@@ -17717,10 +17717,10 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2022-08-05 15:00",
-                    "2022-08-05 12:58",
+                    "2022-08-05 11:55",
                     "2022-08-05 15:54",
-                    "2022-08-05 11:55"
+                    "2022-08-05 12:58",
+                    "2022-08-05 15:00"
                 ],
                 "raw": "Resolved(Resolved : 15:54 PM (CEST)\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0Processing over Cielo is back to normal since 15:00 CEST. We will continue monitoring and provide a new update if required.Please follow new updates through our Status Page (www.adyen.com/status).Identified : 12:58 PM (CEST)We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Cielo starting at 11:55 CEST.  We have contacted Cielo and we will provide an update as soon as it becomes available.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "August 05 2022, 12:58",
@@ -17758,8 +17758,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2022-08-04 09:58",
                     "2022-08-04 06:20",
+                    "2022-08-04 09:58",
                     "2022-08-04 12:30",
                     "2022-08-04 13:34"
                 ],
@@ -21498,8 +21498,8 @@
                     "Latam"
                 ],
                 "identified_datetime": [
-                    "2021-01-21 06:00",
-                    "2021-01-21 07:00"
+                    "2021-01-21 07:00",
+                    "2021-01-21 06:00"
                 ],
                 "resolved_datetime": [
                     "2021-01-21 09:22"
@@ -22818,9 +22818,9 @@
                     "Maybank"
                 ],
                 "identified_datetime": [
-                    "2021-02-02 05:00",
+                    "2021-02-02 00:30",
                     "2021-02-02 04:30",
-                    "2021-02-02 00:30"
+                    "2021-02-02 05:00"
                 ],
                 "resolved_datetime": [
                     "2021-02-02 08:45"
@@ -23373,8 +23373,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-03-12 16:04",
-                    "2021-03-12 16:21"
+                    "2021-03-12 16:21",
+                    "2021-03-12 16:04"
                 ],
                 "raw": "Resolved(Due to a technical issue which has now been resolved, Adyen\u2019s Recurring service experienced degraded performance between 16:04 CET and 16:21 CET for tokenized payments and retrieving tokenized payment details.  The issue has been solved by our technical teams and processing has returned to normal as of 16:21 CET.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\n",
                 "card_datetime": "March 12 2021, 16:36",
@@ -23539,8 +23539,8 @@
                     "GMT"
                 ],
                 "identified_datetime": [
-                    "2021-03-04 02:50",
-                    "2021-03-04 09:50"
+                    "2021-03-04 09:50",
+                    "2021-03-04 02:50"
                 ],
                 "resolved_datetime": [
                     "2021-03-04 05:30"
@@ -23669,8 +23669,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-03-02 11:30",
-                    "2021-03-02 05:30"
+                    "2021-03-02 05:30",
+                    "2021-03-02 11:30"
                 ],
                 "raw": "Resolved(We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Maybank starting at 05:30 CET/11:30 GMT+8.  We have contacted Maybank and we will provide an update as soon as it becomes available.  Please contact Adyen Support (support@adyen.com) in case you have any questions.)\n",
                 "card_datetime": "March 02 2021, 08:37",
@@ -23708,8 +23708,8 @@
                     "RMS"
                 ],
                 "identified_datetime": [
-                    "2021-03-02 05:00",
-                    "2021-03-02 12:00"
+                    "2021-03-02 12:00",
+                    "2021-03-02 05:00"
                 ],
                 "resolved_datetime": [
                     "2021-03-02 05:20"
@@ -23974,9 +23974,9 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-04-18 15:29",
                     "2021-04-18 15:13",
-                    "2021-04-18 15:01"
+                    "2021-04-18 15:01",
+                    "2021-04-18 15:29"
                 ],
                 "raw": "Resolved(We have detected a DDOS attack on our systems that may have resulted in occasional connectivity issues and degraded performance for our European endpoints between 15:01 CEST and 15:29 CEST.  Our engineering team has been able to successfully contain the issue starting 15:13 and since then, we have seen the DDoS attack subside at 15:29 CEST. Our engineering team continues monitoring the situation closely in the event that further intervention is required.  We will keep you informed via system message or via our status page (www.adyen.com/status) in the case of any required updates.)\n",
                 "card_datetime": "April 18 2021, 16:25",
@@ -24183,8 +24183,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-04-10 13:57",
-                    "2021-04-10 14:20"
+                    "2021-04-10 14:20",
+                    "2021-04-10 13:57"
                 ],
                 "raw": "Resolved(This incident can be considered resolved. Network instability has recovered as of 16:34 CEST.  Our technical teams continue to monitor the situation and we will update you further should it be necessary.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\nUpdated(We have identified a second DDoS attack targeting our European endpoints starting 16:31 CEST.  As of 16:34 CEST, response times have returned to normal levels following intervention from our engineering teams.  We continue to actively monitor the situation and will provide an update in the next 30 minutes.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\nResolved(We have detected a DDOS attack on our systems that may have resulted in occasional connectivity issues and degraded performance for our European endpoints between 13:57 CEST and 14:20 CEST.  Although the DDOS attack has subsided, our engineering team continues monitoring the situation closely in the event that further intervention is required.  We will keep you informed via system message or via our status page (www.adyen.com/status) in the case of any required updates.)\n",
                 "card_datetime": "April 10 2021, 15:07",
@@ -24708,8 +24708,8 @@
                     "PDT"
                 ],
                 "identified_datetime": [
-                    "2021-05-26 14:00",
-                    "2021-05-26 13:40"
+                    "2021-05-26 13:40",
+                    "2021-05-26 14:00"
                 ],
                 "resolved_datetime": [
                     "2021-05-27 14:10"
@@ -25023,8 +25023,8 @@
                     "Swish"
                 ],
                 "identified_datetime": [
-                    "2021-05-18 03:45",
-                    "2021-05-18 04:45"
+                    "2021-05-18 04:45",
+                    "2021-05-18 03:45"
                 ],
                 "resolved_datetime": [
                     "2021-05-18 04:40"
@@ -25551,9 +25551,9 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
+                    "2021-06-28 07:45",
                     "2021-06-28 08:05",
-                    "2021-06-28 08:04",
-                    "2021-06-28 07:45"
+                    "2021-06-28 08:04"
                 ],
                 "raw": "Resolved(Elevated error rate for Mastercard 3DS transactions occurred between 28th June 2021 07:45 CET and 08:04 CET has been resolved by Mastercard as of 08:05 CET/CEST.  We will continue monitoring closely and provide a new update if required.  Please contact Adyen Support (support@adyen.com) in case you have any questions.)\n",
                 "card_datetime": "June 28 2021, 08:36",
@@ -25818,8 +25818,8 @@
                     "Server"
                 ],
                 "identified_datetime": [
-                    "2021-06-14 08:43",
-                    "2021-06-14 08:38"
+                    "2021-06-14 08:38",
+                    "2021-06-14 08:43"
                 ],
                 "resolved_datetime": [
                     "2021-06-14 08:43"
@@ -26098,8 +26098,8 @@
                     "UTC"
                 ],
                 "identified_datetime": [
-                    "2021-06-07 00:01",
-                    "2021-06-07 03:00"
+                    "2021-06-07 03:00",
+                    "2021-06-07 00:01"
                 ],
                 "resolved_datetime": [
                     "June 07 2021, 21:08"
@@ -27205,10 +27205,10 @@
                     "Google Pay"
                 ],
                 "identified_datetime": [
+                    "2021-08-29 06:30",
                     "2021-08-29 04:00",
-                    "2021-08-29 12:00",
                     "2021-08-29 04:02",
-                    "2021-08-29 06:30"
+                    "2021-08-29 12:00"
                 ],
                 "resolved_datetime": [
                     "2021-08-29 06:01"
@@ -27308,8 +27308,8 @@
                     "LIVE Customer Area"
                 ],
                 "identified_datetime": [
-                    "2021-08-25 09:30",
-                    "2021-08-25 10:30"
+                    "2021-08-25 10:30",
+                    "2021-08-25 09:30"
                 ],
                 "resolved_datetime": [
                     "2021-08-27 04:02"
@@ -27328,8 +27328,8 @@
                     "eventCode AUTHENTICATION"
                 ],
                 "identified_datetime": [
-                    "2021-08-23 11:00",
-                    "2021-08-23 14:00"
+                    "2021-08-23 14:00",
+                    "2021-08-23 11:00"
                 ],
                 "resolved_datetime": [
                     "2021-08-24 14:40"
@@ -27427,8 +27427,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-08-21 06:30",
-                    "2021-08-21 01:30"
+                    "2021-08-21 01:30",
+                    "2021-08-21 06:30"
                 ],
                 "raw": "Resolved(We detected an increase in errors for JCB Japan starting from 01:30 CEST.  We have addressed root cause and are pleased to inform you that processing is back to normal since 06:30 CEST. We will continue monitoring and provide a new update if required.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\n",
                 "card_datetime": "August 21 2021, 06:36",
@@ -28161,8 +28161,8 @@
                     "Performance"
                 ],
                 "identified_datetime": [
-                    "2021-09-28 11:23",
-                    "2021-09-28 11:09"
+                    "2021-09-28 11:09",
+                    "2021-09-28 11:23"
                 ],
                 "resolved_datetime": [
                     "2021-09-28 11:23"
@@ -28967,10 +28967,10 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-10-25 14:24",
-                    "2021-10-25 15:13",
+                    "2021-10-25 15:30",
                     "2021-10-25 14:12",
-                    "2021-10-25 15:30"
+                    "2021-10-25 15:13",
+                    "2021-10-25 14:24"
                 ],
                 "raw": "Resolved(We identified and resolved an issue which impacted a subset of requests from merchants connecting to Adyen's European and US endpoints.  For the affected subset of requests, merchants may have experienced elevated response times in Europe between 14:12 and 15:30 CEST, and in the US between 14:24 and 15:13 CEST.  We continue monitoring this situation closely and will provide a new update if required.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "October 25 2021, 16:00",
@@ -29553,10 +29553,10 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
+                    "2021-10-08 14:20",
                     "2021-10-08 16:02",
                     "2021-10-08 16:11",
-                    "2021-10-08 16:15",
-                    "2021-10-08 14:20"
+                    "2021-10-08 16:15"
                 ],
                 "raw": "Resolved(Due to an issue which has now been resolved, between 14:20 and 16:11 CEST there was a delay in the processing of modifications (such as refunds, captures and cancellations).  Additionally, there was a temporary delay in the population of the Customer Area (ca-live.adyen.com) transaction list between 16:02 and 16:15 CEST which has since recovered.  Our engineering team has now resolved the issue and modifications are now being processed in real time. We will provide an update should it be necessary.  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "October 08 2021, 16:38",
@@ -31155,8 +31155,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-12-13 15:30",
-                    "2021-12-13 12:30"
+                    "2021-12-13 12:30",
+                    "2021-12-13 15:30"
                 ],
                 "raw": "Resolved(We identified an issue on our platform resulting in elevated error rate for Cartes Bancaires 3D Secure authentications beginning at 12:30 CET and resolved at 15:30 CET.  For more information on how this issue may be affecting your processing, please refer to our FAQ (https://www.adyen.help/hc/en-us/articles/360022088740).  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "December 13 2021, 16:08",
@@ -31198,8 +31198,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2021-12-13 10:50",
-                    "2021-12-13 13:00"
+                    "2021-12-13 13:00",
+                    "2021-12-13 10:50"
                 ],
                 "raw": "Resolved(We've identified an issue outside of our platform resulting in elevated error rate for 3D Secure authentications on Italian issuing banks beginning at 10:50 CET/CEST and resolved at 13:00 CET/CEST.  For more information on how this issue may be affecting your processing, please refer to our FAQ (https://www.adyen.help/hc/en-us/articles/360022088740).  Please follow new updates through our Status Page (www.adyen.com/status).)\n",
                 "card_datetime": "December 13 2021, 13:28",
@@ -31712,8 +31712,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2020-01-21 10:00",
-                    "2020-01-21 09:28"
+                    "2020-01-21 09:28",
+                    "2020-01-21 10:00"
                 ],
                 "raw": "Resolved(We experienced and mitigated an issue impacting Eftpos transaction authorizations on 01/21/2020 between 09:28 - 10:00 PST.Merchants may have experienced an elevated error rate during this time. Our technical teams have resolved the issue and are working to determine root cause.Please contact Adyen Support (support@adyen.com) in case you have any questions.)\n",
                 "card_datetime": "January 21 2020, 19:17",
@@ -32791,8 +32791,8 @@
                     "22CEST"
                 ],
                 "identified_datetime": [
-                    "2020-04-09 14:22",
-                    "2020-04-09 11:30"
+                    "2020-04-09 11:30",
+                    "2020-04-09 14:22"
                 ],
                 "resolved_datetime": [
                     "2020-04-10 02:25"
@@ -33938,8 +33938,8 @@
                     "PayMaya"
                 ],
                 "identified_datetime": [
-                    "2020-06-01 22:30",
-                    "2020-06-01 18:30"
+                    "2020-06-01 18:30",
+                    "2020-06-01 22:30"
                 ],
                 "resolved_datetime": [
                     "2020-06-01 22:30"
@@ -34890,8 +34890,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2020-09-21 18:56",
-                    "2020-09-21 18:30"
+                    "2020-09-21 18:30",
+                    "2020-09-21 18:56"
                 ],
                 "raw": "Resolved(We have identified an issue resulting in an elevated error rate for Bancontact 3D-Secure transactions between 18:30 and 18:56 CEST.  Processing over Bancontact (BCMC) 3D-Secure is back to normal. We will continue monitoring and provide a new update if required.  Please contact Adyen Support (support@adyen.com) in case you have any questions.)\n",
                 "card_datetime": "September 21 2020, 19:16",
@@ -35065,8 +35065,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2020-09-12 00:20",
-                    "2020-09-12 01:20"
+                    "2020-09-12 01:20",
+                    "2020-09-12 00:20"
                 ],
                 "raw": "Resolved(We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Primeiropay starting at 00:20 CET. This is related to the previous elevated error rate earlier today for Primeiropay. As of 01:20 CET the error rate had improved again.  We have are in contact with Primeiropay and will continue to monitor.  Please contact Adyen Support (support@adyen.com) in case you have any questions.)\n",
                 "card_datetime": "September 12 2020, 01:38",
@@ -35788,8 +35788,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2020-10-10 05:00",
-                    "2020-10-10 05:50"
+                    "2020-10-10 05:50",
+                    "2020-10-10 05:00"
                 ],
                 "raw": "Resolved(We have identified an issue outside of our platform resulting in an elevated error rate for transactions processed through Banorte starting at 05:00 CET and returned to normal as of 05:50 CEST.  We will continue to monitor and provide a new update if required.  Please contact Adyen Support (support@adyen.com) should you have any additional questions.)\n",
                 "card_datetime": "October 10 2020, 07:10",
@@ -37160,8 +37160,8 @@
                 ],
                 "identified_datetime": [],
                 "resolved_datetime": [
-                    "2020-12-01 10:07",
-                    "2020-12-01 09:30"
+                    "2020-12-01 09:30",
+                    "2020-12-01 10:07"
                 ],
                 "raw": "Resolved(Between 09:30 and 10:07 CET, we experienced an issue impacting transactions processed for redirect payment methods. Merchants may have experienced elevated response times and an elevated error rate.  The issue has now been resolved. We will continue monitoring and provide a new update if required.  Please contact Adyen Support (support@adyen.com) in case you have additional questions.)\n",
                 "card_datetime": "December 01 2020, 10:20",
