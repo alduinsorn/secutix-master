@@ -2,7 +2,15 @@ from nltk import data as nltk_data, download as nltk_download
 from nltk.corpus import stopwords
 from re import findall as re_findall
 
-def download_nltk_data():
+from typing import List, Set
+
+def download_nltk_data() -> None:
+    '''
+    This function download the nltk data if not already downloaded
+    
+    Returns:
+        None
+    '''
     try:
         nltk_data.find('stopwords')
     except LookupError:
@@ -10,15 +18,24 @@ def download_nltk_data():
 
 
 # Fonction pour extraire les noms propres fait maison
-def extract_proper_names(text):
-    proper_names = []
+def extract_proper_names(text: str) -> List[str]:
+    '''
+    This function extract the "proper names" contained in the text (based on the capital letters)
+    
+    Parameters:
+        text (str): text to extract the proper names from
+        
+    Returns:
+        list<str>: list of all the proper names found
+    '''
+    proper_names: List[str] = []
     
     # Tokenize text
-    words = re_findall(r'\b\w+\b', text)
-    stop_words = set(stopwords.words('english'))  
+    words: List[str] = re_findall(r'\b\w+\b', text)
+    stop_words: Set[str] = set(stopwords.words('english'))  
     
-    prev_word_was_upper = False
-    current_name = ""
+    prev_word_was_upper: bool = False
+    current_name: str = ""
 
     for word in words:
         if any(letter.isupper() for letter in word) and word.lower() not in stop_words:
@@ -41,12 +58,22 @@ def extract_proper_names(text):
     return proper_names
 
 
-def clean_services_found(services, words_often_found):
-    cleaned_services = []
-    seen_services = set()
+def clean_services_found(services: List[str], words_often_found: List[str]) -> List[str]:
+    '''
+    This function clean the services found by removing the duplicates and the words often found in the description (words_often_found)
+    
+    Parameters:
+        services (list<str>): list of services found
+        words_often_found (list<str>): list of words often found in the descriptionm
+        
+    Returns:
+        list<str>: list of cleaned services
+    '''
+    cleaned_services: List[str] = []
+    seen_services: Set[str] = set()
     
     for service in services:
-        lowercase_service = service.lower()
+        lowercase_service: str = service.lower()
         if lowercase_service not in seen_services and service not in words_often_found:
             cleaned_services.append(service)
             seen_services.add(lowercase_service)
@@ -54,12 +81,23 @@ def clean_services_found(services, words_often_found):
     return cleaned_services
 
 
-def search_services(elem_desc_all: list):
-    services = []
+def search_services(elem_desc_all: List[str], words_often_found: List[str]):
+    '''
+    This function is a wrapper for the extract_proper_names and clean_services_found functions
+    
+    Parameters:
+        elem_desc_all (list<str>): list of text (description of the incident)
+        words_often_found (list<str>): list of words often found in the description
+
+    Returns:
+        list<str>: list of all the services found in the description
+    '''
+    services: List[str] = []
     for elem_desc in elem_desc_all:
-        # Add all proper names in the bank arrray -> should do everything -> service and bank
-        proper_names = extract_proper_names(elem_desc.text)
+        proper_names: List[str] = extract_proper_names(elem_desc.text)
         for name in proper_names:
             services.append(name.strip())
 
-    return services
+    cleaned_services: List[str] = clean_services_found(services, words_often_found)
+
+    return cleaned_services
