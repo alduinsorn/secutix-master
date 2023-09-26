@@ -76,9 +76,6 @@ class PartType(Enum):
         obj.title = title
         return obj
 
-
-
-
 ##### Generic function ######
 def get_word_index(text_list: List[str], word: str) -> int:
     return text_list.index(word) if word in text_list else -1
@@ -94,4 +91,8 @@ def setup_driver(headless: bool = True) -> webdriver.Firefox:
     driver = webdriver.Firefox(options=options)
 
     return driver
+
+def clean_special_characters(text: str) -> str:
+    return text.replace('\n', '').replace('\t', '').replace('\r', '')
+
 
