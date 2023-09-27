@@ -10,7 +10,7 @@ from bs4.element import ResultSet, Tag
 
 from utils.utils import IncidentType, Incident, PartType, extract_word 
 from utils.nlp_utils import search_services, clean_services_found
-from utils.datetime_utils import DatetimeUtils, MONTHS, INPUT_DATETIME_FORMAT
+from utils.datetime_utils import DatetimeUtils, MONTHS
 
 from typing import List, Set, Union, Tuple
 
@@ -26,6 +26,8 @@ class AdyenScrapper:
         self.common_words = common_words_found
         
         self.base_url: str = "https://status.adyen.com/incident-history"
+        
+        self.INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
         
         
     ### The 3 main functions ###
@@ -176,10 +178,11 @@ class AdyenScrapper:
         # Need to get the part date to find the year or always the today year if we found a date
         part_date = part.find("span", {"class": ["ds-text-small ds-color-grey-450 ds-margin-left-12"]}).text
         part_date = extract_word(part_date.split(), -1, -1) # remove 'CEST'
-        part_date = DatetimeUtils.convert_to_date(part_date, INPUT_DATETIME_FORMAT) # create a datetime object
+        part_date = DatetimeUtils.convert_to_date(part_date, self.INPUT_DATETIME_FORMAT) # create a datetime object
         
         # Check if the date of the incident is in the description or take the part global time
         dates_found = DatetimeUtils.search_dates(elem_desc_all) 
+        # if a date is found, create a new datetime object with the year of the part
         if len(dates_found) > 0:
             elem_date = dates_found[0] # take the first date found, discards other for now
             elem_date = datetime(
@@ -190,10 +193,10 @@ class AdyenScrapper:
                 minute = elem_date.minute
             )
         else:
-            elem_date = datetime.strptime(part_date, INPUT_DATETIME_FORMAT)
+            elem_date = part_date
 
-        
-        times = DatetimeUtils.search_times(elem_desc_all, elem_date)
+        elem_desc_all = [elem.text for elem in elem_desc_all]
+        times = DatetimeUtils.search_times(elem_desc_all, elem_date, self.INPUT_DATETIME_FORMAT)
         match part_title:
             case PartType.RESOLVED.title:
                 incident_obj.resolved_datetime = times

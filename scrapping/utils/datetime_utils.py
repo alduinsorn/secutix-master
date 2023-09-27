@@ -10,9 +10,10 @@ TIME_REGEX = r'\b(?:[0-1]?[0-9]|2[0-3])\s*[:.]\s*[0-5][0-9](?:[A-Za-z]{3-4})?'
 # Regex formula detecting writted date in 2 different common formats 
 DATE_REGEX_1 = r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\s*\b'
 DATE_REGEX_2 = r'\b\d{1,2}(?:st|nd|rd|th)?\s*(?:of)?\s*(?:January|February|March|April|May|June|July|August|September|October|November|December)\b'
+# this search for date in the format "dd/mm/yyyy" or "dd-mm-yyyy" or "dd.mm.yyyy"
+DATE_REGEX_3 = r'\b\d{1,2}[-./]\d{1,2}[-./]\d{4}\b'
 
 # Datetime format for the datetime library, for now based on the Adyen data
-INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
 INPUT_TIME_FORMAT = '%H:%M'
 OUTPUT_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 
@@ -25,13 +26,14 @@ class DatetimeUtils:
     '''
     
     # Function that search any times given in the description like "12:15 CEST" and then assign it to the correct datetime attribut
-    def search_times(elem_desc_all: List[str], elem_date: datetime) -> Union[datetime, List[datetime]]:
+    def search_times(elem_desc_all: List[str], elem_date: datetime, input_datetime_format: str) -> Union[datetime, List[datetime]]:
         '''
         This function search for any time in the description using the TIME_REGEX and then assign it to the correct datetime attribut
         
         Parameters:
             elem_desc_all (List[str]): list of text (description of the incident)
             elem_date (datetime): datetime of the part
+            input_datetime_format (str): format of the datetime
 
         Returns:
             Union[datetime, List[datetime]]: list of all the datetime found in the description
@@ -42,14 +44,14 @@ class DatetimeUtils:
         
         # For every <p> tag in the part description
         for desc in elem_desc_all:
-            times_arr: List[str] = re_findall(TIME_REGEX, desc.text) # get all the time
+            times_arr: List[str] = re_findall(TIME_REGEX, desc) # get all the time
             for time_str in times_arr:
                 time_found: str = DatetimeUtils.clean_time(time_str, general_parsed_datetime)
                 if time_found:
                     datetime_arr.append(time_found)
 
         datetime_arr: list = list(set(datetime_arr))
-        return [datetime.strftime(general_parsed_datetime, INPUT_DATETIME_FORMAT)] if len(datetime_arr) == 0 else datetime_arr
+        return [datetime.strftime(general_parsed_datetime, input_datetime_format)] if len(datetime_arr) == 0 else datetime_arr
 
     def clean_time(time_str: str, general_parsed_datetime: datetime) -> Union[datetime, None]:
         '''
@@ -92,6 +94,7 @@ class DatetimeUtils:
             # search for the date in text -> can vary a lot
             date_matches: List[str] = re_findall(DATE_REGEX_1, elem_desc.text, IGNORECASE)
             date_matches.extend(re_findall(DATE_REGEX_2, elem_desc.text, IGNORECASE))
+            date_matches.extend(re_findall(DATE_REGEX_3, elem_desc.text, IGNORECASE))
             for date_match in date_matches:
                 parsed_date: datetime = parse(date_match, fuzzy=True)
                 parsed_dates.append(parsed_date)

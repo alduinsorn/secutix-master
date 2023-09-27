@@ -94,7 +94,7 @@ def search_services(elem_desc_all: List[str], words_often_found: List[str]):
     '''
     services: List[str] = []
     for elem_desc in elem_desc_all:
-        proper_names: List[str] = extract_proper_names(elem_desc.text)
+        proper_names: List[str] = extract_proper_names(elem_desc)
         for name in proper_names:
             services.append(name.strip())
 
