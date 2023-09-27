@@ -8,7 +8,7 @@ from time import time as get_time
 
 
 from utils.utils import clean_special_characters, Incident
-
+from utils.datetime_utils import DatetimeUtils, OUTPUT_DATETIME_FORMAT
 
 class IngenicoScrapper:
     def __init__(self, driver, filename="ingenico_incidents.json", json_export=True, common_words_found=['CEST', 'CET', 'Status Page', 'Please']):
@@ -19,6 +19,10 @@ class IngenicoScrapper:
         self.common_words = common_words_found
         
         self.base_url = "https://ingenico-ogone.statuspage.io/history?page=" # add the number of the page 
+
+        # Jul 16, 2023 - 11:29 CEST
+        self.INPUT_DATETIME_FORMAT = "%b %d, %Y - %H:%M"
+    
     
     def _scrap_history(self):
         start_time = get_time()
@@ -66,6 +70,7 @@ class IngenicoScrapper:
                     incident_steps = incident_soup.find_all('div', class_='row update-row')
                     
                     incident_obj = Incident(title=incident_title)
+                    raw = ""
                     
                     # for every step, we need to extract the right information
                     for incident_step in incident_steps:
@@ -76,9 +81,39 @@ class IngenicoScrapper:
                         # clean the text
                         step_title = clean_special_characters(step_title)
                         step_text = clean_special_characters(step_text)
-                        step_time = clean_special_characters(step_time)
+                        step_time = clean_special_characters(step_time) # looks like this "Posted 8 days ago. Sep 19, 2023 - 11:34 CEST "
                         
-                        print(f"Step {step_title} at {step_time} with text: {step_text}")
+                        ### Gather the dates ###
+                        # the logic is different from Adyen, we can have multiple dates in the text that give the beginning and the end of the incident directly (green incidents)
+                        # 
+                        dates_found = DatetimeUtils.search_dates([step_text])
+                        if len(dates_found) > 0:
+                            elem_date = dates_found[0]
+                        
+                        ### Gather the time(s) ###
+                        # this is complex because sometimes the Identified part have no time in it or the time given isn't exactly the right one. The right time is in the Resolved part
+                        # sometimes there is no time in every part, so it's impossible to know the exact time of the incident (only the date)
+                        
+                        match step_title:
+                            case "Resolved":
+                                # depending on the incident color, it change what can be found in the text
+                                incident_obj.resolved_datetime = DatetimeUtils.convert_to_date(step_time, self.INPUT_DATETIME_FORMAT).strftime(OUTPUT_DATETIME_FORMAT)
+                            
+                            case "Identified":
+                                incident_obj.identified_datetime = DatetimeUtils.convert_to_date(step_time, self.INPUT_DATETIME_FORMAT).strftime(OUTPUT_DATETIME_FORMAT)
+                                # need to check if a date is contains in the text, else we use the date of the incident
+                                
+                            
+                            case "Investigating": # only in orange incidents
+                                pass                            
+                            case "Monitoring": # not usefull for us
+                                pass
+                            case _:
+                                pass
+                        
+                        raw += f"{step_title}({step_text})\n"        
+                    
+                    incident_obj.raw = raw
                         
                     # il y a plusieurs type d'incidents
                     # 1. Scheduled Maintenance (green)
@@ -97,8 +132,11 @@ class IngenicoScrapper:
                     
                     condition = False
                 
-                
-                
+        
+        print(f"\n\nScraping done in {get_time() - start_time} seconds")
+        for inc in self.incidents_dict:
+            print(inc)
+        
         return -1
     
     def _parse_url(self, url, page_incident, wait_time=2):
