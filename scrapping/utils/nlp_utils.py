@@ -81,16 +81,16 @@ def clean_services_found(services: List[str], words_often_found: List[str]) -> L
     return cleaned_services
 
 
-def search_services(elem_desc_all: List[str], words_often_found: List[str]):
+def search_services(elem_desc_all: List[str], words_often_found: List[str]) -> List[str]:
     '''
     This function is a wrapper for the extract_proper_names and clean_services_found functions
     
     Parameters:
-        elem_desc_all (list<str>): list of text (description of the incident)
-        words_often_found (list<str>): list of words often found in the description
+        elem_desc_all (List[str]): list of text (description of the incident)
+        words_often_found (List[str]): list of words often found in the description
 
     Returns:
-        list<str>: list of all the services found in the description
+        List[str]: list of all the services found in the description
     '''
     services: List[str] = []
     for elem_desc in elem_desc_all:

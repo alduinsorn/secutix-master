@@ -26,7 +26,7 @@ class DatetimeUtils:
     '''
     
     # Function that search any times given in the description like "12:15 CEST" and then assign it to the correct datetime attribut
-    def search_times(elem_desc_all: List[str], elem_date: datetime, input_datetime_format: str) -> Union[datetime, List[datetime]]:
+    def search_times(elem_desc_all: List[str], elem_date: datetime, input_datetime_format: str) -> List[datetime]:
         '''
         This function search for any time in the description using the TIME_REGEX and then assign it to the correct datetime attribut
         
@@ -36,7 +36,7 @@ class DatetimeUtils:
             input_datetime_format (str): format of the datetime
 
         Returns:
-            Union[datetime, List[datetime]]: list of all the datetime found in the description
+            List[datetime]: list of all the datetime found in the description
         '''
         # General datetime from the part
         general_parsed_datetime: datetime = elem_date
@@ -113,6 +113,19 @@ class DatetimeUtils:
             datetime: datetime object of the text
         '''
         return datetime.strptime(text, date_format)
+
+    def convert_to_str(date: datetime, date_format: str = OUTPUT_DATETIME_FORMAT) -> str:
+        '''
+        This function convert a datetime object to a string using the date_format
+        
+        Parameters:
+            date (datetime): datetime object to convert
+            date_format (str): format of the date
+            
+        Returns:
+            str: string of the datetime object
+        '''
+        return datetime.strftime(date, date_format)
 
     def get_today_date() -> datetime:
         '''
