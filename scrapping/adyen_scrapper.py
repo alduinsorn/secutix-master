@@ -9,10 +9,10 @@ from bs4 import BeautifulSoup
 from bs4.element import ResultSet, Tag
 
 from utils.utils import IncidentType, Incident, PartType, extract_word 
-from utils.nlp_utils import search_services, clean_services_found
+from utils.nlp_utils import search_services
 from utils.datetime_utils import DatetimeUtils, MONTHS
 
-from typing import List, Set, Union, Tuple
+from typing import List, Tuple
 
 class AdyenScrapper:
     '''

@@ -1,7 +1,7 @@
 from enum import Enum
 from selenium import webdriver
 
-from typing import List, Set, Union
+from typing import List, Union
 
 class IncidentType(Enum):
     ERROR_RATE = (1,"Elevated Error Rate")
@@ -38,7 +38,7 @@ class Incident:
         self.card_datetime = card_datetime
         self.incident_type = incident_type
 
-    def _to_dict(self) -> dict:
+    def _to_dict_all(self) -> dict:
         incident_dict = {
             "title": self.title,
             "services": self.services,
@@ -52,6 +52,19 @@ class Incident:
                 "id" : self.incident_type.value,
                 "title" : self.incident_type.title
             }
+        return incident_dict
+
+    def _to_dict(self) -> dict:
+        # compute severity or do it when we have all the incidents ?
+        # need to separate the services into payment method and service ?
+
+        incident_dict = {
+            "title": self.title,
+            "services": self.services,
+            "identified_datetime": self.identified_datetime,
+            "resolved_datetime": self.resolved_datetime,
+            "raw": self.raw,
+        }
         return incident_dict
     
     
