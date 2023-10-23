@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from bs4.element import ResultSet, Tag
 
-from utils.utils import IncidentType, Incident, PartType, extract_word 
+from utils.utils import IncidentType, Incident, PartType, extract_word, clean_special_characters
 from utils.nlp_utils import search_services
 from utils.datetime_utils import DatetimeUtils, MONTHS
 
@@ -24,8 +24,10 @@ class AdyenScrapper:
         self.json_export = json_export
         self.filename = filename
         self.common_words = common_words_found
+        self.payment_methods: List[str] = [] # will be filled later
         
         self.base_url: str = "https://status.adyen.com/incident-history"
+        self.payment_methods_url: str = "https://www.adyen.com/payment-methods"
         
         self.INPUT_DATETIME_FORMAT = '%B %d %Y, %H:%M'
         
@@ -45,6 +47,9 @@ class AdyenScrapper:
         except Exception as e:
             print("No JSON file found, start the scrapping from the beginning")
 
+        # Get the payment methods to distinguish the services from the payment methods later on
+        _, soup = self._parse_url_payment_methods(self.payment_methods_url)
+        self.payment_methods: List[str] = self._extract_payment_methods(soup)
 
         today: datetime = DatetimeUtils.get_today_date()
         id_today_month: int = DatetimeUtils.get_month_id(today)
@@ -80,8 +85,7 @@ class AdyenScrapper:
                     self._scrap_adyen_months(0, 12, year_to_scrap)
                 
                 self._scrap_adyen_months(id_last_month, 12, last_year_scrapped)
-        
-        
+                
         execution_time: float = get_time() - start_time
         # compute the number of element inside the dictionnary
         incidents_count: int = 0
@@ -204,8 +208,11 @@ class AdyenScrapper:
         
         part_date = DatetimeUtils.convert_to_date(part_date, self.INPUT_DATETIME_FORMAT) # create a datetime object
         
+        # convert the part description to a list of string
+        elem_desc_all_str: List[str] = [elem.text for elem in elem_desc_all]
+
         # Check if the date of the incident is in the description or take the part global time
-        dates_found = DatetimeUtils.search_dates(elem_desc_all) 
+        dates_found = DatetimeUtils.search_dates(elem_desc_all_str) 
         # if a date is found, create a new datetime object with the year of the part (because the date found doesn't have a year and it will take the current year)
         if len(dates_found) > 0:
             elem_date = dates_found[0] # take the first date found, discards other because impossible to process
@@ -219,7 +226,7 @@ class AdyenScrapper:
         else:
             elem_date = part_date
 
-        elem_desc_all_str: List[str] = [elem.text for elem in elem_desc_all]
+
         times: List[datetime] = DatetimeUtils.search_times(elem_desc_all_str, elem_date, self.INPUT_DATETIME_FORMAT)
         match part_title:
             case PartType.RESOLVED.title:
@@ -233,7 +240,25 @@ class AdyenScrapper:
         incident_obj.raw += part_raw
         
         services_cleaned: List[str] = search_services(elem_desc_all_str, self.common_words)
-        incident_obj.services = services_cleaned
+
+        # split the proper nouns into two lists: payment methods and services
+        payment_methods: List[str] = []
+        services: List[str] = []
+        for proper_noun in services_cleaned:
+            # Check if the proper noun is contains in each payment methods (in lowercase to avoid case sensitive)
+
+            ##################3
+            # IL VA FALLOIR TROUVER UN MEILLEUR MOYEN DE FAIRE CA, CAR IL Y A TROP DE VARIATION ENTRE CE QUI SE TROUVE SUR LE SITE ET CE QUI EST DANS LES INCIDENTS
+            ##################3
+            # marche pas bien car si le truc est dans l'autre sens ça ne prendra pas la méthode de payement -> e.g. proper_noun = "Visa Brazil" et s = "Visa", proper_noun n'est pas dans s mais l'inverse
+            if any(proper_noun.lower() in s.lower() for s in self.payment_methods):
+                payment_methods.append(proper_noun)
+            else:
+                # print(f"Service found: {proper_noun}")
+                services.append(proper_noun)
+                # input()
+        incident_obj.services = services
+        incident_obj.payment_methods = payment_methods
         return True
 
     def _retrieve_raw_desc(self, part: ResultSet[str], part_title: str) -> str:
@@ -292,3 +317,61 @@ class AdyenScrapper:
             exit()
 
         return content, soup
+    
+    # this below methods are used to get the possible payment methods
+    def _parse_url_payment_methods(self, url: str, wait_time: int = 3) -> Tuple[str, BeautifulSoup]:
+        '''
+        Go on the url given to get all the html data contains on it and clicks on a button to get all payment methods available.
+        
+        Parameters:
+            url (str): The url to scrap.
+            wait_time (int): The wait time before scrapping and after the click on the button.
+            
+        Returns:
+            tuple(str, BeautifulSoup): The data from the page in raw and object form.
+        '''
+        self.driver.implicitly_wait(wait_time)
+        content: str = None; soup: BeautifulSoup = None
+
+        try:
+            self.driver.get(url)
+            print(f"Scraping payment methods from {url}")
+            try:
+                # besoin de cliquer sur un bouton pour afficher tout les incidents
+                button_show_all = self.driver.find_element(By.XPATH, '//button[contains(@class, "ds-button-link-icon ds-margin-top-24 ds-margin-bottom-24")]')   
+
+                button_show_all.click()
+                sleep(wait_time) # sleep require or page isn't complete
+            except Exception as e:
+                print("Error no 'Show all payment methods' button")
+                
+            content = self.driver.page_source
+            soup = BeautifulSoup(content, 'lxml')
+
+        except Exception as e:
+            print(f"Error: {e}")
+            exit()
+
+        return content, soup
+    
+    def _extract_payment_methods(self, soup: BeautifulSoup) -> List[str]:
+        '''
+        Extract the payment methods from the soup given in parameter.
+        
+        Parameters:
+            soup (BeautifulSoup): The source code in HTML scraped.
+            
+        Returns:
+            list(str): The list of payment methods.
+        '''
+        payment_methods: List[str] = []
+        payment_methods_soup: ResultSet[str] = soup.find_all("h3", {"class": ["card-payment-method__title", "ds-heading-small"]})
+        for payment_method in payment_methods_soup:
+            payment_methods.append(clean_special_characters(payment_method.text))
+        
+        # print the payment methods in alphabetical order
+        payment_methods.sort()
+        for payment_method in payment_methods:
+            print(payment_method)
+        print(f"Number of payment methods found: {len(payment_methods)}")
+        return payment_methods

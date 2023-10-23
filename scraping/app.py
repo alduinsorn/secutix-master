@@ -12,10 +12,8 @@ process = psutil.Process()
 my_driver = setup_driver(headless=True)
 download_nltk_data()
 
-adyen_scrapper = AdyenScrapper(my_driver, json_export=False)
+adyen_scrapper = AdyenScrapper(my_driver, json_export=True)
 adyen_scrapper._scrap_adyen_history()
-for incident in adyen_scrapper.incidents_dict:
-    print(incident)
 
 # # memory_usage = process.memory_info()
 # # memory_mb = memory_usage.rss / (1024 ** 2)  # Convert to megabytes

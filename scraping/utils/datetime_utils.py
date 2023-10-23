@@ -92,9 +92,9 @@ class DatetimeUtils:
         parsed_dates: List[datetime] = []
         for elem_desc in elem_desc_all:
             # search for the date in text -> can vary a lot
-            date_matches: List[str] = re_findall(DATE_REGEX_1, elem_desc.text, IGNORECASE)
-            date_matches.extend(re_findall(DATE_REGEX_2, elem_desc.text, IGNORECASE))
-            date_matches.extend(re_findall(DATE_REGEX_3, elem_desc.text, IGNORECASE))
+            date_matches: List[str] = re_findall(DATE_REGEX_1, elem_desc, IGNORECASE)
+            date_matches.extend(re_findall(DATE_REGEX_2, elem_desc, IGNORECASE))
+            date_matches.extend(re_findall(DATE_REGEX_3, elem_desc, IGNORECASE))
             for date_match in date_matches:
                 parsed_date: datetime = parse(date_match, fuzzy=True)
                 parsed_dates.append(parsed_date)

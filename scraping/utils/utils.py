@@ -28,9 +28,10 @@ class IncidentType(Enum):
 
 
 class Incident:
-    def __init__(self, title: str = "Unknown", services: List[str] = [], identified_datetime: List[str] = [], resolved_datetime: List[str] = [], raw: str = "", card_datetime: Union[str, None] = None, incident_type: Union[IncidentType, None]=None):
+    def __init__(self, title: str = "Unknown", payment_methods: List[str] = [], services: List[str] = [], identified_datetime: List[str] = [], resolved_datetime: List[str] = [], raw: str = "", card_datetime: Union[str, None] = None, incident_type: Union[IncidentType, None]=None):
 
         self.title = title
+        self.payment_methods = payment_methods
         self.services = services
         self.identified_datetime = identified_datetime
         self.resolved_datetime = resolved_datetime
@@ -41,6 +42,7 @@ class Incident:
     def _to_dict_all(self) -> dict:
         incident_dict = {
             "title": self.title,
+            "payment_methods": self.payment_methods,
             "services": self.services,
             "identified_datetime": self.identified_datetime,
             "resolved_datetime": self.resolved_datetime,
@@ -60,6 +62,7 @@ class Incident:
 
         incident_dict = {
             "title": self.title,
+            "payment_methods": self.payment_methods,
             "services": self.services,
             "identified_datetime": self.identified_datetime,
             "resolved_datetime": self.resolved_datetime,
@@ -106,6 +109,6 @@ def setup_driver(headless: bool = True) -> webdriver.Firefox:
     return driver
 
 def clean_special_characters(text: str) -> str:
-    return text.replace('\n', '').replace('\t', '').replace('\r', '')
+    return text.replace('\n', '').replace('\t', '').replace('\r', '').strip()
 
 
