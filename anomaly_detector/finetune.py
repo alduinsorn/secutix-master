@@ -29,7 +29,7 @@ def sarimax_objective_function(args_list):
         
     return params_evaluated, mse_results
 
-data_fn = '../database/data/data_ogone.csv'
+data_fn = '../database/data/month/data_ogone.csv'
 data = pd.read_csv(data_fn)
 
 data_values = data['paid_rate'].values

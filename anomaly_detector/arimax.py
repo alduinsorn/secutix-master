@@ -38,8 +38,12 @@ data = pd.read_csv(data_fn)
 
 training_data = data[:int(0.8 * len(data))]
 testing_data = data[int(0.8 * len(data)):]
-# get headers
-headers = list(data.columns.values)
+
+print(f"Size of training data: {len(training_data)} & size of testing data: {len(testing_data)}")
+
+# get headers without the first one (index) and the last one (incident)
+# headers = list(data.columns.values)[1:-1]
+headers = list(data.columns.values)[1:]
 
 
 # arima_model = auto_arima(y=training_data['paid_rate'],
@@ -54,13 +58,13 @@ headers = list(data.columns.values)
 # arima_model = sm.tsa.ARIMA(training_data['paid_rate'], exog=training_data[headers[1:]], order=(2, 0, 2))
 
 
-arima_model = sm.tsa.SARIMAX(training_data['paid_rate'], exog=training_data[headers[1]], order=(4, 0, 2), seasonal_order=(0, 0, 0, 24))
+arima_model = sm.tsa.SARIMAX(training_data['paid_rate'], exog=training_data[headers[1:]], order=(2, 0, 2), seasonal_order=(0, 0, 0, 24))
 # arima_model = sm.tsa.SARIMAX(training_data['paid_rate'], exog=training_data[headers[1:]], order=(4, 0, 4), seasonal_order=(4, 0, 4, 24))
 arima_model = arima_model.fit()
 # print(arima_model.summary())
 
 
-predictions = arima_model.get_forecast(steps=len(testing_data), exog=testing_data[headers[1]])
+predictions = arima_model.get_forecast(steps=len(testing_data), exog=testing_data[headers[1:]])
 predictions = predictions.predicted_mean
 predictions = pd.DataFrame(predictions, index=testing_data.index)
 predictions.columns = ['pred_paid_rate']
@@ -83,6 +87,11 @@ rmse = np.sqrt(np.mean((predictions['pred_paid_rate'].values - testing_data['pai
 print(f"MAE: {mae}")
 print(f"RMSE: {rmse}")
 
+# print AIC, BIC and HQIC
+print(f"AIC: {arima_model.aic}")
+print(f"BIC: {arima_model.bic}")
+print(f"HQIC: {arima_model.hqic}")
+
 # plot the predictions
 plt.figure(figsize=(12, 7))
 # plt.plot(training_data.index, training_data['paid_rate'], label='training')
@@ -97,4 +106,30 @@ plt.savefig('arima.png')
 
 
 
+# Calculer les résidus en soustrayant les valeurs réelles des prédictions
+residuals = testing_data['paid_rate'] - predictions['pred_paid_rate']
 
+# Tracer les résidus
+plt.figure(figsize=(10, 6))
+plt.plot(residuals)
+plt.title('Residuals Plot')
+plt.xlabel('Time')
+plt.ylabel('Residuals')
+plt.show()
+
+# Afficher un histogramme des résidus
+plt.figure(figsize=(10, 6))
+plt.hist(residuals, bins=30, density=True, alpha=0.6, color='b', label='Residuals')
+plt.title('Residuals Histogram')
+plt.xlabel('Residuals')
+plt.ylabel('Density')
+plt.legend()
+plt.show()
+
+# Calculer et afficher la moyenne des résidus
+mean_residuals = np.mean(residuals)
+print(f"Mean Residuals: {mean_residuals}")
+
+# Calculer et afficher l'écart type des résidus
+std_residuals = np.std(residuals)
+print(f"Standard Deviation of Residuals: {std_residuals}")

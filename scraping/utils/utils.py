@@ -61,11 +61,11 @@ class Incident:
         # need to separate the services into payment method and service ?
 
         incident_dict = {
-            "title": self.title,
+            "title": str(self.title),
             "payment_methods": self.payment_methods,
             "services": self.services,
-            "identified_datetime": self.identified_datetime,
-            "resolved_datetime": self.resolved_datetime,
+            "identified_datetime": str(self.identified_datetime),
+            "resolved_datetime": str(self.resolved_datetime),
             "raw": self.raw,
         }
         return incident_dict

@@ -34,6 +34,16 @@ class HighLevelData2():
         return f"{self.paid_rate},{self.paid_transaction_count},{self.paid_total_amount},{self.unpaid_rate},{self.unpaid_transaction_count},{self.unpaid_total_amount},{self.abandoned_rate},{self.abandoned_transaction_count},{self.abandoned_total_amount}\n"
 
 
+class HighLevelData3():
+    def __init__(self, timestamp="", paid_rate=0.0, total_transaction_count=0):
+        self.timestamp = timestamp
+        self.paid_rate = paid_rate
+        self.total_transaction_count = total_transaction_count
+
+    def _convert_to_csv(self):
+        return f"{self.timestamp},{self.paid_rate},{self.total_transaction_count}\n"
+
+
 def request_data(date_start, date_end, cursor):
     query = f"""
     SELECT 
@@ -202,7 +212,6 @@ def extract_data(cursor, fname, paytype='OGONE_HID'):
 
     print(f"Number of empty highLevel: {count}/{len(data)}")
 
-
 def extract_data2(cursor, fname, paytype='OGONE_HID'):
     data = []
     days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30]
@@ -226,6 +235,56 @@ def extract_data2(cursor, fname, paytype='OGONE_HID'):
             f.write(highLevel._convert_to_csv())
 
     print(f"Number of empty highLevel: {count}/{len(data)}")
+
+
+def request_data_with_date(date_start, cursor, paytype):
+    query = f"""
+    SELECT DATETIME, STATE, TRANSACTION_COUNT, PERCENTAGE FROM HIGH_LEVEL 
+    WHERE PAYMENT_TYPE LIKE '{paytype}' 
+    AND DATETIME = TO_DATE ('{date_start}', 'YYYY-MM-DD HH24:MI:SS') 
+    """
+
+    cursor.execute(query)
+    highLevel = HighLevelData3()
+
+    for row in cursor.fetchall():
+        timestamp, status, nb_transaction, ratio = row
+        match status:
+            case 'PAID':
+                highLevel.timestamp = timestamp
+                highLevel.paid_rate = ratio
+                highLevel.total_transaction_count += nb_transaction
+            case 'UNPAID':
+                highLevel.total_transaction_count += nb_transaction
+            case 'ABANDONED':
+                highLevel.total_transaction_count += nb_transaction
+
+    return highLevel
+
+def extract_data_with_date(cursor, fname, paytype='OGONE_HID'):
+    data = []
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30]
+
+    for month in range(1, 10):
+        print("Month: ", month)
+        for i in range(1, days_in_month[month-1]+1):
+            for j in range(0, 24):
+                date_start = f"2023-{month}-{i} {j}:00:00"
+                # print(date_start)
+
+                data.append(request_data_with_date(date_start, cursor, paytype))
+
+    count = 0
+    # write the data into a csv file
+    with open(f'data/{fname}', 'w') as f:
+        # write a header
+        f.write("timestamp,paid_rate,total_transaction_count\n")
+        
+        for highLevel in data:
+            f.write(highLevel._convert_to_csv())
+
+    print(f"Number of empty highLevel: {count}/{len(data)}")
+
 
 def insert_data(cursor, filename):
     # create the table HIGH_LEVEL
@@ -266,7 +325,9 @@ cursor = connection.cursor()
 # insert_data(cursor, "../database/data/01-01-23_31-08-23_stats-pay-ratios.sql")
 
 # extract_data2(cursor, 'data_adyen.csv', 'ADYEN_JSHD')
-extract_data2(cursor, 'data_ogone.csv', 'OGONE_HID')
+# extract_data2(cursor, 'data_ogone.csv', 'OGONE_HID')
+
+extract_data_with_date(cursor, 'real_data_ogone.csv', 'OGONE_HID')
 
 connection.commit()
 cursor.close()

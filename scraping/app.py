@@ -1,7 +1,7 @@
 from utils.utils import setup_driver
 from utils.nlp_utils import download_nltk_data
-from adyen_scrapper import AdyenScrapper
-from ingenico_scrapper import IngenicoScrapper
+from adyen_scraper import AdyenScraper
+from ogone_scraper import OgoneScraper
 
 import psutil
 import time
@@ -12,8 +12,8 @@ process = psutil.Process()
 my_driver = setup_driver(headless=True)
 download_nltk_data()
 
-adyen_scrapper = AdyenScrapper(my_driver, json_export=True)
-adyen_scrapper._scrap_adyen_history()
+# adyen_scrapper = AdyenScraper(my_driver, json_export=True)
+# adyen_scrapper._scrap_adyen_history()
 
 # # memory_usage = process.memory_info()
 # # memory_mb = memory_usage.rss / (1024 ** 2)  # Convert to megabytes
@@ -30,5 +30,5 @@ adyen_scrapper._scrap_adyen_history()
 
 
 
-# ingenico_scrapper = IngenicoScrapper(my_driver, json_export=False)
-# ingenico_scrapper._scrap_history()
+ogone_scrapper = OgoneScraper(my_driver, json_export=True)
+ogone_scrapper._scrap_history()
