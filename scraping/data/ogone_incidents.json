@@ -1,0 +1,1985 @@
+{
+    "2022": {
+        "december": []
+    },
+    "2023": {
+        "november": [
+            {
+                "title": "Planned maintenance at TWINT slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "TWINT"
+                ],
+                "identified_datetime": "2023-11-19 09:00",
+                "resolved_datetime": "2023-11-19 12:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at TWINT.The maintenance is announced for 19/11/2023 between 09:00 and 12:00 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Service interruption with iDeal",
+                "payment_methods": [],
+                "services": [
+                    "Resolved RESOLVED Service",
+                    "iDeal Please",
+                    "iDeal",
+                    "Worldline Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-10-11 10:00",
+                "resolved_datetime": "2023-10-11 10:40",
+                "raw": "Resolved(RESOLVED: Service interruption with iDeal Please be informed that due to a technical issue, some of your customers were unable to make payments online via iDeal between 10:00 and 10:40 CET today (10/11/2023).We confirm that as of 10:40 CET, normal service has been resumed and your customers will now be able to make payments as expected.We also confirm that the issue has an external responsibility (independent of Worldline).)\nIdentified(We have identified ongoing difficulties with transaction processing via iDeal as of 10:00 CET on 10/11/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Service interruption with EMS",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "EMS",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-10-11 10:18",
+                "resolved_datetime": "2023-11-10 13:46",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with transaction processing via EMS acquirer as of 10:18 CET on 10/11/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "New WLOP release 4.159",
+                "payment_methods": [],
+                "services": [
+                    "Completed WLOP",
+                    "PRODUCTION Version",
+                    "159We",
+                    "WLOP",
+                    "TEST",
+                    "PRODUCTION",
+                    "Support",
+                    "Home News Changelog",
+                    "november2023Thanks",
+                    "Furthermore",
+                    "Update",
+                    "Worldline WLOP",
+                    "Tomorrow",
+                    "Worldline",
+                    "changelogThe",
+                    "Wednesday",
+                    "Scheduled",
+                    "Support Site"
+                ],
+                "identified_datetime": "2023-10-25 04:15",
+                "resolved_datetime": "2023-10-25 04:15",
+                "raw": "Completed(WLOP: new release in PRODUCTION Version 4.159We are proud to inform you that the latest version of the WLOP payment platform is now available in both the TEST and PRODUCTION environments. Please note, however, that there are no new features / changes deployed within this release that concern your business.In case of doubt, we suggest to check our Support site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelog#november2023Thanks to your cooperation with WLOP, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\nUpdate(As previously communicated, there is a new release (version 4.159) of the Worldline (WLOP) platform. Tomorrow, 08/11/2023, the release \u2013 which was previously made available in our TEST environment - will be converted into PRODUCTION.The conversion will be completed at around 09:00 CET. We will be closely monitoring this operation in order to deal with any bugs that may arise.We are doing everything to ensure that the WLOP payment platform continues to work without a hitch during this operation.Please also note that there are no new features / changes deployed within this release that concern your business.In case of doubt, we suggest to check our Support site: https://support.legacy.worldline-solutions.com/en/news/changelog#november2023)\nUpdate(We are happy to confirm that the new Worldline release (version 4.159) is now successfully implemented in the TEST environment.Please note, however, that there are no new features / changes deployed within this release that concern your business.In case of doubt, we suggest to check our Support site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelogThe release will be moved to the PRODUCTION environment on Wednesday 08/11/2023.)\nScheduled(To provide our customers with new features, Worldline constantly invests in the capacity and functionalities of its payment platform.  On Wednesday 25/10/2023 there will be a new release 4.159 available in the TEST environment.This release is available for testing purposes in our TEST environment before being moved to our PRODUCTION environment at a later stage. A detailed description of these new release functionalities will be available on our Support Site under 'Home' - 'News' - 'Changelog' (https://support.legacy.worldline-solutions.com/en/news/changelog) on the day of the TEST release.At this stage, no changes are being done to the PRODUCTION environment and no live transactions will be affected.We are planning to move this new release to production on Wednesday 08/11/2023.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline for Bancontact: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "Bancontact",
+                    "Thursday",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-09-11 07:00",
+                "resolved_datetime": "2023-09-11 09:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming maintenance at Worldline for Bancontact.The maintenance is announced for Thursday, 09/11/2023 between 07:00 and 09:30 CET.There is no service interruption expected. What is more, there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding and we apologize for any inconvenience caused.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline for Banque Populaire: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "Banque Populaire",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-06-11 07:00",
+                "resolved_datetime": "2023-06-11 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming maintenance at Worldline for Banque Populaire.The maintenance is announced for 06/11/2023 between 07:00 and 09:00 CET and 09/11/2023 between 07:00 and 09:00 CET. There is no service interruption expected. What is more, there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding and we apologize for any inconvenience caused.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform partial disruption",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-11-08 08:16",
+                "resolved_datetime": "2023-11-08 10:46",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing partial perturbations in processing payments since 08:16 CET.As a result, you might currently experience an increase of refused transactions (ending in status 2) and an increase of soft declines in error code 40001139.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline for BudgetCard and ChargeCard: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "Marks Spencer BudgetCard",
+                    "ChargeCard",
+                    "Monday",
+                    "Tuesday",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-06-11 07:00",
+                "resolved_datetime": "2023-06-11 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming maintenance at Worldline for Marks & Spencer BudgetCard and ChargeCard.The maintenance is announced for Monday, 06/11/2023 between 07:00 and 09:00 CET, and for Tuesday, 07/11/2023 between 07:00 and 09:00 CET.There is no service interruption expected. What is more, there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding and we apologize for any inconvenience caused.)\n"
+            },
+            {
+                "title": "Planned maintenance at TWINT: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "TWINT"
+                ],
+                "identified_datetime": "2023-07-11 03:00",
+                "resolved_datetime": "2023-07-11 07:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at TWINT.The maintenance is announced for 07/11/2023 between 03:00 and 07:00 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Service interruption with BNP",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "BNP",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-11-06 13:17",
+                "resolved_datetime": "2023-11-06 15:20",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with  transaction processing via BNP acquirer as of 13:17 CET today. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Service interruption with Thunes",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Thunes Limonetik",
+                    "Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-02-11 11:20",
+                "resolved_datetime": "2023-02-11 13:03",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Thunes (Limonetik) between 11:20 and 13:03 CET today (02/11/2023).We confirm that as of 13:03 CET, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\nIdentified(We have identified ongoing difficulties with transaction processing via Thunes (Limonetik) acquirer as of 11:20 CET today (02/11/2023). We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Issue with processing recurring BCC/Banksys/BMC transactions.",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Bancontact",
+                    "Identified",
+                    "BCC Banksys BMC"
+                ],
+                "identified_datetime": "2023-11-02 05:50",
+                "resolved_datetime": "2023-02-11 08:49",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Bancontact between 05:44 and 08:49 CET today (02/11/2023).We confirm that as of 08:49 CET, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\nIdentified(We have identified an ongoing technical issue with processing recurring BCC/Banksys/BMC transactions as of 05:50 CET.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible.You will be updated as soon as the activity is restored. We sincerely apologise for any potential inconveniences.)\n"
+            }
+        ],
+        "october": [
+            {
+                "title": "Exceptional maintenance at Worldline for BNP Paribas: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "BNP Paribas",
+                    "Monday",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-10-30 08:00",
+                "resolved_datetime": "2023-10-30 15:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming exceptional maintenance at Worldline for BNP Paribas.The maintenance is announced for Monday, 30/10/2023 between 08:00 and 15:00 CET.There is no service interruption expected. What is more, there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Please accept our sincere apologies for the late notification. The maintenance is performed on an exceptional basis and future events will be announced within the usual notice period. Thank you for your understanding and we apologize for any inconvenience caused.)\n"
+            },
+            {
+                "title": "Planned maintenance at PostFinance: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PostFinance"
+                ],
+                "identified_datetime": "2023-10-30 02:00",
+                "resolved_datetime": "2023-10-30 03:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at PostFinance.The maintenance is announced for 30/10/2023 between 02:00 and 03:30 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION (WLOP) database on 26/10/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION WLOP",
+                    "Thursday",
+                    "CEST Impact",
+                    "PRODUCTION",
+                    "timeframeDuring"
+                ],
+                "identified_datetime": "2023-10-26 05:30",
+                "resolved_datetime": "2023-10-26 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION (WLOP) database on Thursday 26/10/2023 between 05:30 and 06:30 CEST. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this update)\n"
+            },
+            {
+                "title": "Service with Bancontact restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Bancontact"
+                ],
+                "identified_datetime": "2023-10-24 22:43",
+                "resolved_datetime": "2023-10-24 23:48",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Bancontact between 22:43 and 23:48 CEST today 24/10/2023.We confirm that as of  23:48 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Planned maintenance at Paypal: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "Paypal"
+                ],
+                "identified_datetime": "2023-10-18 05:30",
+                "resolved_datetime": "2023-10-18 09:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at Paypal.The maintenance is announced for 18/10/2023 between 05:30 and 09:30 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-10-17 03:09",
+                "resolved_datetime": "2023-10-17 03:09",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline platform between 03:05  and 03:09 CEST 17/10/2023.Our dedicated teams have restored the activity to normal at 03:09 CEST.We apologise for any potential inconvenience.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Paypal: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PaypalThe"
+                ],
+                "identified_datetime": "2023-10-13 05:00",
+                "resolved_datetime": "2023-10-13 11:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at PaypalThe maintenance is announced for 13/10/2023 between 05:00 and 11:00 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Service with AHUB restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "AHUB"
+                ],
+                "identified_datetime": "2023-10-10 19:11",
+                "resolved_datetime": "2023-10-10 19:44",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via AHUB between 19:11 and 19:44 CEST today 10/10/2023.We confirm that as of 19:44 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Fraud Expert Scoring partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Update",
+                    "Investigating Please",
+                    "Fraud Expert Scoring",
+                    "Fraud Expert Scoring However",
+                    "Secure FDM FDMA Checklist",
+                    "FDMA Scoring"
+                ],
+                "identified_datetime": "2023-10-05 22:50",
+                "resolved_datetime": "2023-10-05 22:50",
+                "raw": "Resolved(This incident has been resolved.)\nUpdate(We are continuing to investigate this issue.)\nInvestigating(Please be informed that due to a technical issue, certain Fraud Expert Scoring functionalities are temporarily disturbed.Some of your transactions may be currently processed without Fraud Expert Scoring. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 are functioning normally. Our dedicated teams are working to resolve this matter with utmost urgency. We will update you as soon as the activity is restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-10-04 00:38",
+                "resolved_datetime": "2023-10-04 04:26",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "SSL certificate change for Worldline (WLOP) platform",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "SSL",
+                    "Monday",
+                    "Support Team"
+                ],
+                "identified_datetime": "2023-02-10 07:00",
+                "resolved_datetime": "2023-02-10 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(We would like to inform you that the SSL (security) certificates of secure.ogone.com and secure2.ogone.com are going to be updated on Monday 02/10/2023 between 07:00 and 09:00 CEST in order to ensure continuous security of your future transactions.Is there any action needed at my side?Only if you have specific security measures in place to validate the complete chain of the certificate including the root, or if you trust only selected root certificates explicitly installed, you may have to adapt your system in order to accept the new certificates.Please contact your integrator, webmaster or infrastructure engineer explaining this requirement and make sure the upgrades are done at your side, if necessary, before Monday 02/10/2023 07:00 CEST.To receive a copy of the new security certificates, please contact our Support Team by e-mail, phone or webform: https://support.legacy.worldline-solutions.com/en/help/contact/)\n"
+            }
+        ],
+        "september": [
+            {
+                "title": "Ongoing - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "However",
+                    "Investigating Please"
+                ],
+                "identified_datetime": "2023-09-29 13:22",
+                "resolved_datetime": "2023-09-29 13:22",
+                "raw": "Resolved(We inform you that some of your customers might have experienced time-outs and problems to process transactions. However, all transactions that did go through were processed normally and have correct statuses.The service is currently fully reestablished.We apologise for the inconvenience caused both for yourself and your customers.)\nInvestigating(Please be informed that your customers might currently experience higher than expected latency in the processing of transactions and, potentially, a number of time-outs since 28/09/2023 11:00 CEST. Our dedicated teams are working on this with the aim to restore the activity to normal as soon as possible.We will update you as soon as the activity is restored.    We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Service interruption with Bancontact",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Bancontact",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-09-28 13:00",
+                "resolved_datetime": "2023-09-28 14:05",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with Bancontact transaction processing as of 13:00 CEST on 28/09/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "WLOP:  New release 4.158",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Support Site",
+                    "Home News Changelog",
+                    "Thanks",
+                    "Furthermore",
+                    "Update",
+                    "Wednesday",
+                    "Scheduled",
+                    "WLOP TEST"
+                ],
+                "identified_datetime": "2023-09-13 04:15",
+                "resolved_datetime": "2023-09-13 04:15",
+                "raw": "Completed(We are proud to inform you that the latest version of the Worldline payment platform is now available in both the TEST and PRODUCTION environments. You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog'.All these changes and extra functionalities are made available to you automatically and free of charge, in both the TEST and the PRODUCTION environments.Thanks to your cooperation with Worldline, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\nUpdate(We wish to inform you that the new release (4.158) is now available in the TEST environment.We are planning to move this new release to production on Wednesday 27/09/2023.)\nScheduled(To provide our customers with new features, Worldline constantly invests in the capacity and functionalities of its payment platform.On Wednesday 13/09/2023 there will be a new release 4.158 available in the WLOP TEST environment.This release will be available for testing purposes in our TEST environment before being moved to our PRODUCTION environment at a later stage. A detailed description of these new release functionalities will be available on our Support Site under 'Home' - 'News' - 'Changelog' on the day of the release.We encourage all merchants to read the release notes and to test all new functionalities. You will be able to test these in the TEST environment using your TEST account. At this stage, no changes are being done to the PRODUCTION environment and no live transactions will be affected.We are planning to move this new release to production on Wednesday 27/09/2023.)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION database on 28/09/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CET Impact",
+                    "timeframeDuring",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-09-28 05:30",
+                "resolved_datetime": "2023-09-28 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 28/09/2023, between 05:30 and 06:30 CET. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Planned maintenance at TWINT: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "TWINT"
+                ],
+                "identified_datetime": "2023-09-26 04:00",
+                "resolved_datetime": "2023-09-26 07:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at TWINT.The maintenance is announced for 26/09/2023 between 04:00 and 07:00 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Planned maintenance at Paypal:  slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "Paypal"
+                ],
+                "identified_datetime": "2023-09-22 05:00",
+                "resolved_datetime": "2023-09-22 09:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at Paypal.The maintenance is announced for 22/09/2023 between 05:00 and 09:30 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-09-21 04:09",
+                "resolved_datetime": "2023-09-21 08:23",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 21/09/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CET Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-09-21 05:30",
+                "resolved_datetime": "2023-09-21 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 21/09/2023, between 05:30 and 06:30 CET. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Planned maintenance at TWINT: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "TWINT"
+                ],
+                "identified_datetime": "2023-09-21 01:00",
+                "resolved_datetime": "2023-09-21 06:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at TWINT.The maintenance is announced for 21/09/2023 between 01:00  and 06:00 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Service with BCC restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "BCC"
+                ],
+                "identified_datetime": "2023-09-19 02:06",
+                "resolved_datetime": "2023-09-19 23:46",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via BCC between 23:46 19/09/2023 and 02:06 CEST today 20/09/2023.We confirm that as of 02:06 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Fraud Expert Scoring partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Investigating Please",
+                    "Fraud Expert Scoring",
+                    "Fraud Expert Scoring However",
+                    "Secure FDM FDMA Checklist",
+                    "FDMA Scoring"
+                ],
+                "identified_datetime": "2023-09-19 11:35",
+                "resolved_datetime": "2023-09-19 11:35",
+                "raw": "Resolved(This incident has been resolved.)\nInvestigating(Please be informed that due to a technical issue, certain Fraud Expert Scoring functionalities are temporarily disturbed.Some of your transactions may be currently processed without Fraud Expert Scoring. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 are functioning normally. Our dedicated teams are working to resolve this matter with utmost urgency. We will update you as soon as the activity is restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "RESOLVED: Worldline services\u2019 disturbances",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Services",
+                    "Rest"
+                ],
+                "identified_datetime": "2023-09-19 09:28",
+                "resolved_datetime": "2023-09-19 10:05",
+                "raw": "Resolved(We would like to inform you that this morning at circa 9:30 CEST, we have faced network issues triggered by some problems encountered by one of our global internet services provider.These issues took place during a limited period of time (09:28-09:40 & 09:47-10:05 CEST) and some perturbations may have affected you so we apologise for any inconvenience.Services are being restored and the exact root cause is being investigated with our provider. Rest assured our teams are fully mobilized to support you.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Monitoring",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-09-19 10:04",
+                "resolved_datetime": "2023-09-19 11:29",
+                "raw": "Resolved(This incident has been resolved.)\nMonitoring(A fix has been implemented and we are monitoring the results.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-09-19 09:42",
+                "resolved_datetime": "2023-09-19 09:51",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Service interruption with Bancontact",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Bancontact",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-09-15 04:50",
+                "resolved_datetime": "2023-09-15 13:23",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with some Bancontact transaction processing as of 04:50 CEST on 15/09/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Service interruption with TWINT",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "TWINT",
+                    "2023We",
+                    "Worldline Identified",
+                    "Worldline Thank"
+                ],
+                "identified_datetime": "2023-09-14 09:45",
+                "resolved_datetime": "2023-09-14 10:52",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via TWINT  between 09:45  and 10:52 CEST today 14/09/2023We confirm that as of 10:52 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We also confirm that the issue has an external responsibility (independent of Worldline).)\nIdentified(We have identified ongoing difficulties with TWINT transaction processing as of 09:45 CEST on 14/09/2023.We have contacted the external party involved and will update you as soon as the activity is restored to normal. We also confirm that the issue has an external responsibility (independent of Worldline).Thank you for your patience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Airplus: Slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "AirPlus"
+                ],
+                "identified_datetime": "2023-07-09 20:00",
+                "resolved_datetime": "2023-07-09 21:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at AirPlus.The maintenance is announced for 07/09/2023 between 20:00 and 21:30 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Refunds not executed for Santander transactions",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Santander",
+                    "Based",
+                    "Worldline Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-08-29 14:00",
+                "resolved_datetime": "2023-05-09 12:30",
+                "raw": "Resolved(Our systems have detected that a number of refund requests sent to acquirer Santander on 05/09/2023 between 09:00 and 12:30 CEST could not be executed and were declined. Based on the monitoring performed by our technical experts, the issue is now resolved.We also confirm that the issue has an external responsibility (independent of Worldline).)\nIdentified(We have identified a technical issue with processing refunds via Santander acquirer since 29/08/2023 at 14:00 CEST.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible.We confirm that the general transaction flow has not been affected and payments are being treated as expected.Thank you for your patience and we sincerely apologise for any potential inconveniences.)\n"
+            },
+            {
+                "title": "RESOLVED: Worldline WLOP payment platform disruption",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline WLOP"
+                ],
+                "identified_datetime": "2023-06-09 09:24",
+                "resolved_datetime": "2023-06-09 09:29",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline WLOP platform between 09:24 and 09:29 CEST (06/09/2023). As a result, some of their transactions might have been declined.Our dedicated teams have restored the activity to normal at 09:29 CEST.We apologise for any potential inconvenience.)\n"
+            }
+        ],
+        "august": [
+            {
+                "title": "Planned maintenance at SIX Payment Services: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "SIX Payment Services"
+                ],
+                "identified_datetime": "2023-08-29 04:00",
+                "resolved_datetime": "2023-08-29 07:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming maintenance at SIX Payment Services.The maintenance is announced for 29/08/2023 between 04:00 and 07:00 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "3-D Secure Authentication partially unavailable on 28/08/2023",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Secure"
+                ],
+                "identified_datetime": "2023-08-28 10:21",
+                "resolved_datetime": "2023-08-28 11:18",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified an ongoing technical interruption impacting 3-D Secure authentication as of 10:21 CEST.As a result, some 3-D Secure transactions might currently receive a status 0 (incomplete/invalid) due to the impossibility of performing a 3-D Secure check.Our technical teams are working on it with the highest priority.We thank you for your patience and understanding.)\n"
+            },
+            {
+                "title": "Planned maintenance at PayPal: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PayPal"
+                ],
+                "identified_datetime": "2023-08-25 08:00",
+                "resolved_datetime": "2023-08-25 11:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at PayPal.The maintenance is announced for 25/08/2023 between 08:00 and 11:00 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION database on 24/08/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CET Impact",
+                    "timeframeDuring",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-08-24 05:30",
+                "resolved_datetime": "2023-08-24 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 24/08/2023, between 05:30 and 06:30 CET. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Service with Limonetik restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Limonetik"
+                ],
+                "identified_datetime": "2023-08-23 10:13",
+                "resolved_datetime": "2023-08-23 10:32",
+                "raw": "Resolved(Please be informed that due to an external technical issue, your customers might have been unable to make payments online via Limonetik between 10:13 and 10:32 CEST today (23/08/2023).We confirm that as of 10:32 CEST, normal service has been resumed and your customers will now be able to make payments as expected.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 17/08/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CET Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-08-17 05:30",
+                "resolved_datetime": "2023-08-17 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 17/08/2023, between 05:30 and 06:30 CET. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Planned maintenance at WLOP Services : No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "WLOP Services",
+                    "PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-08-16 07:00",
+                "resolved_datetime": "2023-08-16 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at WLOP Services.The maintenance activities will take place in one of our datacenters on 16/08/2023 between 07:00 and 09:00 CEST.There is no impact foreseen in the PRODUCTION environment. The maintenance will not affect payments processing and there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding.)\n"
+            },
+            {
+                "title": "Service interruption with iDEAL (Rabobank acquirer)",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "iDEAL",
+                    "Rabobank",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-10-08 15:34",
+                "resolved_datetime": "2023-08-10 21:20",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with iDEAL transaction processing via Rabobank acquirer as of 15:34 CEST on 10/08/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Service with Bancontact  restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Bancontact"
+                ],
+                "identified_datetime": "2023-08-03 00:15",
+                "resolved_datetime": "2023-08-03 01:20",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Bancontact between 00:15 and 01:20 today.We confirm that as of 01:20 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Important Planned maintenance at Worldline in PRODUCTION environment",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "PRODUCTION",
+                    "WLOP",
+                    "Thank",
+                    "Verifying",
+                    "Scheduled",
+                    "Update",
+                    "Worldline Online Payments WLOP PRODUCTION",
+                    "Tuesday",
+                    "Wednesday",
+                    "WLOP TEST",
+                    "Update WLOP",
+                    "Due",
+                    "TEST",
+                    "Scheduled Worldline",
+                    "WLOP Worldline",
+                    "However",
+                    "Support",
+                    "Worldline TEST"
+                ],
+                "identified_datetime": "2023-01-08 00:30",
+                "resolved_datetime": "2023-01-08 22:00",
+                "raw": "Completed(We are proud to inform you that the previously announced maintenance, scheduled in our PRODUCTION environment between 01/08/2023 22:00 and 02/08/2023 05:00 CEST, has been successfully completed. All maintenance activities are now fully accomplished by our technical experts.We confirm that the WLOP platform is stable and our services are working as expected.Thank you for your cooperation and trust.)\nVerifying(We confirm that our WLOP platform is available again for the transactions processing since 02:12 CEST. The planned downtime lasted on 02/08/2023 between 01:50 and 02:12 CEST.Our technical experts keep monitoring the platform closely and are currently performing all necessary follow-up maintenance actions. No further impact is foreseen for the transactions processing.We will keep you posted once the maintenance works are fully completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nUpdate(We confirm that our technical experts continue working on the maintenance and the WLOP platform will become fully unavailable in the PRODUCTION environment shortly, as planned and announced.We foresee the downtime to last maximum 60 minutes tonight (02/08/2023) between 01:30 and 02:30 CEST.We will keep you posted on the status of the maintenance works and once our platform is reachable again.)\nUpdate(We have informed you earlier on the maintenance scheduled in our Worldline Online Payments (WLOP) PRODUCTION environment between Tuesday 01/08/2023 22:00 and Wednesday 02/08/2023 05:00 CEST.We confirm that the maintenance activities will start shortly, as planned and announced.We also wish to remind you that due to the maintenance works, all WLOP services will be fully unavailable in the PRODUCTION environment for a duration up to 60 minutes tonight (02/08/2023) between 01:30 and 02:30 CEST. If you submit batch files, we advise not to do so on 02/08/2023 between 00:30 and 02:30 CEST.There is no impact on the WLOP TEST environment foreseen.Our dedicated team is mobilized to perform all necessary maintenance activities, and keeps monitoring our platform closely.We will keep you posted on the status of the maintenance works.)\nUpdate(WLOP services wish to advise its clients and partners of a planned maintenance scheduled in the PRODUCTION environment between Tuesday 01/08/2023 22:00 and Wednesday 02/08/2023 05:00 CEST.What can I expect?Due to the maintenance works, all WLOP services will be fully unavailable in the PRODUCTION environment for a duration up to 60 minutes on 02/08/2023 between 01:30 and 02:30 CEST.If you submit batch files, we advise not to do so on 02/08/2023 between 00:30 and 02:30 CEST. During the whole maintenance, our team of experts will monitor all processes closely to ensure that the maintenance is correctly completed.Please note that there is no impact on the WLOP services in the TEST environment foreseen.We apologize for any inconvenience resulting from the timing of the update. Please don't hesitate to contact us in case you have any questions.)\nUpdate(We will be undergoing scheduled maintenance during this time.)\nScheduled(Worldline wishes to advise its clients and partners of a planned maintenance scheduled in the PRODUCTION environment between Tuesday 01/08/2023 22:00 and Wednesday 02/08/2023 05:00 CEST.What can I expect?Due to the maintenance works, all WLOP Worldline services will be fully unavailable in the PRODUCTION environment for a duration up to 60 minutes on 02/082023 between 01:30 and 02:30 CEST.If you submit batch files, we advise not to do so on 02/08/2023 between 00:30 and 02:30 CEST. During the whole maintenance, our team of experts will monitor all processes closely to ensure that the maintenance is correctly completed, and any resulting issues are immediately addressed. However, if you encounter any issues after the maintenance timeframe, we ask to contact our Support teams who are ready to assist your business and address your questions with the highest priority. Please note that there is no impact on the Worldline TEST environment foreseen.We apologize for any inconvenience resulting from the timing of the update. Please don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Service interruption with Bancontact (Worldline acquirer)",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Bancontact",
+                    "Identified",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-01-08 08:08",
+                "resolved_datetime": "2023-01-08 11:41",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Bancontact between 08:08 and 11:41 CEST today (01/08/2023).We confirm that as of 11:41 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\nIdentified(We have identified ongoing difficulties with Bancontact transaction processing via Worldline acquirer as of 08:08 CEST on 01/08/2023. We will update you as soon as the activity is restored to normal.We thank you for your patience and apologize for any inconvenience caused.)\n"
+            }
+        ],
+        "july": [
+            {
+                "title": "Update of our PRODUCTION database on 27/07/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CEST Impact"
+                ],
+                "identified_datetime": "2023-07-27 05:30",
+                "resolved_datetime": "2023-07-27 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 27/07/2023, between 05:30 and 06:30 CEST. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this update.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline WLOP",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-07-25 15:21",
+                "resolved_datetime": "2023-07-25 15:22",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline (WLOP) platform between 15:17 and 15:22 CEST (25/07/2023).Our dedicated teams have restored the activity to normal at 15:22 CEST.We apologise for any potential inconvenience.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Issue with processing recurring Maestro transactions",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "MAESTRO",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-07-20 07:00",
+                "resolved_datetime": "2023-07-20 19:29",
+                "raw": "Resolved(Please be informed that the issue with processing MAESTRO transactions is resolved since 19:29 CEST.We apologise for any potential inconvenience.)\nIdentified(We have identified an ongoing technical issue with processing Maestro transactions as of 07:00 CEST.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible.You will be updated as soon as the activity is restored. We sincerely apologise for any potential inconveniences.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline Payment Platform",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-07-20 03:16",
+                "resolved_datetime": "2023-07-20 03:15",
+                "raw": "Resolved(Due to a technical problem, you might have experienced problems with perturbations in processing payments using the Worldline Payment Platform between 03:14 and 03:15 CEST 20/7/2023.Our technical teams have identified the cause of this interruption and the problem has been resolved at 03:15.The general transaction flow in production environment has not been affected and payments are being treated as expected.We apologise for any inconvenience.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned load tests at Worldline in the TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Update",
+                    "Due",
+                    "TEST",
+                    "However",
+                    "Worldline PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-05-07 08:00",
+                "resolved_datetime": "2023-05-07 16:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nUpdate(We will be undergoing scheduled maintenance during this time.)\nScheduled(To provide our customers with the best online payment experience, we constantly invest in the capacity and functionalities of our platform.Due to this, we wish to inform our clients and partners about load tests planned in our TEST environment.The load test activities will take place on 05/07/2023 between 08:00 and 16:00 CEST.We will take all possible measures to perform the testing activities without any impact on your business. However, slight interruptions might still occur for a short period of time in the connection to the payment systems in the TEST environment. Please note that there is no impact on the Worldline PRODUCTION environment foreseen. Thank you for your understanding and we apologize for any inconvenience this may cause you.)\n"
+            },
+            {
+                "title": "Service interruption with iDEAL",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "iDEAL",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-07-18 09:00",
+                "resolved_datetime": "2023-07-19 13:49",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with iDEAL transaction processing as of 09:00 CEST on 18/07/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 19/07/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CEST Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-07-19 05:30",
+                "resolved_datetime": "2023-07-19 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 19/07/2023, between 05:30 and 06:30 CEST. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Service interruption with limonetik",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-07-16 08:41",
+                "resolved_datetime": "2023-07-16 11:22",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via limonetik between 08:41 and 11:22 CEST today 16/7/2023.We confirm that as of 11:22 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\nIdentified(We have identified ongoing difficulties with transaction processing via limonetik acquirer as of 08:41 CEST on 16/7/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Service interruption with EMS",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "EMS",
+                    "Update",
+                    "Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-12-07 12:35",
+                "resolved_datetime": "2023-07-15 12:16",
+                "raw": "Resolved(Please be informed that the issue with difficulties with EMS transactions is resolved since 12:16 on 15/07/2023 CEST.We apologise for any potential inconvenience.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We have identified ongoing difficulties with EMS transaction processing as of 12:35 CEST on 12/07/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "RESOLVED: Worldline payment platform partial disruption",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-07-13 12:22",
+                "resolved_datetime": "2023-07-13 12:51",
+                "raw": "Resolved(Due to a technical issue, some of your customers might have experienced perturbations performing transactions using the Worldline platform between 12:22 and 12:51 CEST (13/07/2023).Our dedicated teams have fully restored the activity to normal at 12:51 CEST. We confirm that processing transactions is now working as expected.We apologise for any potential inconvenience caused.)\n"
+            },
+            {
+                "title": "Worldline: New release  4.157",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Worldline WLOP",
+                    "TEST",
+                    "PRODUCTION",
+                    "Support Site",
+                    "Home News Changelog",
+                    "july2023All",
+                    "Thanks",
+                    "Worldline",
+                    "Furthermore",
+                    "Worldline TEST",
+                    "Wednesday",
+                    "Customer Care",
+                    "Scheduled"
+                ],
+                "identified_datetime": "2023-06-28 04:15",
+                "resolved_datetime": "2023-06-28 04:15",
+                "raw": "Completed(We are proud to inform you that the latest version of the Worldline (WLOP) platform (release 4.157) is now available in both the TEST and PRODUCTION environments.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelog#july2023All these changes and extra functionalities are made available to you automatically and free of charge, in both the TEST and the PRODUCTION environments.Thanks to your cooperation with Worldline, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\nIn progress(We confirm that the new Worldline release (4.157) is now available in the TEST environment.We advise you to try out the new functionalities in your Worldline TEST account before we publish the updates in PRODUCTION on Wednesday 12/07/2023.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog' (https://support.legacy.worldline-solutions.com/en/news/changelog#july2023). All these updates and additional functionalities are made available to you automatically and free of charge in the TEST environment.If you have any commercial questions you can always get in touch with your contact person or our commercial department.For technical questions, our Customer Care department is always there to help you.)\nScheduled(To provide our customers with new features, Worldline constantly invests in the capacity and functionalities of its payment platform.  On Wednesday 28/06/2023 there will be a new release  4.157 available in the TEST environment.This release will be available for testing purposes in our TEST environment before being moved to our PRODUCTION environment at a later stage. A detailed description of these new release functionalities will be available on our Support Site under 'Home' - 'News' - 'Changelog' (https://support.legacy.worldline-solutions.com/en/news/changelog) on the day of the release.We encourage all merchants to read the release notes and to test all new functionalities as of the TEST release day (28/06/2023). You will be able to test these in the TEST environment using your TEST account. At this stage, no changes are being done to the PRODUCTION environment and no live transactions will be affected.We are planning to move this new release to production on Wednesday 12/07/2023.)\n"
+            },
+            {
+                "title": "Service interruption with Limonetik",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Limonetik",
+                    "Identified",
+                    "51Thank"
+                ],
+                "identified_datetime": "2023-07-11 16:07",
+                "resolved_datetime": "2023-11-07 16:51",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Limonetik between 16:07 and 16:51 CEST today 11/07/2023.We confirm that as of 16:51 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\nIdentified(We have experienced issues with Limonetik This started at 16:07 and stopped at 16:51Thank you for your understanding)\n"
+            }
+        ],
+        "june": [
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Back Office",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-06-30 15:35",
+                "resolved_datetime": "2023-06-30 15:42",
+                "raw": "Resolved(Due to a technical problem, you might have experienced problems to access Back Office and perform transactions using the Worldline platform in the TEST environment between 15:31 and 15:42 CEST (30/06/2023).Our technical teams have identified the cause of this interruption and the problem has been resolved at 15:42 CEST.We confirm that the general transaction flow in the PRODUCTION environment has NOT been affected and payments are being treated as expected.We apologise for any inconvenience.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Settlement delay Cr\u00e9dit Du Nord",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Cr\u00e9dit Du Nord",
+                    "Thank",
+                    "Identified",
+                    "Credit",
+                    "Nord",
+                    "Due"
+                ],
+                "identified_datetime": "2023-06-29 00:00",
+                "resolved_datetime": "2023-06-30 00:00",
+                "raw": "Resolved(We confirm that our technical teams fixed the issue and the settlement file with Cr\u00e9dit Du Nord transactions has been successfully submitted to the acquirer today (30/06/2023). The proceeds of the transactions involved will be credited to your account 1 day later than usual.Thank you for your understanding and we sincerely apologise for any inconvenience caused.)\nIdentified(Our systems have detected that the Credit du Nord transactions starting from 29/06/2023 have not been settled correctly. Due to this, the funds associated with the transactions concerned will be credited to your account 1day later than usual.Our technical teams are working to resolve this matter with the highest priority. We will update you as soon as more information becomes available.  We are sorry for the inconvenience that this may cause.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Worldline",
+                    "TEST",
+                    "Thus",
+                    "Identified",
+                    "Back Office"
+                ],
+                "identified_datetime": "2023-06-29 16:15",
+                "resolved_datetime": "2023-06-29 16:34",
+                "raw": "Resolved(Our technical teams investigated the situation and we confirm that this issue has no impact on your access to the Worldline platform in the TEST environment. We confirm that the Worldline platform in the TEST environment is working as expected.Thus, we kindly ask you to ignore the previous notification.We sincerely apologise for any inconvenience caused.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing and Back Office access.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Service with Soci\u00e9t\u00e9 G\u00e9n\u00e9rale restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Soci\u00e9t\u00e9 G\u00e9n\u00e9rale"
+                ],
+                "identified_datetime": "2023-06-29 13:37",
+                "resolved_datetime": "2023-06-29 14:01",
+                "raw": "Resolved(Please be informed that due to an external technical issue, your customers might have been unable to make payments online via Soci\u00e9t\u00e9 G\u00e9n\u00e9rale between 13:37-13:47 and 13:53-14:01 CEST today (29/06/2023).Our technical teams are monitoring the situation closely. We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION database on 29/06/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CET Impact",
+                    "timeframeDuring",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-06-29 05:30",
+                "resolved_datetime": "2023-06-29 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 29/06/2023, between 05:30 and 06:30 CET. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Service with Rabobank restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Rabobank"
+                ],
+                "identified_datetime": "2023-06-26 19:27",
+                "resolved_datetime": "2023-06-26 20:21",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Rabobank between 19:27 and 20:21 CEST today (26/06/2023).We confirm that as of 20:21 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 22/06/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CEST Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-06-22 05:30",
+                "resolved_datetime": "2023-06-22 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 22/06/2023, between 05:30 and 06:30 CEST. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-06-21 15:33",
+                "resolved_datetime": "2023-06-21 16:58",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-06-21 07:00",
+                "resolved_datetime": "2023-06-21 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at Worldline.The maintenance activities will take place in one of our datacenters on 21/06/2023 between 07:00 and 09:00 CEST.There is no impact foreseen in the PRODUCTION environment. The maintenance will not affect payments processing and there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding.)\n"
+            },
+            {
+                "title": "Service with Bancontact restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Bancontact"
+                ],
+                "identified_datetime": "2023-06-19 15:40",
+                "resolved_datetime": "2023-06-19 15:54",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Bancontact between 15:40 and 15:54 CEST today (19/06/2023).We confirm that as of 15:54 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Technical issue causing refused transactions",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Identified Please"
+                ],
+                "identified_datetime": "2023-06-16 12:35",
+                "resolved_datetime": "2023-06-16 13:26",
+                "raw": "Resolved(Due to a technical issue today between 12:35 and 13:26 CEST, some of your transactions might have been set to status 2 (declined) and your customers might have experienced higher than usual time of processing their transactions.Our dedicated teams have investigated the situation and the activity has been restored.We apologise for any potential inconvenience.)\nIdentified(Please be informed that due to a technical difficulty ongoing since 12:35 CEST, some of your transactions may be currently set status 2 (refused).Our dedicated teams are working on resolving this situation as quickly as possible. We will update you as soon as the activity is restored to normal.  We sincerely apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "3-D Secure Authentication partially unavailable on 16/06/2023",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Secure"
+                ],
+                "identified_datetime": "2023-06-16 12:36",
+                "resolved_datetime": "2023-06-16 12:47",
+                "raw": "Resolved(Please be informed that a technical interruption impacting 3-D Secure authentication occurred on 16/06/2023 between 12:36 and 12:47 CEST. The issue is confirmed to be solved now.We apologise for any inconvenience caused.)\n"
+            },
+            {
+                "title": "Visa 3-D Secure Authentication partially unavailable in the TEST environment on 13/06/2023 (no impact on PRODUCTION)",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Update",
+                    "Identified",
+                    "VISA",
+                    "Secure",
+                    "TEST"
+                ],
+                "identified_datetime": "2023-06-13 09:40",
+                "resolved_datetime": "2023-06-13 14:33",
+                "raw": "Resolved(This incident has been resolved.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We have identified an ongoing technical interruption impacting VISA 3-D Secure authentication in the TEST environment as of 09:40 CEST.As a result, VISA transactions in the TEST environment might currently not be working. We are aware of the issue and our technical teams are working on resolving it as quickly as possible. We will update you as soon as more information becomes available.  We apologise for any resulting inconvenience.)\n"
+            },
+            {
+                "title": "Mastercard 3-D Secure Authentication partially unavailable on 12/06/2023",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Update",
+                    "Identified",
+                    "Mastercard",
+                    "Secure"
+                ],
+                "identified_datetime": "2023-06-12 13:03",
+                "resolved_datetime": "2023-06-12 20:53",
+                "raw": "Resolved(This incident has been resolved.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We have identified an ongoing external technical interruption impacting Mastercard 3-D Secure authentication as of 13:03 CEST.As a result, some transactions treated by Mastercard might receive a status 0 (incomplete/invalid) due to the impossibility of performing a 3-D Secure check.The external party involved confirmed an issue at their side. We will come back to you in case of updates.We thank you for your patience and understanding.)\n"
+            },
+            {
+                "title": "Planned maintenance at Barclaycard",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Worldline",
+                    "Barclaycard"
+                ],
+                "identified_datetime": "2023-11-06 04:00",
+                "resolved_datetime": "2023-11-06 05:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Worldline has been informed about upcoming maintenance at Barclaycard.The maintenance is announced for 11/06/2023 between 04:00 and 05:00 CEST.During the indicated period, the connection to the Barclaycard payment systems will be unavailable up to 10 minutes.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Back Office slowness (Search functionalities)",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified Please",
+                    "Back Office",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-06-05 12:00",
+                "resolved_datetime": "2023-06-05 13:27",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(Please be advised that we are currently experiencing issues in our Back Office with search functionalities since 12:00 CEST.We would like to reassure you that our platform is stable and no impact on transaction processing has been identified.We are investigating this with high priority. Thank you for your patience and understanding.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "CEST However",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-06-02 16:56",
+                "resolved_datetime": "2023-02-06 17:01",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline platform between 16:51 and 17:01 CEST (02/06/2023).Our dedicated teams have restored the activity to normal at 17:01 CEST. However, we keep monitoring our platform closely.We apologise for any potential inconvenience.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "TEST",
+                    "Update",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-06-02 01:37",
+                "resolved_datetime": "2023-02-06 03:07",
+                "raw": "Resolved(Due to a technical problem, you might have experienced problems to perform transactions using the Worldline platform in TEST environment between 01:37 and 03:07 CEST 02/06/2023.Our technical teams have identified the cause of this interruption and the problem has been resolved at 03:07.The general transaction flow in production environment has not been affected and payments are being treated as expected.We apologise for any inconvenience.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            }
+        ],
+        "may": [
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-05-31 21:29",
+                "resolved_datetime": "2023-05-31 21:45",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-05-31 12:33",
+                "resolved_datetime": "2023-05-31 13:35",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-05-31 10:30",
+                "resolved_datetime": "2023-05-31 10:34",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Issue with processing recurring First Data transactions",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Update",
+                    "Update Please",
+                    "First Data",
+                    "Investigations",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-05-18 12:01",
+                "resolved_datetime": "2023-05-16 12:05",
+                "raw": "Resolved(Due to a technical issue, some of your transactions may have been set to an incomplete or invalid status between 16-5-2023 12:05 CEST and 20-5-2023 01:58 CEST.Our dedicated teams have investigated the situation and the activity has been restored. Please accept our sincere apologies for any potential inconvenience.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(Please be informed that the issue with processing transactions via acquirer First Data is still ongoing.Our technical teams are in a close contact with the external party involved to resolve the perturbation as soon as possible. Investigations are ongoing and we are working on it with the highest priority.We will keep you posted as soon as the situation is back to normal operating conditions.)\nIdentified(We have identified an ongoing technical issue with processing recurring First Data transactions as of 12:01 CEST.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible.You will be updated as soon as the activity is restored. We sincerely apologise for any potential inconveniences.)\n"
+            },
+            {
+                "title": "Ongoing: Technical issue causing incomplete or invalid transactions FIRST DATA US",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Investigating Please"
+                ],
+                "identified_datetime": "2023-05-16 01:58",
+                "resolved_datetime": "2023-05-16 12:05",
+                "raw": "Resolved(Due to a technical issue, some of your transactions may have been set to an incomplete or invalid status between 16-5-2023 12:05 CEST and 20-5-2023 01:58 CEST.Our dedicated teams have investigated the situation and the activity has been restored. Please accept our sincere apologies for any potential inconvenience.)\nInvestigating(Please be informed that due to an ongoing technical issue on 16/05/2023 since 12:05 CEST, some of your transactions may be set to an incomplete or invalid status.Our technical teams are working on resolving this issue as quickly as possible. We will update you as soon as more information becomes available.  We apologise for any resulting inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-11-05 10:00",
+                "resolved_datetime": "2023-11-05 15:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at Worldline.The maintenance activities will take place  on 11/05/2023 between 10:00 and 15:00 CEST.There is no impact foreseen in the PRODUCTION environment. The maintenance will not affect payments processing and there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Thank you for your understanding.)\n"
+            },
+            {
+                "title": "Worldline new release (4.156)",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Support Site",
+                    "Home News Changelog",
+                    "may2023All",
+                    "Thanks",
+                    "Furthermore",
+                    "Tomorrow",
+                    "Scheduled",
+                    "Worldline TEST",
+                    "Wednesday",
+                    "changelogAll",
+                    "Customer Care"
+                ],
+                "identified_datetime": "2023-10-05 04:15",
+                "resolved_datetime": "2023-10-05 04:15",
+                "raw": "Completed(We are proud to inform you that the latest version of the Worldline payment platform is now available in both the TEST and PRODUCTION environments.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelog#may2023All these changes and extra functionalities are made available to you automatically and free of charge, in both the TEST and the PRODUCTION environments.Thanks to your cooperation with Worldline, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\nIn progress(As previously communicated, there is a new release of the Worldline platform. Our aim is to offer you new functionalities to ensure that by working with Worldline you will continue to have one of the most complete and innovative solutions on the market.Tomorrow, 10/05/2023, the release \u2013 which was previously made available in our TEST environment - will be converted into PRODUCTION.The conversion will be completed at around 09:00 CEST. We will be closely monitoring this operation and will keep you informed once the deployment is completed.We are doing everything to ensure that the Worldline payment platform continues to work without a hitch during this operation.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelog#may2023)\nScheduled(We are happy to confirm that our new release (4.156) is now available in the TEST environment.We advise you to try out the new functionalities in your Worldline TEST account before we publish the updates in PRODUCTION on Wednesday 10/05/2023.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelogAll these updates and additional functionalities are made available to you automatically and free of charge in the TEST environment.If you have any commercial questions you can always get in touch with your contact person or our commercial department.For technical questions, our Customer Care department is always there to help you.)\n"
+            },
+            {
+                "title": "RESOLVED - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "CEST However"
+                ],
+                "identified_datetime": "2023-05-08 05:10",
+                "resolved_datetime": "2023-05-08 05:16",
+                "raw": "Resolved(We wish to inform you that your customers might have experienced time-outs or higher than expected latency for processing transactions between 05:10 and 05:16 CEST. However, all transactions that were not subject to a time-out were processed and have correct statuses.The service has been restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline in the PRODUCTION environment: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION"
+                ],
+                "identified_datetime": "2023-08-05 07:00",
+                "resolved_datetime": "2023-08-05 08:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at Worldline in the PRODUCTION environment.The maintenance is announced for 08/05/2023 between 07:00 and 08:30 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION"
+                ],
+                "identified_datetime": "2023-08-05 07:00",
+                "resolved_datetime": "2023-08-05 08:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at Worldline in the PRODUCTION environment.The maintenance is announced for 08/05/2023 between 07:00 and 08:30 CEST.During the indicated period, your customers may experience slight interruptions in the connection to the payment systems.Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "TEST",
+                    "Update",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-05-04 00:08",
+                "resolved_datetime": "2023-04-05 01:14",
+                "raw": "Resolved(Due to a technical problem, you might have experienced problems to perform transactions using the Worldline platform in TEST environment between 01:01 and 01:14 CEST (4/5/2023).The general transaction flow in production environment has not been affected and payments are being treated as expected.We apologise for any inconvenience.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(We are continuing to work on a fix for this issue.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "TEST",
+                    "Identified"
+                ],
+                "identified_datetime": "2023-05-03 19:06",
+                "resolved_datetime": "2023-03-05 19:08",
+                "raw": "Resolved(Due to a technical problem, you might have experienced problems to perform transactions using the Worldline platform in TEST environment between 19:02 and 19:08 CEST 03/05/2023.Our technical teams have identified the cause of this interruption and the problem has been resolved at 19:08 CEST.The general transaction flow in production environment has not been affected and payments are being treated as expected.We apologise for any inconvenience.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned load tests at Worldline in the TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Due",
+                    "TEST",
+                    "However",
+                    "Worldline PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-03-05 08:00",
+                "resolved_datetime": "2023-03-05 13:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(To provide our customers with the best online payment experience, we constantly invest in the capacity and functionalities of our platform.Due to this, we wish to inform our clients and partners about load tests planned in our TEST environment.The load test activities will take place on 03/05/2023 between 08:00 and 13:00 CEST.We will take all possible measures to perform the testing activities without any impact on your business. However, slight interruptions might still occur for a short period of time in the connection to the payment systems in the TEST environment. Please note that there is no impact on the Worldline PRODUCTION environment foreseen. Thank you for your understanding and we apologize for any inconvenience this may cause you.)\n"
+            }
+        ],
+        "april": [
+            {
+                "title": "Update of our PRODUCTION database on 27/04/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CET Impact",
+                    "timeframeDuring",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-04-27 05:30",
+                "resolved_datetime": "2023-04-27 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 27/04/2023, between 05:30 and 06:30 CET. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Service interruption with iDEAL",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "iDEAL",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-04-25 14:56",
+                "resolved_datetime": "2023-04-25 16:31",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with iDEAL transaction processing as of 14:56 CEST on 25/04/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Issue with processing transactions with Mastercard",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "MasterCard",
+                    "Secure",
+                    "PM CEST"
+                ],
+                "identified_datetime": "2023-04-23 04:50",
+                "resolved_datetime": "2023-04-23 18:23",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified an ongoing technical interruption impacting MasterCard 3-D Secure authentication as of 4.50 PM CEST.As a result, some transactions treated by MasterCard might receive a status 2.We have contacted the external party involved and will update you as soon as the activity is restored to normal. We thank you for your patience and understanding.)\n"
+            },
+            {
+                "title": "Service with Rabobank restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Rabobank"
+                ],
+                "identified_datetime": "2023-04-20 09:11",
+                "resolved_datetime": "2023-04-20 09:31",
+                "raw": "Resolved(Please be informed that due to a technical issue, your customers might have been unable to make payments online via Rabobank  between 09:11 and 09:31 CEST today (20/04/2023).We confirm that as of 09:31 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We apologise for any potential inconvenience experienced.)\n"
+            },
+            {
+                "title": "Service interruption with Twint",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Twint",
+                    "CEST Please",
+                    "Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-04-19 16:32",
+                "resolved_datetime": "2023-04-19 17:39",
+                "raw": "Resolved(Please be informed that the issue with processing Twint transactions is resolved. Our dedicated teams have investigated the situation and the activity has been restored to normal as of 17:39 CEST.Please accept our sincere apologies for any potential inconvenience.)\nIdentified(We have identified ongoing difficulties with transaction processing via Twint acquirer as of 16:32 CEST on 19/04/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline on 19/04/2023: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION",
+                    "TEST",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-04-19 07:00",
+                "resolved_datetime": "2023-04-19 09:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about a maintenance planned at Worldline.The maintenance activities will take place in one of our datacenters on 19/04/2023 between 07:00 and 09:00 CEST.There is no impact foreseen neither in the PRODUCTION nor TEST environment.The maintenance will not affect payments processing and there is no action nor change required from your side.Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed.Thank you for your understanding.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 13/04/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CEST Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-04-13 05:30",
+                "resolved_datetime": "2023-04-13 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 13/04/2023, between 05:30 and 06:30 CEST. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline in the PRODUCTION environment: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION"
+                ],
+                "identified_datetime": "2023-12-04 07:00",
+                "resolved_datetime": "2023-12-04 08:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(Please be informed about a maintenance planned at Worldline in the PRODUCTION environment.The maintenance is announced for 12/04/2023 between 07:00 and 08:30 CEST.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Service interruption with iDEAL via Rabobank",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "iDEAL Rabobank",
+                    "Worldline Identified",
+                    "iDEAL",
+                    "Rabobank",
+                    "Thank",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-07-04 14:41",
+                "resolved_datetime": "2023-07-04 16:06",
+                "raw": "Resolved(Please be informed that due to an external technical issue, your customers might have been unable to make payments online via iDEAL (Rabobank) between 14:41 and 16:06 CEST today (07/04/2023).We confirm that as of 16:06 CEST, normal service has been resumed and your customers will now be able to make payments as expected.We also confirm that the issue has an external responsibility (independent of Worldline).)\nIdentified(We have identified ongoing difficulties with iDEAL transaction processing via Rabobank acquirer as of 14:41 CEST on 07/04/2023. We have contacted the external party involved and will update you as soon as the activity is restored to normal. Thank you for your patience.We also confirm that the issue has an external responsibility (independent of Worldline).)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline in the TEST environment: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "TEST",
+                    "Nonetheless"
+                ],
+                "identified_datetime": "2023-04-04 08:00",
+                "resolved_datetime": "2023-04-04 14:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about upcoming maintenance at Worldline in the TEST environment.The maintenance is announced between 04/04/2023 and 06/04/2023 (between 08:00 and 14:00 CEST).No interruption is expected. Nonetheless, we will monitor that transactions are being processed normally during this maintenance.Please forward this information to your technical department.)\n"
+            }
+        ],
+        "march": [
+            {
+                "title": "Worldline: new release in PRODUCTION Version 4.155",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Support Site",
+                    "Home News Changelog",
+                    "changelogAll",
+                    "Thanks",
+                    "Furthermore"
+                ],
+                "identified_datetime": "2023-03-29 20:23",
+                "resolved_datetime": "2023-03-29 20:23",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(We are proud to inform you that the latest version of the Worldline payment platform is now available in both the TEST and PRODUCTION environments. You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://support.legacy.worldline-solutions.com/en/news/changelogAll these changes and extra functionalities are made available to you automatically and free of charge, in both the TEST and the PRODUCTION environments.Thanks to your cooperation with Worldline, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION database on 28/03/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "PRODUCTION",
+                    "Tuesday",
+                    "CEST Impact",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-03-28 05:30",
+                "resolved_datetime": "2023-03-28 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about an exceptional maintenance planned at Worldline.The maintenance activities will take place in our PRODUCTION database on Tuesday 28/03/2023 between 05:30 and 06:30 CEST.Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for up to 5 seconds during the maintenance.Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed.Please accept our apologies for the late notification. The maintenance is performed on an exceptional basis and future events will be announced within the usual notice period.Thank you for your understanding.Please don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-03-19 09:36",
+                "resolved_datetime": "2023-03-19 09:49",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline platform between 9:21 and 9:49 CET (19/03/2023).Our dedicated teams have restored the activity to normal at 9:49 CET.We apologise for any potential inconvenience.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline: New release 4.155",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Wednesday",
+                    "Scheduled",
+                    "Support Site"
+                ],
+                "identified_datetime": "2023-03-15 04:15",
+                "resolved_datetime": "2023-03-15 04:15",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(We are happy to confirm that Worldline launched its new release (4.155) in the TEST environment.The release will be live in PRODUCTION on Wednesday 29/03/2023.)\nScheduled(To provide our customers with new features, Worldline constantly invests in the capacity and functionalities of its payment platform.On Wednesday 15/03/2023 there will be a new release (4.155) available in the TEST environment.This release will be available for testing purposes in our TEST environment before being moved to our PRODUCTION environment at a later stage. A detailed description of these new release functionalities will be available on our Support Site (https://support.legacy.worldline-solutions.com/en/news/changelog) on the day of the release.We encourage all merchants to read the release notes as of 15/03/2023 and to test all new functionalities in the TEST environment. At this stage, no changes are being done to the PRODUCTION environment and no live transactions will be affected.We are planning to move this new release to production on Wednesday 29/03/2023.)\n"
+            },
+            {
+                "title": "RESOLVED - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "CET However"
+                ],
+                "identified_datetime": "2023-03-14 10:00",
+                "resolved_datetime": "2023-03-14 10:29",
+                "raw": "Resolved(We wish to inform you that your customers might have experienced time-outs or higher than expected latency for processing transactions between 10:00 and 10:29 CET. However, all transactions that were not subject to a time-out were processed and have correct statuses.The service has been restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Ongoing - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Update",
+                    "Investigating Please"
+                ],
+                "identified_datetime": "2023-03-14 10:41",
+                "resolved_datetime": "2023-03-14 10:41",
+                "raw": "Resolved(This incident has been resolved.)\nUpdate(We are continuing to investigate this issue.)\nInvestigating(Please be informed that your customers might currently experience higher than expected latency in the processing of transactions and, potentially, a number of time-outs since 10:00 CET. Our dedicated teams are working on this with the aim to restore the activity to normal as soon as possible.We will update you as soon as the activity is restored.    We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Due",
+                    "Worldline",
+                    "Update",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-03-10 22:38",
+                "resolved_datetime": "2023-10-03 22:46",
+                "raw": "Resolved(Due to a technical issue, your customers might have experienced perturbations performing transactions using the Worldline platform between 22:32 and 22:46 CET (10/03/2023).Our dedicated teams have restored the activity to normal at 22:46 CET.We apologise for any potential inconvenience.)\nUpdate(We are continuing to work on a fix for this issue.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 09/03/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CET Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-09-03 05:30",
+                "resolved_datetime": "2023-09-03 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 09/03/2023, between 05:30 and 06:30 CET. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            }
+        ],
+        "february": [
+            {
+                "title": "Worldline support team not reachable via telephone",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified Please",
+                    "Worldline",
+                    "Legacy",
+                    "Direct",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-02-27 16:10",
+                "resolved_datetime": "2023-02-28 10:16",
+                "raw": "Resolved(We confirm that the issue with our telephone operator is resolved and you can now reach our support teams as usual.We apologise for any inconvenience this may have caused you.)\nIdentified(Please be informed that we are currently experiencing issues with our telephone operator. As a result, you might currently experience problems with reaching Worldline support teams via phone. If you need immediate assistance, you can contact us via the webform:-for Legacy merchants: https://support.legacy.worldline-solutions.com/en/help/contact/ -for Direct merchants: https://support.direct.worldline-solutions.com/en/help/contact/ Your request is important to us and our support team will assist you as soon as it is possible.  Thank you for your understanding and we sincerely apologise for any inconvenience this may be causing.  We will keep you posted once the situation is back to normal.)\n"
+            },
+            {
+                "title": "Planned maintenance at Worldline: No impact foreseen",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "Wednesday",
+                    "Thursday",
+                    "TEST",
+                    "PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-02-22 03:00",
+                "resolved_datetime": "2023-02-22 23:59",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about an exceptional maintenance planned at Worldline.The maintenance activity will take place in one of our datacenters between Wednesday 22/02/2023 23:59 and Thursday 23/02/2023 03:00 CET.There is no impact foreseen neither in the TEST nor PRODUCTION environment. The maintenance will not affect payments processing and there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that the maintenance activity is correctly executed and completed. Please accept our apologies for the late notification. The maintenance is performed on an exceptional basis and future events will be announced within the usual notice period.Thank you for your understanding.)\n"
+            },
+            {
+                "title": "RESOLVED - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "CET However"
+                ],
+                "identified_datetime": "2023-02-15 16:19",
+                "resolved_datetime": "2023-02-15 16:29",
+                "raw": "Resolved(We wish to inform you that your customers might have experienced time-outs or higher than expected latency for processing transactions today 15/02/2023 between 16:19-16:21 and 16:27-16:29 CET. However, all transactions that were not subject to a time-out were processed and have correct statuses.The service has been restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Worldline Payment Platform unavailability",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Worldline Payment Platform"
+                ],
+                "identified_datetime": "2023-02-14 01:07",
+                "resolved_datetime": "2023-02-14 08:56",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the Worldline Payment Platform is temporarily experiencing perturbations in processing payments.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal. We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Planned maintenance at TWINT: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "TWINT"
+                ],
+                "identified_datetime": "2023-02-14 01:00",
+                "resolved_datetime": "2023-02-14 05:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at TWINT.The maintenance is announced for 14/02/2023 between 01:00 and 05:00 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Planned maintenances at Worldline",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Please",
+                    "Worldline",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Monday",
+                    "CETThere",
+                    "TEST",
+                    "PRODUCTION",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-02-06 01:00",
+                "resolved_datetime": "2023-02-06 22:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Please be informed about exceptional maintenances planned at Worldline.The maintenance activities will take place in three datacenters:\u2022between Tuesday 07/02 22:00 and Wednesday 08/02 01:00 CET\u2022between Thursday 09/02 22:00 and Friday 10/02 01:00 CET \u2022between Monday 13/02 22:00 and Tuesday 14/02 01:00 CETThere is no impact foreseen neither in the TEST nor PRODUCTION environment. The maintenance will not affect payments processing and there is no action nor change required from your side. Our team of experts will monitor all processes closely to ensure that all the maintenance activities are correctly executed and completed. Please accept our apologies for the late notification. The maintenances are performed on an exceptional basis and future events will be announced within usual notice period. Thank you for your understanding.)\n"
+            },
+            {
+                "title": "Service interruption with Belfius",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "Belfius",
+                    "Invalid",
+                    "Incomplete",
+                    "Thank",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-11-02 23:56",
+                "resolved_datetime": "2023-02-13 11:17",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We have identified ongoing difficulties with transaction processing via Belfius acquirer as of 11/02/2023 at 23:56 CET. As a result, transactions of your customers might receive a status 0 (\"Invalid or Incomplete\"). We have contacted the external party involved and will update you as soon as the activity is restored to normal. Thank you for your patience.We also confirm that the issue has an external responsibility (independent of Worldline).)\n"
+            },
+            {
+                "title": "Planned maintenance at PostFinance: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PostFinance",
+                    "PostFinance E Finance",
+                    "CET PostFinance Card",
+                    "CETDuring"
+                ],
+                "identified_datetime": "2023-11-02 03:00",
+                "resolved_datetime": "2023-11-02 17:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenances at PostFinance.The maintenances are announced between 11/02/2023 and 12/02/2023:- PostFinance E-Finance: 11/02/2023 17:00 - 12/02/2023 08:00 CET- PostFinance Card: 12/02/2023 03:00 - 12/02/2023 04:00 CETDuring the indicated period, your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Planned maintenance at PayPal: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PayPal"
+                ],
+                "identified_datetime": "2023-10-02 03:00",
+                "resolved_datetime": "2023-10-02 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at PayPal.The maintenance is announced for 10/02/2023 between 03:00 and 06:30 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Worldline support team not reachable via telephone for customers in France, Germany, the UK & Switzerland",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Customers",
+                    "France Germany Switzerland",
+                    "UK",
+                    "France",
+                    "Germany",
+                    "Switzerland",
+                    "66You",
+                    "Legacy",
+                    "Direct",
+                    "Monitoring Please",
+                    "France Germany",
+                    "English French Dutch",
+                    "German Thank",
+                    "Identified Please",
+                    "Worldline",
+                    "German",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-02-08 09:43",
+                "resolved_datetime": "2023-02-09 10:46",
+                "raw": "Resolved(We wish to inform you that the issue with our telephone operator is resolved. Customers located in France, Germany, Switzerland and the UK can now reach our support team as usual:- France: +33 170 700 903- Germany: +49 221 455 301 80- Switzerland: +41 445 83 09 85- the UK +44 203 147 49 66You can also contact us via the webform:- for Legacy merchants: https://support.legacy.worldline-solutions.com/en/help/contact/ - for Direct merchants: https://support.direct.worldline-solutions.com/en/help/contact/ We apologise for any inconvenience this may have caused you.)\nMonitoring(Please be informed that the issue with our phone operator is still ongoing (for our customers located in France, Germany, the UK and Switzerland). If you need immediate assistance, please contact us via:- the webform:for Legacy merchants: https://support.legacy.worldline-solutions.com/en/help/contact/ for Direct merchants: https://support.direct.worldline-solutions.com/en/help/contact/ - or via the phone number +32 2 286 96 11 where we offer support in English, French, Dutch and German. Thank you for your understanding and we apologise for any inconvenience.)\nIdentified(Please be informed that we are experiencing issues with our telephone operator.\u00a0As a result, Worldline support team is currently not reachable via phone for our customers located in France, Germany, the UK and Switzerland.\u00a0If you need immediate assistance, you can contact us via the webform (https://support.legacy.worldline-solutions.com/en/help/contact/) or via the following phone number:\u00a0+32 2 286 96 11 where we offer support in English, French, Dutch and German.\u00a0Your request is important to us and our support team will assist you as soon as it is possible.\u00a0Thank you for your understanding and we sincerely apologise for any inconvenience this may be causing.\u00a0We will keep you posted once the situation is back to normal.)\n"
+            },
+            {
+                "title": "Worldline platform unavailability in TEST environment",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Identified",
+                    "TEST",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-02-09 05:49",
+                "resolved_datetime": "2023-02-09 08:51",
+                "raw": "Resolved(This incident has been resolved.)\nIdentified(We would like to inform you that the TEST environment of the Worldline platform is temporarily unavailable for payment processing.A dedicated team has been deployed to investigate the situation as a matter of urgency with the aim to restore the activity to normal as soon as possible. You will be updated as soon as the activity is restored to normal.  We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Update of our TEST & Archives database on 09/02/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "TEST Archives",
+                    "Thursday",
+                    "CET Impact",
+                    "TEST",
+                    "updatePlease"
+                ],
+                "identified_datetime": "2023-09-02 05:30",
+                "resolved_datetime": "2023-09-02 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nIn progress(Scheduled maintenance is currently in progress. We will provide updates as necessary.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Please be informed that an update will take place to the TEST & Archives databases on Thursday 09/02/2023, between 05:30 and 06:30 CET. Impact on your TEST account:The TEST environment and the archives database will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframe.During the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this updatePlease don't hesitate to contact us in case you have any questions.)\n"
+            },
+            {
+                "title": "Worldline: New release 4.154",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Worldline",
+                    "TEST",
+                    "PRODUCTION",
+                    "Thanks",
+                    "Furthermore",
+                    "Update",
+                    "Worldline TEST",
+                    "Wednesday",
+                    "Support Site",
+                    "Home News Changelog",
+                    "Customer Care",
+                    "Scheduled"
+                ],
+                "identified_datetime": "2023-01-25 04:15",
+                "resolved_datetime": "2023-01-25 04:15",
+                "raw": "Completed(We are proud to inform you that the latest version of the Worldline payment platform is now available in both the TEST and PRODUCTION environments.Thanks to your cooperation with Worldline, you now have access to one of the most complete and innovative solutions on the market. Furthermore, you have our guarantee that these products will also constantly continue to grow with you, in line with market needs and especially with your requirements.)\nUpdate(We are happy to confirm that the new release (4.154) is now available in the TEST environment.We advise you to try out the new functionalities in your Worldline TEST account before we publish the updates in PRODUCTION on Wednesday 08/02/2023.You can find detailed explanation and further information on this release on our Support Site under 'Home' - 'News' - 'Changelog': https://epayments-support.ingenico.com/en/news/changelog All these updates and additional functionalities are made available to you automatically and free of charge in the TEST environment.If you have any commercial questions you can always get in touch with your contact person or our commercial department.For technical questions, our Customer Care department is always there to help you.)\nScheduled(To provide our customers with new features, Worldline constantly invests in the capacity and functionalities of its payment platform.  On Wednesday 25/01/2023 there will be a new release 4.154 available in the TEST environment.As of this day, this release will be available for testing purposes in our TEST environment before being moved to our PRODUCTION environment at a later stage. A detailed description of these new release functionalities will be available on our Support Site (https://epayments-support.ingenico.com/en/news/changelog) on the day of the TEST release (25/01/2023).We encourage all our customers to read the release notes and to test all new functionalities.You can test these in the TEST environment using your TEST account. At this stage, no changes are being done to the PRODUCTION environment and no live transactions will be affected.We are planning to move this new release to production on Wednesday 08/02/2023.)\n"
+            },
+            {
+                "title": "Service interruption with BNP Paribas",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "BNP Paribas",
+                    "Worldline Identified",
+                    "Thank"
+                ],
+                "identified_datetime": "2023-06-02 12:22",
+                "resolved_datetime": "2023-06-02 12:52",
+                "raw": "Resolved(Please be informed that due to an external technical issue, your customers might have been unable to make payments online via BNP Paribas between 12:22 and 12:52 CET today (06/02/2023).As of 12:52 CET, normal service has been resumed and your customers are now able to make payments as expected.We also confirm that the issue has an external responsibility (independent of Worldline).)\nIdentified(We have identified ongoing difficulties with transaction processing via BNP Paribas acquirer as of 12:22 CET on 06/02/2023. The acquirer has confirmed issues at their side and they are working on it with the highest priority. We will update you as soon as the activity is restored to normal.Thank you for your patience.)\n"
+            }
+        ],
+        "january": [
+            {
+                "title": "RESOLVED - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "CET However",
+                    "Since",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-01-26 13:12",
+                "resolved_datetime": "2023-01-26 13:17",
+                "raw": "Resolved(We wish to inform you that your customers might have experienced time-outs or higher than expected latency for processing transactions between 13:12 and 13:17 CET. However, all transactions that were not subject to a time-out were processed and have correct statuses.Since 13:17 CET, the service has been restored to normal.We also confirm that the issue has an external root cause and responsibility (independent of Worldline).)\n"
+            },
+            {
+                "title": "Update of our PRODUCTION database on 26/01/2023",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled",
+                    "Therefore",
+                    "PRODUCTION",
+                    "Thursday",
+                    "CET Impact",
+                    "timeframeDuring"
+                ],
+                "identified_datetime": "2023-01-26 05:30",
+                "resolved_datetime": "2023-01-26 06:30",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(In order to provide you with a secure, reliable and innovative online payment platform we must periodically update our test and production environments.Therefore, we plan an update of our PRODUCTION database on Thursday 26/01/2023, between 05:30 and 06:30 CET. Impact on your PRODUCTION account:The PRODUCTION environment will be unavailable for 20 seconds during the maintenance.We have performed testing on our internal system to ensure that the planned maintenance can be completed within the proposed timeframeDuring the update our team of experts will also monitor all processes closely to ensure that the maintenance is correctly completed and any resulting issues are immediately addressed.To minimize the impact on your business, all updates are always performed during off-peak time frames.We apologise for any inconvenience resulting from the timing of this update)\n"
+            },
+            {
+                "title": "Planned maintenance at Teller: slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "Teller"
+                ],
+                "identified_datetime": "2023-01-26 00:00",
+                "resolved_datetime": "2023-01-26 05:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at Teller.The maintenance is announced for 26/01/2023 between 00:00 and 05:00 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "RESOLVED - Worldline Slow Response Time",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "CET However"
+                ],
+                "identified_datetime": "2023-01-25 12:26",
+                "resolved_datetime": "2023-01-25 12:29",
+                "raw": "Resolved(We wish to inform you that your customers might have experienced time-outs or higher than expected latency for processing transactions between 12:26 and 12:29 CET. However, all transactions that were not subject to a time-out were processed and have correct statuses.The service has been restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Service with TWINT restored",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "TWINT",
+                    "Worldline"
+                ],
+                "identified_datetime": "2023-01-17 11:55",
+                "resolved_datetime": "2023-01-17 12:33",
+                "raw": "Resolved(Please be informed that due to an external technical issue, some of your customers might have been unable to make payments online via TWINT between 11:55 and 12:33 CET today (17/01/2023).We confirm that as of 12:33 CET, normal service has been resumed and your customers will now be able to make payments as expected.We also confirm that the issue has an external responsibility (independent of Worldline).)\n"
+            },
+            {
+                "title": "Planned maintenance at PayPal slight interruptions possible",
+                "payment_methods": [],
+                "services": [
+                    "Completed",
+                    "Scheduled Worldline",
+                    "PayPal"
+                ],
+                "identified_datetime": "2023-01-13 02:00",
+                "resolved_datetime": "2023-01-13 08:00",
+                "raw": "Completed(The scheduled maintenance has been completed.)\nScheduled(Worldline has been informed about upcoming maintenance at PayPal .The maintenance is announced for 13/01/2023 between 02:00 and 08:00 CET.During the indicated period your customers may experience slight interruptions in the connection to the payment systems.Please forward this information to your technical department.)\n"
+            },
+            {
+                "title": "Fraud Expert Scoring partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Investigating Please",
+                    "Fraud Expert Scoring",
+                    "Fraud Expert Scoring However",
+                    "Secure FDM FDMA Checklist",
+                    "FDMA Scoring"
+                ],
+                "identified_datetime": "2023-01-12 09:08",
+                "resolved_datetime": "2023-01-12 09:08",
+                "raw": "Resolved(This incident has been resolved.)\nInvestigating(Please be informed that due to a technical issue, certain Fraud Expert Scoring functionalities are temporarily disturbed.Some of your transactions may be currently processed without Fraud Expert Scoring. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 are functioning normally. Our dedicated teams are working to resolve this matter with utmost urgency. We will update you as soon as the activity is restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Fraud Expert Scoring partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved Please",
+                    "Fraud Expert Scoring",
+                    "However",
+                    "Secure FDM FDMA Checklist",
+                    "FDMA Scoring",
+                    "Investigating Please",
+                    "Fraud Expert Scoring However"
+                ],
+                "identified_datetime": "2023-11-01 10:28",
+                "resolved_datetime": "2023-11-01 10:46",
+                "raw": "Resolved(Please be informed that as a result of a technical issue, certain Fraud Expert Scoring functionalities were disturbed today (11/01/2023) between 10:28 and 10:46 CET.Some of your transactions may have been processed without Fraud Expert Scoring during this timeframe. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 were functioning as expected.We apologise for any potential inconvenience.)\nInvestigating(Please be informed that due to a technical issue, certain Fraud Expert Scoring functionalities are temporarily disturbed.Some of your transactions may be currently processed without Fraud Expert Scoring. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 are functioning normally. Our dedicated teams are working to resolve this matter with utmost urgency. We will update you as soon as the activity is restored to normal.We apologise for any potential inconvenience.)\n"
+            },
+            {
+                "title": "Issue with reaching Worldline support site",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Investigating Please",
+                    "Back Office"
+                ],
+                "identified_datetime": "2023-01-11 09:20",
+                "resolved_datetime": "2023-01-11 09:20",
+                "raw": "Resolved(This incident has been resolved.)\nInvestigating(Please be informed that you might currently experience issues with reaching our support site. We are investigating this together with our external partner with the highest priority to restore our support site fully at the earliest possible opportunity.Please note that the issue concerns our support sites only, while access to our Back Office and general payment processing are working as expected.We apologise for any resulting inconvenience.)\n"
+            },
+            {
+                "title": "Fraud Expert Scoring partially unavailable",
+                "payment_methods": [],
+                "services": [
+                    "Resolved",
+                    "Investigating Please",
+                    "Fraud Expert Scoring",
+                    "Fraud Expert Scoring However",
+                    "Secure FDM FDMA Checklist",
+                    "FDMA Scoring"
+                ],
+                "identified_datetime": "2023-01-03 13:56",
+                "resolved_datetime": "2023-01-03 13:56",
+                "raw": "Resolved(This incident has been resolved.)\nInvestigating(Please be informed that due to a technical issue, certain Fraud Expert Scoring functionalities are temporarily disturbed.Some of your transactions may be currently processed without Fraud Expert Scoring. However, other fraud prevention services \u2013 3-D Secure, FDM, FDMA Checklist and FDMA Scoring \u2013 are functioning normally. Our dedicated teams are working to resolve this matter with utmost urgency. We will update you as soon as the activity is restored to normal.We apologise for any potential inconvenience.)\n"
+            }
+        ]
+    }
+}
