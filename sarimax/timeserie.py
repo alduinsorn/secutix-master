@@ -46,10 +46,10 @@ def load_data(fn, exog=False):
 # data_test = data.loc['2023-09-01':]
 
 
-
-
-p,d,q = 1,1,1
-P,D,Q = 1,1,1
+# p,d,q = 1,1,1
+# P,D,Q = 1,1,1
+p,d,q = 1,0,2
+P,D,Q = 0,1,1
 s = 24
 
 
@@ -268,25 +268,38 @@ def sarima_other(data_train, data_test, exog=False, plot=False):
         if exog:
             name = f'{name}_exog'
         
-        fig, ax = plt.subplots(figsize=(20, 10))
-        predictions.plot(ax=ax, label='pred')
-        ax.set_title('Predictions with ARIMA models')
-        ax.legend()
-        plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
-        plt.autoscale(enable=True, axis='x', tight=True)
-        plt.tight_layout()
-        plt.savefig(f'{name}.png')
-        plt.show()
+        # fig, ax = plt.subplots(figsize=(20, 10))
+        # predictions.plot(ax=ax, label='pred')
+        # ax.set_title('Predictions with ARIMA models')
+        # ax.legend()
+        # plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+        # plt.autoscale(enable=True, axis='x', tight=True)
+        # plt.tight_layout()
+        # plt.savefig(f'{name}.png')
+        # plt.show()
 
-        fig, ax = plt.subplots(figsize=(20, 10))
-        predictions.loc['2023-09-18':'2023-09-21'].plot(ax=ax, label='pred')
-        ax.set_title('Predictions with ARIMA models')
-        ax.legend()
-        plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
-        plt.autoscale(enable=True, axis='x', tight=True)
-        plt.tight_layout()
-        plt.savefig(f'{name}_specific.png')
-        plt.show()
+
+        # create a plot for every 3 days
+        for i in range(1, 29, 3):
+            fig, ax = plt.subplots(figsize=(20, 10))
+            predictions.loc[f'2023-09-{i}':f'2023-09-{i+2}'].plot(ax=ax, label='pred')
+            ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th september')
+            ax.legend()
+            plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+            plt.autoscale(enable=True, axis='x', tight=True)
+            plt.tight_layout()
+            plt.savefig(f'{name}_{i}.png')
+            plt.show()
+
+        # fig, ax = plt.subplots(figsize=(20, 10))
+        # predictions.loc['2023-09-18':'2023-09-21'].plot(ax=ax, label='pred')
+        # ax.set_title('Predictions with ARIMA models')
+        # ax.legend()
+        # plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+        # plt.autoscale(enable=True, axis='x', tight=True)
+        # plt.tight_layout()
+        # plt.savefig(f'{name}_specific.png')
+        # plt.show()
 
 
 def sarima_statsmodels():
@@ -422,8 +435,8 @@ exog = False
 
 data = load_data(fn_global, exog=exog)
 
-# data_train = data.loc[:'2023-08-31']
-# data_test = data.loc['2023-09-01':]
+data_train = data.loc[:'2023-08-31']
+data_test = data.loc['2023-09-01':]
 # print(data_train.head(10))
 
 # data_diff_1 = data_train.diff().dropna()
@@ -432,6 +445,7 @@ data = load_data(fn_global, exog=exog)
 # forecaster = sarima_forecaster(data_train, data_test, exog=exog, plot=True)
 # sarima_other(data_train, data_test, exog=exog, plot=True)
 # forecaster.save('sarima_model_skforecast.pkl')
+# exit()
 
 def backtesting():
     forecaster = ForecasterSarimax(
@@ -602,29 +616,29 @@ def grid_search_bad():
     # Car avec order=(1,1,1) et seasonal_order=(1,1,1,24) on a un AIC de 23496.291621331176
     pass
 
+def launch_grid_search():
+    data_train = data.loc[:'2023-07-31'] # 7 months
+    data_test = data.loc['2023-08-01':] # 2 months
+    # create a grid search manually
+    # for p in [2]:#range(0, 3):
+    #     for d in range(0, 2):
+    #         for q in range(0, 3):
+    #             for P in range(0, 3):
+    #                 for D in range(0, 2):
+    #                     for Q in range(0, 3):
+    #                         try:
+    #                             start_time = time.time()
+    #                             model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,s))
+    #                             model.fit(y=data_train)
+    #                             predictions_pdmarima = model.predict(len(data_test))
+    #                             predictions_pdmarima.name = 'predictions_pdmarima'
+    #                             predictions_pdmarima = pd.concat([data_test, predictions_pdmarima], axis=1)
 
-data_train = data.loc[:'2023-07-31'] # 7 months
-data_test = data.loc['2023-08-01':] # 2 months
-# create a grid search manually
-# for p in [2]:#range(0, 3):
-#     for d in range(0, 2):
-#         for q in range(0, 3):
-#             for P in range(0, 3):
-#                 for D in range(0, 2):
-#                     for Q in range(0, 3):
-#                         try:
-#                             start_time = time.time()
-#                             model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,s))
-#                             model.fit(y=data_train)
-#                             predictions_pdmarima = model.predict(len(data_test))
-#                             predictions_pdmarima.name = 'predictions_pdmarima'
-#                             predictions_pdmarima = pd.concat([data_test, predictions_pdmarima], axis=1)
+    #                             # print the MSE and AIC
+    #                             print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q} - AIC: {model.aic()} - MSE: {mean_absolute_error(data_test['paid_rate'], predictions_pdmarima['predictions_pdmarima'])} - Time: {time.time() - start_time:.2f}s")
 
-#                             # print the MSE and AIC
-#                             print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q} - AIC: {model.aic()} - MSE: {mean_absolute_error(data_test['paid_rate'], predictions_pdmarima['predictions_pdmarima'])} - Time: {time.time() - start_time:.2f}s")
-
-#                         except:
-#                             print(f"Error pdmarima can't fit the model. p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}")
+    #                         except:
+    #                             print(f"Error pdmarima can't fit the model. p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}")
 
 
 def open_file(file):
@@ -666,20 +680,65 @@ def open_file(file):
     return data_pd
 
 
-# data1 = open_file('output_gridsearch_p0.txt')
-# data2 = open_file('output_gridsearch_p1.txt')
-# data3 = open_file('output_gridsearch_p2.txt')
+def grid_search_analysis():
 
-# data = pd.concat([data1, data2, data3])
-# # save the dataframe to a csv file
-# data.to_csv('output_gridsearch.csv', index=False)
+    data1 = open_file('output_gridsearch_p0.txt')
+    data2 = open_file('output_gridsearch_p1.txt')
+    data3 = open_file('output_gridsearch_p2.txt')
+    data = pd.concat([data1, data2, data3])
+    # save the dataframe to a csv file
+    data.to_csv('output_gridsearch.csv', index=False)
 
-data = pd.read_csv('output_gridsearch.csv')
+    data = pd.read_csv('output_gridsearch.csv')
 
-data = data.sort_values(by=['AIC'])
-print("AIC")
-print(data.head(10))
+    data = data.sort_values(by=['AIC'])
+    print("AIC")
+    print(data.head(10))
 
-data = data.sort_values(by=['MSE'])
-print("MSE")
-print(data.head(10))
+    data = data.sort_values(by=['MSE'])
+    print("MSE")
+    print(data.head(10))
+
+
+    # sort the data using 50% AIC and 50% MSE
+    data['score'] = (data['AIC'] + data['MSE']) / 2
+    data = data.sort_values(by=['score'])
+    print("SCORE")
+    print(data.head(10))
+    ### RESULT ###
+    #      p  d  q  P  D  Q           AIC       MSE    Time         score
+    # 148  1  0  2  0  1  1  25629.983562  2.201917   54.37  12816.092740
+    # 238  2  0  1  0  1  1  25631.249118  2.191278   55.40  12816.720198
+    # 149  1  0  2  0  1  2  25631.299778  2.189466  116.34  12816.744622
+    # 154  1  0  2  1  1  1  25631.384019  2.189653   68.57  12816.786836
+    # 239  2  0  1  0  1  2  25632.707111  2.194291  138.97  12817.450701
+    # 160  1  0  2  2  1  1  25633.072605  2.190785  141.71  12817.631695
+    # 155  1  0  2  1  1  2  25633.254862  2.191324  124.73  12817.723093
+    # 245  2  0  1  1  1  2  25634.087578  2.191055  168.59  12818.139316
+    # 244  2  0  1  1  1  1  25634.105795  2.197561   63.90  12818.151678
+    # 263  2  0  2  1  1  2  25634.272720  2.190599  181.97  12818.231660
+
+
+from sklearn.model_selection import TimeSeriesSplit
+# train a model with this 2 possible parameters
+# 1  0  2  0  1  1
+# 2  0  1  0  1  1
+
+tscv = TimeSeriesSplit(n_splits=5)
+
+for train_idx, test_idx in tscv.split(data['paid_rate']):
+    train_data = data.iloc[train_idx]['paid_rate']
+    test_data = data.iloc[test_idx]['paid_rate']
+
+    print(f"Train dates      : {train_data.index.min()} --- {train_data.index.max()}  "
+          f"(n={len(train_data)})")
+    print(f"Test dates       : {test_data.index.min()} --- {test_data.index.max()}  "
+            f"(n={len(test_data)})")
+
+    model = ARIMA(order=(1,1,1), seasonal_order=(1,1,1,24))
+    model.fit(y=train_data)
+
+    predictions = model.predict(len(test_data))
+
+    print(f"MAE: {mean_absolute_error(test_data, predictions)}")
+
