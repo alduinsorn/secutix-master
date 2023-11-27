@@ -6,7 +6,7 @@ from io import StringIO
 import contextlib
 import re
 import matplotlib.pyplot as plt
-plt.style.use('seaborn-v0_8-darkgrid')
+# plt.style.use('seaborn-v0_8-darkgrid')
 import time
 
 # pmdarima
@@ -282,8 +282,8 @@ def sarima_other(data_train, data_test, exog=False, plot=False):
         # create a plot for every 3 days
         for i in range(1, 29, 3):
             fig, ax = plt.subplots(figsize=(20, 10))
-            predictions.loc[f'2023-09-{i}':f'2023-09-{i+2}'].plot(ax=ax, label='pred')
-            ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th september')
+            predictions.loc[f'2023-07-{i}':f'2023-07-{i+2}'].plot(ax=ax, label='pred')
+            ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th july')
             ax.legend()
             plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
             plt.autoscale(enable=True, axis='x', tight=True)
@@ -428,6 +428,45 @@ def plot_predictions():
     plt.show()
 
 
+def sarima_plot_3days(data_train, data_test, month_name):
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+    try:
+        model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,s))
+        model.fit(y=data_train)
+        predictions = model.predict(len(data_test))
+        predictions.name = 'predictions'
+        predictions = pd.concat([data_test, predictions], axis=1)
+        print(predictions.head(4))
+
+    except Exception as e:
+        print("Error pdmarima can't fit the model", e)
+        predictions = pd.DataFrame(index=data_test.index, columns=['predictions'])
+        exit()
+
+    print(f"MAE: {mean_absolute_error(data_test['paid_rate'], predictions['predictions'])}")
+
+    # save the data into a csv file
+    # predictions.to_csv(f'./predictions_{month_name}.csv')
+    
+    name = 'pred_arima'
+    days = days_in_month[months.index(month_name)] - 1
+
+    # create a plot for every 3 days
+    for i in range(1, days, 3):
+        fig, ax = plt.subplots(figsize=(20, 10))
+        predictions.loc[f'2023-{(months.index(month_name)+1):02}-{i}':f'2023-{(months.index(month_name)+1):02}-{i+2}'].plot(ax=ax, label='pred')
+        ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th {month_name}')
+        ax.legend()
+        # set the y axis to be between 0 and 100
+        ax.set_ylim(0, 100)
+        plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+        plt.autoscale(enable=True, axis='x', tight=True)
+        plt.tight_layout()
+        plt.savefig(f'{name}_{month_name}_{i}.png')
+        plt.show()
+
+
 fn_global = './data_ogone_norm_global.csv'
 fn_morning = './data_ogone_norm_morning.csv'
 
@@ -436,7 +475,7 @@ exog = False
 data = load_data(fn_global, exog=exog)
 
 data_train = data.loc[:'2023-08-31']
-data_test = data.loc['2023-09-01':]
+data_test = data.loc['2023-09-01':'2023-09-30']
 # print(data_train.head(10))
 
 # data_diff_1 = data_train.diff().dropna()
@@ -445,7 +484,12 @@ data_test = data.loc['2023-09-01':]
 # forecaster = sarima_forecaster(data_train, data_test, exog=exog, plot=True)
 # sarima_other(data_train, data_test, exog=exog, plot=True)
 # forecaster.save('sarima_model_skforecast.pkl')
-# exit()
+
+
+
+sarima_plot_3days(data_train, data_test, 'september')
+
+exit()
 
 def backtesting():
     forecaster = ForecasterSarimax(

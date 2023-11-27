@@ -60,19 +60,65 @@ def detect_anomalies(model, data):
     # print(df[(df['residuals'] <= -3.5) & (df.index.hour > 6)])
 
     return df
-    
+
+def threshold_model(data, threshold=75):
+    # for every data, check if the value is lower than the threshold, if yes, then it's an anomaly
+    anomalies = data[data <= threshold]
+    return anomalies
 
 
 # create_trained_model('./data_ogone_norm_morning.csv')
 
+days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-model = load_model()
+
+real_anomalies = load_data('./anomalies.csv')
+
+# model = load_model()
 data = load_data('./data_ogone_norm_morning.csv')
-data_test = data['2023-09-01':]['paid_rate']
+data_train = data[:'2023-06-30']['paid_rate']
+data_test = data['2023-07-01':]['paid_rate']
+
+anomalies_threshold = threshold_model(data_test, threshold=75)
+
+
+model = train_model(data_train)
 df = detect_anomalies(model, data_test)
 # add the 'total_transactions' column to the dataframe
 df['total_transaction'] = data['total_transaction']
 
-anomalies = df[df['residuals'] <= -3.5]
+anomalies = df[df['residuals'] <= -4.5]
 anomalies = anomalies[anomalies.index.hour > 6] # during the night it's not that relevant because there are not a lot of transactions
-print(anomalies[anomalies['paid_rate'] <= 70])
+# print(anomalies[anomalies['paid_rate'] <= 70])
+print(anomalies)
+
+
+# convert the threshold model anomalies to a dataframe, keep the index (timestamp) and the paid_rate
+anomalies_threshold = pd.DataFrame({'paid_rate': anomalies_threshold})
+
+
+# count the number of real and false anomalies detected by the threshold model using the real_anoamlies dataset
+real_anomalies_detected = 0
+false_anomalies_detected = 0
+for index, row in anomalies_threshold.iterrows():
+    if index in real_anomalies.index:
+        real_anomalies_detected += 1
+    else:
+        false_anomalies_detected += 1
+
+print(f"total real anomalies: {len(real_anomalies)}")
+print(f"real anomalies detected: {real_anomalies_detected}")
+print(f"false anomalies detected: {false_anomalies_detected}")
+
+# same for the arima model
+real_anomalies_detected = 0
+false_anomalies_detected = 0
+for index, row in anomalies.iterrows():
+    if index in real_anomalies.index:
+        real_anomalies_detected += 1
+    else:
+        false_anomalies_detected += 1
+
+print(f"total real anomalies: {len(real_anomalies)}")
+print(f"real anomalies detected: {real_anomalies_detected}")
+print(f"false anomalies detected: {false_anomalies_detected}")
