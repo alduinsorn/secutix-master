@@ -70,7 +70,8 @@ def threshold_model(data, threshold=75):
 # create_trained_model('./data_ogone_norm_morning.csv')
 
 days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
+months_names = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 
+                'september', 'october', 'november', 'december']
 
 real_anomalies = load_data('./anomalies.csv')
 

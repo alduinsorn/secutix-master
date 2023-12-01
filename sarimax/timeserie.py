@@ -32,7 +32,7 @@ import warnings
 
 def load_data(fn, exog=False):
     # data = pd.read_csv('./data_ogone_norm_global.csv')
-    data = pd.read_csv('./data_ogone_norm_morning.csv')
+    data = pd.read_csv(fn)
     data['timestamp'] = pd.to_datetime(data['timestamp'])
     data = data.set_index('timestamp')
     data.index = pd.DatetimeIndex(data.index.values, freq=data.index.inferred_freq)
@@ -48,12 +48,12 @@ def load_data(fn, exog=False):
 
 # p,d,q = 1,1,1
 # P,D,Q = 1,1,1
-p,d,q = 1,0,2
-P,D,Q = 0,1,1
-s = 24
+# p,d,q = 1,0,2
+# P,D,Q = 0,1,1
+# s = 24
 
 
-def test_stationarity():
+def test_stationarity(data, data_diff_1, data_diff_2):
     # Test stationarity
     # ==============================================================================
     warnings.filterwarnings("ignore")
@@ -107,7 +107,7 @@ def test_stationarity():
     plt.show()
 
 
-def plot_acf_pacf():
+def plot_acf_pacf(data, data_diff_1, savefig=False):
     # Autocorrelation plot for original and differenced series
     # ==============================================================================
     fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(7, 4), sharex=True)
@@ -132,7 +132,7 @@ def plot_acf_pacf():
     # PACF -> 1 so p = 1
 
 
-def plot_decomposition():
+def plot_decomposition(data, data_diff_1):
     # Time series decomposition of original versus differenced series
     # ==============================================================================
     res_decompose = seasonal_decompose(data, model='additive', extrapolate_trend='freq')
@@ -165,7 +165,7 @@ def plot_decomposition():
     # on remarque qu'il y a de la saisonnalité dans les données tout les 24 heures (car données sont prise toutes les heures) et que chaque jour il se passe la même chose
     # Au vu des graphiques il n'est pas necessaire de faire une différence d'ordre car les données sembles suffisament stationnaire
 
-def adfuller_test():
+def adfuller_test(data_train):
     # Donc on va prendre les données et les différencier d'ordre 24 pour enlever la saisonnalité
     data_diff_0_24 = data_train.diff(24).dropna()
 
@@ -459,7 +459,7 @@ def sarima_plot_3days(data_train, data_test, month_name):
         ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th {month_name}')
         ax.legend()
         # set the y axis to be between 0 and 100
-        ax.set_ylim(0, 100)
+        # ax.set_ylim(0, 100)
         plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
         plt.autoscale(enable=True, axis='x', tight=True)
         plt.tight_layout()
@@ -467,19 +467,216 @@ def sarima_plot_3days(data_train, data_test, month_name):
         plt.show()
 
 
-fn_global = './data_ogone_norm_global.csv'
-fn_morning = './data_ogone_norm_morning.csv'
+
+def analyse_2years_data(fname):
+    data = pd.read_csv(fname)
+    data['timestamp'] = pd.to_datetime(data['timestamp'])
+    data = data.set_index('timestamp')
+    data.index = pd.DatetimeIndex(data.index.values, freq=data.index.inferred_freq)
+    
+    data = data['percentage']
+    
+    data_diff_1 = data.diff().dropna()
+    data_diff_2 = data_diff_1.diff().dropna()
+
+    test_stationarity(data, data_diff_1, data_diff_2)
+    plot_acf_pacf(data, data_diff_1, savefig=True)
+    plot_decomposition(data, data_diff_1)
+    adfuller_test(data)
+
+def grid_search_2years(fname):
+    data = pd.read_csv(fname)
+    data['timestamp'] = pd.to_datetime(data['timestamp'])
+    data = data.set_index('timestamp')
+    data.index = pd.DatetimeIndex(data.index.values, freq=data.index.inferred_freq)
+    
+    data = data['percentage']
+
+    data_train = data.loc['2022-08-01':'2023-07-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
+    data_test = data.loc['2023-08-01':] # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
+
+    # print(len(data_train))
+    # print(len(data_test))
+
+    for p in [2]: # should be changed after each run
+        for d in [1,0]:
+            for q in [2, 1,0]:
+                for P in [2, 1,0]:
+                    for D in [1,0]:
+                        for Q in [2,1,0]:
+                            try:
+                                start_time = time.time()
+                                model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
+                                model.fit(y=data_train)
+                                predictions_pdmarima = model.predict(len(data_test))
+                                predictions_pdmarima.name = 'predictions_pdmarima'
+                                predictions_pdmarima = pd.concat([data_test, predictions_pdmarima], axis=1)
+
+                                # print the MSE and AIC
+                                print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={model.aic()}, MSE={mean_absolute_error(data_test, predictions_pdmarima['predictions_pdmarima'])}, Time={time.time() - start_time:.2f}s")
+
+                            except Exception as e:
+                                # print("p=-1, d=-1, q=-1, P=-1, D=-1, Q=-1 - AIC: -1 - MSE: -1 - Time: -1s")
+                                print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={float('inf')}, MSE={float('inf')}, Time={int('inf')}s\n {e}")
+
+def plot_by_month(pred, month_name):
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 28, 31] # november isn't complete in the dataset so we take 28 days
+    months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+    
+    month_nb = months.index(month_name) + 1
+    days = days_in_month[month_nb - 1]
+    
+    plt.figure(figsize=(20, 10))
+    plt.plot(pred.loc[f'2023-{month_nb:02}-01':f'2023-{month_nb:02}-{days:02}']['percentage'], label='test')
+    plt.plot(pred.loc[f'2023-{month_nb:02}-01':f'2023-{month_nb:02}-{days:02}']['predictions'], label='pred')
+    plt.title(f'Predictions with ARIMA models for the month of {month_name}')
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f'pred_arima_{month_name}.png')
+    plt.show()
+
+
+def sarima_2years(fname):
+
+    p,d,q,P,D,Q = 1,0,1,1,1,1
+
+    data = pd.read_csv(fname)
+    data['timestamp'] = pd.to_datetime(data['timestamp'])
+    data = data.set_index('timestamp')
+    data.index = pd.DatetimeIndex(data.index.values, freq=data.index.inferred_freq)
+    
+    data = data['percentage']
+
+    data_train = data.loc['2022-08-01':'2023-07-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
+    data_test = data.loc['2023-08-01':] # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
+
+    timestart = time.time()    
+    model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
+    model.fit(y=data_train)
+    print(f"Time to fit the model: {time.time() - timestart:.2f}s")
+    predictions = model.predict(len(data_test))
+    predictions.name = 'predictions'
+    predictions = pd.concat([data_test, predictions], axis=1)
+
+    mse = mean_absolute_error(data_test, predictions['predictions'])
+    print(f"MAE: {mse}")
+
+    plot_by_month(predictions, 'august')
+    plot_by_month(predictions, 'september')
+    plot_by_month(predictions, 'october')
+    plot_by_month(predictions, 'november')
+
+def open_file(file):
+    # create a dataframe that will contains the data from the file
+    data_pd = pd.DataFrame(columns=['p', 'd', 'q', 'P', 'D', 'Q', 'AIC', 'MSE', 'Time'])
+    with open(file, 'r') as f:
+        lines = f.readlines()
+        # remove empty lines
+        lines = [line for line in lines if line.strip()]
+        # remove the '\n' at the end of each line
+        lines = [line.strip() for line in lines]
+        for line in lines:
+            # example of a line :
+            # p=0, d=0, q=2, P=1, D=0, Q=1, AIC=36352.21971120763, MSE=8.406316710696737, Time=15.73s
+            line_arr = line.split(', ')
+            # remove the name and the '='
+            line_arr = [line.split('=')[1] for line in line_arr]
+            # remove the 's' at the end of the time
+            line_arr[-1] = line_arr[-1][:-1]
+            print(line_arr)
+            try:
+                # add the line to the dataframe
+                data_pd.loc[len(data_pd)] = line_arr
+            except:
+                print("Error with the line : ", line)
+                exit()
+
+    # convert the values to the correct type
+    data_pd['p'] = data_pd['p'].astype(int)
+    data_pd['d'] = data_pd['d'].astype(int)
+    data_pd['q'] = data_pd['q'].astype(int)
+    data_pd['P'] = data_pd['P'].astype(int)
+    data_pd['D'] = data_pd['D'].astype(int)
+    data_pd['Q'] = data_pd['Q'].astype(int)
+    data_pd['AIC'] = data_pd['AIC'].astype(float)
+    data_pd['MSE'] = data_pd['MSE'].astype(float)
+    data_pd['Time'] = data_pd['Time'].astype(float)
+
+    # return the dataframe
+    return data_pd
+
+
+def grid_search_analysis(folder):
+
+    data1 = open_file(f'{folder}/output_gridsearch_p0.txt')
+    data2 = open_file(f'{folder}/output_gridsearch_p1.txt')
+    # data3 = open_file(f'{folder}/output_gridsearch_p2.txt')
+    data = pd.concat([data1, data2])#, data3])
+    # save the dataframe to a csv file
+    data.to_csv('output_gridsearch.csv', index=False)
+
+    data = pd.read_csv('output_gridsearch.csv')
+
+    # data = data.sort_values(by=['AIC'])
+    # print("AIC")
+    # print(data.head(10))
+
+    # data = data.sort_values(by=['MSE'])
+    # print("MSE")
+    # print(data.head(10))
+
+
+    # sort the data using 50% AIC and 50% MSE
+    data['score'] = (data['AIC'] + data['MSE']) / 2
+    data = data.sort_values(by=['score'])
+    print("SCORE")
+    print(data.head(10))
+    ### RESULT ###
+    #      p  d  q  P  D  Q           AIC       MSE    Time         score
+    # 148  1  0  2  0  1  1  25629.983562  2.201917   54.37  12816.092740
+    # 238  2  0  1  0  1  1  25631.249118  2.191278   55.40  12816.720198
+    # 149  1  0  2  0  1  2  25631.299778  2.189466  116.34  12816.744622
+    # 154  1  0  2  1  1  1  25631.384019  2.189653   68.57  12816.786836
+    # 239  2  0  1  0  1  2  25632.707111  2.194291  138.97  12817.450701
+    # 160  1  0  2  2  1  1  25633.072605  2.190785  141.71  12817.631695
+    # 155  1  0  2  1  1  2  25633.254862  2.191324  124.73  12817.723093
+    # 245  2  0  1  1  1  2  25634.087578  2.191055  168.59  12818.139316
+    # 244  2  0  1  1  1  1  25634.105795  2.197561   63.90  12818.151678
+    # 263  2  0  2  1  1  2  25634.272720  2.190599  181.97  12818.231660
+
+ 
+
+
+# analyse_2years_data('./data/2years_ogone_noise_reduction.csv')
+# analyse_2years_data('./data/2years_az_noise_reduction.csv')
+# analyse_2years_data('./data/2years_datatrans_noise_reduction.csv')
+
+# grid_search_2years('./data/2years_ogone_noise_reduction.csv')
+
+sarima_2years('./data/2years_ogone_noise_reduction.csv')
+
+# grid_search_analysis('./gridsearch/2years_ogone')
+
+exit()
+
+
+
+fn_global = './data/data_ogone_norm_global.csv'
+fn_morning = './data/data_ogone_norm_morning.csv'
 
 exog = False
 
 data = load_data(fn_global, exog=exog)
 
-data_train = data.loc[:'2023-08-31']
-data_test = data.loc['2023-09-01':'2023-09-30']
-# print(data_train.head(10))
+data_train = data.loc[:'2023-04-30']
+data_test = data.loc['2023-05-01':'2023-05-31']
+# # print(data_train.head(10))
 
 # data_diff_1 = data_train.diff().dropna()
 # data_diff_2 = data_diff_1.diff().dropna()
+
+# plot_acf_pacf(data_train, data_diff_1, savefig=True)
+# exit()
 
 # forecaster = sarima_forecaster(data_train, data_test, exog=exog, plot=True)
 # sarima_other(data_train, data_test, exog=exog, plot=True)
@@ -487,9 +684,9 @@ data_test = data.loc['2023-09-01':'2023-09-30']
 
 
 
-sarima_plot_3days(data_train, data_test, 'september')
+# sarima_plot_3days(data_train, data_test, 'may')
 
-exit()
+# exit()
 
 def backtesting():
     forecaster = ForecasterSarimax(
@@ -660,7 +857,7 @@ def grid_search_bad():
     # Car avec order=(1,1,1) et seasonal_order=(1,1,1,24) on a un AIC de 23496.291621331176
     pass
 
-def launch_grid_search():
+def launch_grid_search(data):
     data_train = data.loc[:'2023-07-31'] # 7 months
     data_test = data.loc['2023-08-01':] # 2 months
     # create a grid search manually
@@ -684,83 +881,6 @@ def launch_grid_search():
     #                         except:
     #                             print(f"Error pdmarima can't fit the model. p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}")
 
-
-def open_file(file):
-    # create a dataframe that will contains the data from the file
-    data_pd = pd.DataFrame(columns=['p', 'd', 'q', 'P', 'D', 'Q', 'AIC', 'MSE', 'Time'])
-    with open(file, 'r') as f:
-        lines = f.readlines()
-        # remove empty lines
-        lines = [line for line in lines if line.strip()]
-        # remove the '\n' at the end of each line
-        lines = [line.strip() for line in lines]
-        for line in lines:
-            # example of a line :
-            # p=0, d=0, q=2, P=1, D=0, Q=1, AIC=36352.21971120763, MSE=8.406316710696737, Time=15.73s
-            line_arr = line.split(', ')
-            # remove the name and the '='
-            line_arr = [line.split('=')[1] for line in line_arr]
-            # remove the 's' at the end of the time
-            line_arr[-1] = line_arr[-1][:-1]
-            try:
-                # add the line to the dataframe
-                data_pd.loc[len(data_pd)] = line_arr
-            except:
-                print("Error with the line : ", line)
-                exit()
-
-    # convert the values to the correct type
-    data_pd['p'] = data_pd['p'].astype(int)
-    data_pd['d'] = data_pd['d'].astype(int)
-    data_pd['q'] = data_pd['q'].astype(int)
-    data_pd['P'] = data_pd['P'].astype(int)
-    data_pd['D'] = data_pd['D'].astype(int)
-    data_pd['Q'] = data_pd['Q'].astype(int)
-    data_pd['AIC'] = data_pd['AIC'].astype(float)
-    data_pd['MSE'] = data_pd['MSE'].astype(float)
-    data_pd['Time'] = data_pd['Time'].astype(float)
-
-    # return the dataframe
-    return data_pd
-
-
-def grid_search_analysis():
-
-    data1 = open_file('output_gridsearch_p0.txt')
-    data2 = open_file('output_gridsearch_p1.txt')
-    data3 = open_file('output_gridsearch_p2.txt')
-    data = pd.concat([data1, data2, data3])
-    # save the dataframe to a csv file
-    data.to_csv('output_gridsearch.csv', index=False)
-
-    data = pd.read_csv('output_gridsearch.csv')
-
-    data = data.sort_values(by=['AIC'])
-    print("AIC")
-    print(data.head(10))
-
-    data = data.sort_values(by=['MSE'])
-    print("MSE")
-    print(data.head(10))
-
-
-    # sort the data using 50% AIC and 50% MSE
-    data['score'] = (data['AIC'] + data['MSE']) / 2
-    data = data.sort_values(by=['score'])
-    print("SCORE")
-    print(data.head(10))
-    ### RESULT ###
-    #      p  d  q  P  D  Q           AIC       MSE    Time         score
-    # 148  1  0  2  0  1  1  25629.983562  2.201917   54.37  12816.092740
-    # 238  2  0  1  0  1  1  25631.249118  2.191278   55.40  12816.720198
-    # 149  1  0  2  0  1  2  25631.299778  2.189466  116.34  12816.744622
-    # 154  1  0  2  1  1  1  25631.384019  2.189653   68.57  12816.786836
-    # 239  2  0  1  0  1  2  25632.707111  2.194291  138.97  12817.450701
-    # 160  1  0  2  2  1  1  25633.072605  2.190785  141.71  12817.631695
-    # 155  1  0  2  1  1  2  25633.254862  2.191324  124.73  12817.723093
-    # 245  2  0  1  1  1  2  25634.087578  2.191055  168.59  12818.139316
-    # 244  2  0  1  1  1  1  25634.105795  2.197561   63.90  12818.151678
-    # 263  2  0  2  1  1  2  25634.272720  2.190599  181.97  12818.231660
 
 
 from sklearn.model_selection import TimeSeriesSplit
