@@ -36,3 +36,48 @@ ABANDONED       1572
 
 
 ""Suite -> voir si on choisit d'abord une certaine façon de faire sur les 4 ou si on fait les 4 et on compare les résultats (mais demande de choisir comment on décide si oui ou non on considère que c'est un incident)""
+
+
+
+La première étape après avoir préparé les données est de trouver le nombre de clusters à utiliser. Pour cela, il a été décidé d'utiliser la méthode du coude qui consiste à calculer la somme des distances au carré de chaque point à son centroïde, puis de comparer le résultat obtenu avec le connaissance du domaine. Dans cette optique, la méthode du coude nous informe qu'il faudrait quatre clusters afin de séparer au mieux les données, néanmoins dans notre cas, il serait plus logique d'avoir deux clusters : un pour les transactions  normales et un autre pour les transactions anormales. En outre, lors de l'analyse d'un cas en utilisant quatre et deux clusters respectivement, quatre clusters ne donne pas une vision plus claire des données et complique la décision du choix de décider dans quel mesure affirmer qu'un groupement défini les transactions anormales. C'est pourquoi il a été convenu de choisir deux clusters pour la suite de l'analyse.
+La deuxième décision qu'il a fallu prendre est par rapport à la transformation de l'attribut de l'état du paiement, est-ce qu'il est préférable de choisir la transformation binaire ou celle avec cinq possibilitées. Dans ce but, deux prédictions sur deux jours et heures ont été réalisé afin d'analyser la répartition des résultats obtenues. Ce qui a pu en être ressorti est que la différenciation en cinq catégories ne permet pas d'avoir de meilleures résultats tout en n'avant pas de réel impacte sur la décision du cluster à assigner à une transaction, ce qui est principalement dû au fait que les transactions payés et non payés sont le plus représenté.
+<div style="display: flex; justify-content: space-between;">
+    <img src="./kmeans/2_clusters/onehot_payment_state/kmeans_17th_10h_january_2023_cluster_0_with_payment_state.png" alt="Image 1" width="49%">
+    <img src="./kmeans/2_clusters/onehot_payment_state/kmeans_17th_10h_january_2023_cluster_0_with_payment_state.png" alt="Image 1" width="49%">
+</div>
+<div style="display: flex; justify-content: space-between;">
+    <img src="./kmeans/2_clusters/onehot_payment_state/kmeans_18th_10h_january_2023_cluster_0_with_payment_state.png" alt="Image 1" width="49%">
+    <img src="./kmeans/2_clusters/onehot_payment_state/kmeans_18th_10h_january_2023_cluster_0_with_payment_state.png" alt="Image 1" width="49%">
+</div>
+
+Maintenant que les données sont prêtes ainsi que les hyper paramètres de l'algorithme, l'évaluation du modèle peut commencer. Tout d'abord il faut determiné lequel des deux clusters est celui représentant les données dites anormales, pour y parvenir il a été décidé d'utiliser une fenêtre de données d'une heure et de choisir quatre date différentes dont une a eu un problème. La décision de choisir une fenêtre d'une durée de une heure permet d'avoir assez de transactions afin de pouvoir avoir une plus grande confidence sur l'analyse.
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="./kmeans/2_clusters/binary_payment_state/kmeans_17th_10h_january_2023_cluster_0.png" alt="Image 1" width="49%">
+    <img src="./kmeans/2_clusters/binary_payment_state/kmeans_17th_10h_january_2023_cluster_1.png" alt="Image 1" width="49%">
+</div>
+
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="./kmeans/2_clusters/binary_payment_state/kmeans_18th_10h_january_2023_cluster_0.png" alt="Image 1" width="49%">
+    <img src="./kmeans/2_clusters/binary_payment_state/kmeans_18th_10h_january_2023_cluster_1.png" alt="Image 1" width="49%">
+</div>
+
+Si on calcul le pourcentage que représente les transactions payées et non payées suivant les clusters voici ce que l'on peut obtenir :
+17th
+20.79% (635)
+71.09% (1197)
+
+18th
+17.50% (1543)
+19.81% (515)
+
+19th
+18.75% (400)
+19.24% (447)
+
+Night
+35.00% (20)
+30.43% (23)
+
+La première chose qu'il ressort de l'étude des clusters est qu'il semble que basé sur les représentations et les calculs statistiques, il semblerait que l'algorithme pourrait permettre de détecter des problèmes dans les données de transactions. Cependant, une autre chose ressort clairement de ces représentations et c'est l'axe X représentant le temps, comme on peut le voir l'algorithme K-means ne sépare pas les données basé sur une compréhension de l'état du paiement, mais sépare les données basé sur les minutes. Le cluster 0 représente les données de la deuxième moitié de l'heure et le cluster 1 de la première partie de l'heure. Si on choisit de prendre des données dans un temps plus cours comme 15 ou 30 minutes alors les résultats n'ont plus aucune valeur avec un cluster qui contient la grande majorité des transactions et l'autre quasiement rien. En voyant cela on peut se dire d'enlever le timestamp pour voir comment il réagit mais cela change la séparation des données basé sur la méthode de paiement ce qui ne permet toujours pas de detecter ce que l'on veut. Avec cette analyse, il est dangereux de se baser sur une technique de se genre car elle n'est pas maniable et montre que l'algorithme ne comprend pas la base sous jacente des données, ce qui pourrait amener a des conclusions erronées et engendrer des problèmes. C'est pourquoi cette technique utilisant des données brutes de transaction est écartée des potentielles solutions viables.

@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import datetime
 
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-
+def percent_analysis(unpaid, paid):
+    print(f"{(unpaid / (unpaid + paid) * 100):.2f}% ({unpaid+paid})")
 
 def prepare_data(data, onehot_state=False):
     # convert the date into columns for year, month, day, hour, minute
@@ -21,7 +21,7 @@ def prepare_data(data, onehot_state=False):
     # print(data['PAYMENT_METHOD'].value_counts())
     # input()
 
-    # drop some columns
+    # drop some columns 
     data = data.drop(['CREATION_DATE', 'PAYMENT_ID', 'PREVIOUS_STATES', 'PAYMENT_TYPE', 'ISSUER'], axis=1)
 
 
@@ -37,6 +37,7 @@ def prepare_data(data, onehot_state=False):
         data['PAYMENT_STATE'] = data['PAYMENT_STATE'].replace('UNPAID', 0)
         data['PAYMENT_STATE'] = data['PAYMENT_STATE'].replace('ABANDONED', 0)
         data['PAYMENT_STATE'] = data['PAYMENT_STATE'].replace('REFUSED', 0)
+        data['PAYMENT_STATE'] = data['PAYMENT_STATE'].replace('REFUNDED', 0)
         # keep only the rows where the payment state is 0 or 1
         data = data[data['PAYMENT_STATE'].isin([0, 1])]
 
@@ -56,10 +57,10 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
     data['CREATION_DATE'] = pd.to_datetime(data['CREATION_DATE'])
     # print(data.columns)
 
-    print(data['PAYMENT_TYPE'].value_counts())
-    print(data['PAYMENT_STATE'].value_counts())
-    print(data['PAYMENT_METHOD'].value_counts())
-    exit()
+    # print(data['PAYMENT_TYPE'].value_counts())
+    # print(data['PAYMENT_STATE'].value_counts())
+    # print(data['PAYMENT_METHOD'].value_counts())
+    # exit()
 
 
     # # display the number of transaction for every minutes
@@ -85,10 +86,10 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
 
 
     norm_data = prepare_data(data, onehot_state)
-    print(norm_data.head())
-    print(norm_data.columns)
+    # print(norm_data.head())
+    # print(norm_data.columns)
 
-    ### Elbow method ###
+    # ### Elbow method ###
     # sum_squared_distances = []
     # for num_clusters in range(2, 10):
     #     kmeans = KMeans(n_clusters=num_clusters)
@@ -99,16 +100,26 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
     # plt.plot(range(2, 10), sum_squared_distances)
     # plt.xlabel('Number of Clusters')
     # plt.ylabel('Sum of Squared Distances')
+    # plt.title('Elbow Method based on the transactions data transformed')
+    # plt.savefig('elbow_method.png')
     # plt.show()
-
-    # # create a kmeans model
-    kmeans = KMeans(n_clusters=cluster_number, random_state=42)
-    kmeans.fit(norm_data)
+    # return
 
     # recreate the datetime using the year, month, day, hour, minute, second to keep only the data between start_datetime and end_datetime
     norm_data['CREATION_DATE'] = pd.to_datetime(norm_data[['year', 'month', 'day', 'hour', 'minute', 'second']])
+
     display_data = norm_data[(norm_data['CREATION_DATE'] > start_datetime) & (norm_data['CREATION_DATE'] < end_datetime)]
     display_data = display_data.drop(['CREATION_DATE'], axis=1)
+    print("display_data", display_data.head())
+
+    # # create a kmeans model
+    kmeans = KMeans(n_clusters=cluster_number, random_state=42)
+    # remove the display_data from the norm_data
+    norm_data = norm_data.drop(display_data.index)
+    norm_data = norm_data.drop(['CREATION_DATE'], axis=1)
+
+    print("norm_data", norm_data.head())
+    kmeans.fit(norm_data)
 
     # # predict the clusters for the data
     display_data['LABEL'] = kmeans.predict(display_data)
@@ -134,11 +145,10 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
         display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('ABANDONED', 4)
 
 
-    if not onehot_state:
-        # for each cluster compute the number of paid and unpaid transactions
-        for cluster in range(cluster_number):
-            cluster_data = display_data[display_data['LABEL'] == cluster]
-            print(cluster_data['PAYMENT_STATE'].value_counts())
+    # for each cluster compute the number of paid and unpaid transactions
+    for cluster in range(cluster_number):
+        cluster_data = display_data[display_data['LABEL'] == cluster]
+        print(cluster_data['PAYMENT_STATE'].value_counts())
 
     # recreate the payment_method fields for the plot
     display_data['PAYMENT_METHOD'] = ''
@@ -165,15 +175,13 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
             plt.ylabel('Payment methods')
             plt.legend()
 
-            # get the date like 17th/Jan
-            str_date = start_datetime.strftime("%dth/%M")
 
             if start_datetime.hour == 10 and start_datetime.day == 17:
                 plt.title(f'Data points by payment methods for cluster {i} during the {start_datetime.strftime("%dth/%b")} incident period')
             else:
                 plt.title(f'Data points by payment methods for cluster {i} during the {start_datetime.strftime("%dth/%b")} normal period')
             if savefig: plt.savefig(f'{folder_name}/kmeans_{start_datetime.strftime("%dth_%Hh")}_january_2023_cluster_{i}_with_payment_state.png')
-            # plt.show()
+            plt.show()
     else:
         for i in range(cluster_number):
             display_data_spec = display_data[display_data['LABEL'] == i]
@@ -190,14 +198,16 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
             paid_transaction_count = len(display_data_spec[display_data_spec['PAYMENT_STATE'] == 1])
             unpaid_transaction_count = len(display_data_spec[display_data_spec['PAYMENT_STATE'] == 0])
             plt.legend([f'Paid: {paid_transaction_count}', f'Unpaid: {unpaid_transaction_count}'])
+
+            percent_analysis(unpaid_transaction_count, paid_transaction_count)
             
             if start_datetime.hour == 10 and start_datetime.day == 17:
                 plt.title(f'Data points by payment methods for cluster {i} during the {start_datetime.strftime("%dth/%b")} incident period')
             else:
                 plt.title(f'Data points by payment methods for cluster {i} during the {start_datetime.strftime("%dth/%b")} normal period')
             if savefig: plt.savefig(f'{folder_name}/kmeans_{start_datetime.strftime("%dth_%Hh")}_january_2023_cluster_{i}.png')
-            # plt.show()
-
+            plt.show()
+    
 
 
     # # # plot some of the data points
@@ -214,20 +224,54 @@ normal_end_datetime = datetime.datetime(2023, 1, 18, 11, 0)
 night_start_datetime = datetime.datetime(2023, 1, 18, 3, 0)
 night_end_datetime = datetime.datetime(2023, 1, 18, 4, 0)
 
+other_normal_start_datetime = datetime.datetime(2023, 1, 19, 13, 0)
+other_normal_end_datetime = datetime.datetime(2023, 1, 19, 14, 0)
+
 savefig = True
 
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, savefig=savefig)
 
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
 
 kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, savefig=savefig)
 kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, savefig=savefig)
 kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, savefig=savefig)
+kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, other_normal_start_datetime, other_normal_end_datetime, savefig=savefig)
 
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+
+
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, savefig=savefig)
+
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+
+
+# 17th
+print(f"\n17th")
+percent_analysis(845, 346)
+percent_analysis(122, 503)
+
+# 18th
+print(f"\n18th")
+percent_analysis(95, 413)
+percent_analysis(263, 1273)
+
+# 19th
+print(f"\n19th")
+percent_analysis(75, 325)
+percent_analysis(86, 361)
+
+# night
+print(f"\nNight")
+percent_analysis(5, 16)
+percent_analysis(6, 13)
