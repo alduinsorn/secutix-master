@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import datetime
 
+from sklearn.ensemble import IsolationForest
+
+
 def percent_analysis(unpaid, paid):
     print(f"{(unpaid / (unpaid + paid) * 100):.2f}% ({unpaid+paid})")
 
@@ -21,8 +24,9 @@ def prepare_data(data, onehot_state=False):
     # print(data['PAYMENT_METHOD'].value_counts())
     # input()
 
-    # drop some columns 
+    # drop some columns  
     data = data.drop(['CREATION_DATE', 'PAYMENT_ID', 'PREVIOUS_STATES', 'PAYMENT_TYPE', 'ISSUER'], axis=1)
+    # data = data.drop([ 'PAYMENT_ID', 'PREVIOUS_STATES', 'PAYMENT_TYPE', 'ISSUER'], axis=1)
 
 
     if onehot_state:
@@ -216,6 +220,110 @@ def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, one
     # plt.ylabel('Amount')
     # plt.show()
 
+def kmeans_high_level():
+    pass
+
+
+def isolation_level_transactions(fname, start_datetime, end_datetime, onehot_state=False, savefig=False):
+    data = pd.read_csv(fname)
+    data['CREATION_DATE'] = pd.to_datetime(data['CREATION_DATE'])
+    
+    norm_data = prepare_data(data, onehot_state)
+
+    norm_data['CREATION_DATE'] = pd.to_datetime(norm_data[['year', 'month', 'day', 'hour', 'minute', 'second']])
+
+    display_data = norm_data[(norm_data['CREATION_DATE'] > start_datetime) & (norm_data['CREATION_DATE'] < end_datetime)]
+    display_data = display_data.drop(['CREATION_DATE'], axis=1)
+    print("display_data", display_data.head())
+
+    isolation_forest = IsolationForest(n_estimators=100)
+
+    # remove the display_data from the norm_data
+    norm_data = norm_data.drop(display_data.index)
+    norm_data = norm_data.drop(['CREATION_DATE'], axis=1)
+
+    isolation_forest.fit(norm_data)
+
+    display_data['predictions'] = isolation_forest.predict(display_data)
+    # display_data['predictions'] = isolation_forest.predict(display_data.drop(['CREATION_DATE'], axis=1))
+    
+    # recreate the datetime using the year, month, day, hour, minute, second for the plot
+    display_data['CREATION_DATE'] = pd.to_datetime(display_data[['year', 'month', 'day', 'hour', 'minute', 'second']])
+    
+    if onehot_state:
+        # recreate the payment_state
+        display_data['PAYMENT_STATE'] = ''
+        for index, row in display_data.iterrows():
+            for column in display_data.columns:
+                if row[column] == 1 and column.startswith('PAYMENT_STATE'):
+                    # remove PAYMENT_STATE from the name
+                    display_data.at[index, 'PAYMENT_STATE'] = column.replace('PAYMENT_STATE_', '')
+                    break
+        
+        # # create a column with the payment state as a number
+        display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE'].replace('PAID', 0)
+        display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('UNPAID', 1)
+        display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('REFUNDED', 2)
+        display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('REFUSED', 3)
+        display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('ABANDONED', 4)
+
+        # recreate the payment_method fields for the plot
+    
+    display_data['PAYMENT_METHOD'] = ''
+    for index, row in display_data.iterrows():
+        for column in display_data.columns:
+            if row[column] == 1 and column.startswith('PAYMENT_METHOD'):
+                # remove PAYMENT_METHOD from the name
+                display_data.at[index, 'PAYMENT_METHOD'] = column.replace('PAYMENT_METHOD_', '')
+                break
+
+    folder_name = f'isolation_forest/{"onehot_payment_state" if onehot_state else "binary_payment_state"}'
+
+    print(display_data['predictions'].value_counts())
+    # print(display_data.head())
+
+    if onehot_state:
+        plt.figure(figsize=(20, 10))
+        for i in [-1, 1]:
+            display_data_spec = display_data[display_data['predictions'] == i]
+            count_transactions = len(display_data_spec)
+            plt.scatter(display_data_spec['CREATION_DATE'], display_data_spec['PAYMENT_METHOD'], label=f'{"Anomaly" if i == -1 else "Not anomaly"} ({count_transactions})')
+        plt.xlabel('Creation date')
+        plt.ylabel('Payment methods')
+        plt.legend()
+        plt.title(f'Data points by payment methods during the {start_datetime.strftime("%dth/%b")} incident period')
+        if savefig: plt.savefig(f'{folder_name}/isolation_forest_{start_datetime.strftime("%dth_%Hh")}_january_2023.png')
+        plt.show()
+    else:
+        # create a new column for each possibility (case 1 (paid and anomaly), case 2 (paid and not anomaly), case 3 (unpaid and anomaly), case 4 (unpaid and not anomaly)
+        display_data['CASE'] = ''
+        for index, row in display_data.iterrows():
+            if row['PAYMENT_STATE'] == 0 and row['predictions'] == -1:
+                display_data.at[index, 'CASE'] = "PAID + ANOMALY"
+            elif row['PAYMENT_STATE'] == 0 and row['predictions'] == 1:
+                display_data.at[index, 'CASE'] = "PAID + NOT ANOMALY"
+            elif row['PAYMENT_STATE'] == 1 and row['predictions'] == -1:
+                display_data.at[index, 'CASE'] = "UNPAID + ANOMALY"
+            elif row['PAYMENT_STATE'] == 1 and row['predictions'] == 1:
+                display_data.at[index, 'CASE'] = "UNPAID + NOT ANOMALY"
+
+        colors = ['orange', 'blue', 'red', 'green']
+
+        # plot the data points based on the creation_date and the payment_method
+        plt.figure(figsize=(20, 10))
+        for i, case in enumerate(['PAID + ANOMALY', 'PAID + NOT ANOMALY', 'UNPAID + ANOMALY', 'UNPAID + NOT ANOMALY']):
+            display_data_case = display_data[display_data['CASE'] == case]
+            count_transactions = len(display_data_case)
+            print(f"case {case} ({count_transactions})")
+            plt.scatter(display_data_case['CREATION_DATE'], display_data_case['PAYMENT_METHOD'], label=f'{case} ({count_transactions})', c=colors[i])
+        plt.xlabel('Creation date')
+        plt.ylabel('Payment methods')
+        plt.legend()
+        plt.title(f'Data points by payment methods during the {start_datetime.strftime("%dth/%b")} incident period')
+        if savefig: plt.savefig(f'{folder_name}/isolation_forest_{start_datetime.strftime("%dth_%Hh")}_january_2023.png')
+        plt.show()
+
+
 # their is an incident the 17th of january 2023 between 10 and 11 am
 incident_start_datetime = datetime.datetime(2023, 1, 17, 10, 0)
 incident_end_datetime = datetime.datetime(2023, 1, 17, 11, 0)
@@ -227,51 +335,37 @@ night_end_datetime = datetime.datetime(2023, 1, 18, 4, 0)
 other_normal_start_datetime = datetime.datetime(2023, 1, 19, 13, 0)
 other_normal_end_datetime = datetime.datetime(2023, 1, 19, 14, 0)
 
-savefig = True
 
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, savefig=savefig)
+def analysis_kmeans():
+    savefig = True
 
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, savefig=savefig)
 
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, savefig=savefig)
-kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, other_normal_start_datetime, other_normal_end_datetime, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 3, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
 
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+    kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, savefig=savefig)
+    kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, savefig=savefig)
+    kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, savefig=savefig)
+    kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, other_normal_start_datetime, other_normal_end_datetime, savefig=savefig)
 
-
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, savefig=savefig)
-
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
-# kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 2, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
 
 
-# 17th
-print(f"\n17th")
-percent_analysis(845, 346)
-percent_analysis(122, 503)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, savefig=savefig)
 
-# 18th
-print(f"\n18th")
-percent_analysis(95, 413)
-percent_analysis(263, 1273)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+    # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
 
-# 19th
-print(f"\n19th")
-percent_analysis(75, 325)
-percent_analysis(86, 361)
 
-# night
-print(f"\nNight")
-percent_analysis(5, 16)
-percent_analysis(6, 13)
+
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=True)
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=True)
