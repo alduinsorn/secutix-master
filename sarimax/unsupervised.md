@@ -81,3 +81,100 @@ Night
 30.43% (23)
 
 La première chose qu'il ressort de l'étude des clusters est qu'il semble que basé sur les représentations et les calculs statistiques, il semblerait que l'algorithme pourrait permettre de détecter des problèmes dans les données de transactions. Cependant, une autre chose ressort clairement de ces représentations et c'est l'axe X représentant le temps, comme on peut le voir l'algorithme K-means ne sépare pas les données basé sur une compréhension de l'état du paiement, mais sépare les données basé sur les minutes. Le cluster 0 représente les données de la deuxième moitié de l'heure et le cluster 1 de la première partie de l'heure. Si on choisit de prendre des données dans un temps plus cours comme 15 ou 30 minutes alors les résultats n'ont plus aucune valeur avec un cluster qui contient la grande majorité des transactions et l'autre quasiement rien. En voyant cela on peut se dire d'enlever le timestamp pour voir comment il réagit mais cela change la séparation des données basé sur la méthode de paiement ce qui ne permet toujours pas de detecter ce que l'on veut. Avec cette analyse, il est dangereux de se baser sur une technique de se genre car elle n'est pas maniable et montre que l'algorithme ne comprend pas la base sous jacente des données, ce qui pourrait amener a des conclusions erronées et engendrer des problèmes. C'est pourquoi cette technique utilisant des données brutes de transaction est écartée des potentielles solutions viables.
+
+
+
+
+Isolation forest
+
+With 0.237 contamination
+
+17th january 10AM with one-hot
+**General**
+ 1    1189
+-1     643
+**payment_method VISA**
+ 1    874
+-1    143
+
+**payment_method MASTERCARD** 
+-1    317
+ 1    315
+
+**payment_method UNKNOWN**
+-1    98
+
+**payment_method AMEX**
+-1    64
+
+**payment_method CREDITCARD**
+-1    21
+
+18th january 10AM with one-hot
+**General**
+1    1730
+-1     328
+**payment_method VISA**
+ 1    1060
+-1      76
+
+**payment_method MASTERCARD**
+ 1    670
+-1    116
+
+**payment_method UNKNOWN**
+-1    73
+
+**payment_method AMEX**
+-1    25
+
+**payment_method CREDITCARD**
+-1    38
+
+
+17th january 10AM with binary
+**General**
+ 1    1270
+-1     562
+**payment_method VISA**
+ 1    899
+-1    118
+
+**payment_method MASTERCARD**
+ 1    371
+-1    261
+
+**payment_method UNKNOWN**
+-1    98
+
+**payment_method AMEX**
+-1    64
+
+**payment_method CREDITCARD**
+-1    21
+
+
+18th january 10AM with binary
+**General**
+1    1775
+-1     283
+**payment_method VISA**
+ 1    1117
+-1      19
+
+**payment_method MASTERCARD**
+ 1    658
+-1    128
+
+**payment_method UNKNOWN**
+-1    73
+
+**payment_method AMEX**
+-1    25
+
+**payment_method CREDITCARD**
+-1    38
+
+
+
+Dans le cas des données brutes, il n'y a aucun élément permettant de distinguer les transactions anormales des transactions normales. La seule information pouvant être ressorties est que lors d'une période d'incident un plus grand nombre de transactions finissent dans un état non payé ou abandonné, mais cela suggère que l'algorithme doit être capable de remarquer cela. Or dans le cas de la forêt d'isolation, l'algorithme va principalement essayer de décomposer les données suivant les attributs afin de trouver celles qui sont les plus anormales comparé à la moyenne générale. 

@@ -228,7 +228,15 @@ def isolation_level_transactions(fname, start_datetime, end_datetime, onehot_sta
     data = pd.read_csv(fname)
     data['CREATION_DATE'] = pd.to_datetime(data['CREATION_DATE'])
     
+    # display the number of values during the incident period
+    # print(len(data[(data['CREATION_DATE'] > start_datetime) & (data['CREATION_DATE'] < end_datetime)]))
+    # print(len(data))
+    # exit()
+
     norm_data = prepare_data(data, onehot_state)
+
+    # print(norm_data.columns)
+    # exit()
 
     norm_data['CREATION_DATE'] = pd.to_datetime(norm_data[['year', 'month', 'day', 'hour', 'minute', 'second']])
 
@@ -236,7 +244,8 @@ def isolation_level_transactions(fname, start_datetime, end_datetime, onehot_sta
     display_data = display_data.drop(['CREATION_DATE'], axis=1)
     print("display_data", display_data.head())
 
-    isolation_forest = IsolationForest(n_estimators=100)
+    ### Contamination value resolved by : 70% of the data of the incident period are anomaly so -> (0.7*1924) / 567437 = 0.00237 -> give no anomaly
+    isolation_forest = IsolationForest(n_estimators=100, max_samples='auto', contamination=0.237, random_state=42)
 
     # remove the display_data from the norm_data
     norm_data = norm_data.drop(display_data.index)
@@ -281,6 +290,13 @@ def isolation_level_transactions(fname, start_datetime, end_datetime, onehot_sta
 
     print(display_data['predictions'].value_counts())
     # print(display_data.head())
+
+    # display the number of anomaly and normal point for each payment_method
+    for payment_method in display_data['PAYMENT_METHOD'].unique():
+        display_data_payment_method = display_data[display_data['PAYMENT_METHOD'] == payment_method]
+        print(f"### payment_method {payment_method} ###")
+        print(display_data_payment_method['predictions'].value_counts())
+        print()
 
     if onehot_state:
         plt.figure(figsize=(20, 10))
@@ -366,6 +382,15 @@ def analysis_kmeans():
     # kmeans_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', 4, night_start_datetime, night_end_datetime, onehot_state=True, savefig=savefig)
 
 
+savefig = True
 
-isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=True)
-isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=True)
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', incident_start_datetime, incident_end_datetime, onehot_state=True, savefig=savefig)
+input()
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', normal_start_datetime, normal_end_datetime, onehot_state=True, savefig=savefig)
+input()
+
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', incident_start_datetime, incident_end_datetime, onehot_state=False, savefig=savefig)
+input()
+isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', normal_start_datetime, normal_end_datetime, onehot_state=False, savefig=savefig)
+input()
+
