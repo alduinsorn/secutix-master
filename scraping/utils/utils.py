@@ -109,6 +109,6 @@ def setup_driver(headless: bool = True) -> webdriver.Firefox:
     return driver
 
 def clean_special_characters(text: str) -> str:
-    return text.replace('\n', '').replace('\t', '').replace('\r', '').strip()
+    return text.replace('\n', ' ').replace('\t', '').replace('\r', '').strip()
 
 

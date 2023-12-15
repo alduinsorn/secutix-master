@@ -22,7 +22,7 @@ from time import time as get_time
 from datetime import datetime
 
 from utils.utils import clean_special_characters, Incident
-from utils.datetime_utils import DatetimeUtils, OUTPUT_DATETIME_FORMAT
+from utils.datetime_utils import DatetimeUtils, OUTPUT_DATETIME_FORMAT, MONTHS
 from utils.nlp_utils import NLPUtils
 
 class OgoneScraper:
@@ -37,7 +37,7 @@ class OgoneScraper:
         # Example : 'Jul 16, 2023 - 11:29 CEST'
         self.INPUT_DATETIME_FORMAT = "%b %d, %Y - %H:%M"
 
-        self.nlp_utils = NLPUtils()
+        self.nlp_utils = NLPUtils("ogone")
     
     def _scrap_history(self):
         print("Begin scraping")
@@ -47,6 +47,28 @@ class OgoneScraper:
         data_dir = os.path.join(script_dir, "data")
         data_file = os.path.join(data_dir, self.filename)
         
+        # Search for the file
+        try:
+            with open(data_file, 'r') as f:
+                self.incidents_dict = json.load(f)
+        except Exception as e:
+            print("No JSON file found, start the scrapping from the beginning")
+
+        last_year_scrapped = -1
+        last_month_index_scrapped = -1
+        if len(self.incidents_dict) > 0:
+            last_year_scrapped = list(self.incidents_dict.keys())[0]
+            if len(self.incidents_dict[last_year_scrapped]) > 0:
+                last_month_scrapped = list(self.incidents_dict[last_year_scrapped].keys())[0]
+                last_month_index_scrapped = MONTHS.index(last_month_scrapped)
+
+        if last_year_scrapped != -1 and last_month_index_scrapped != -1:
+            # remove the last month scrapped in the dict
+            self.incidents_dict[last_year_scrapped].pop(last_month_scrapped)
+            # convert dictionary key year to int
+            self.incidents_dict = {int(k): v for k, v in self.incidents_dict.items()}
+
+
         page_id = 1
         condition = True
         count_empty = 0
@@ -67,14 +89,22 @@ class OgoneScraper:
             for month_content in months_content:
                 month, year, incidents = self._parse_month_part(month_content)
                 
-                # if year == 2022:
-                #     condition = False
-                #     break
-                
-                # if month == "august":
+                # if year == 2023 and month == "november":
                 #     condition = False
                 #     break
 
+                # test if the year and the current month is the one before the last one scrapped we stop the scraping
+                # we wait for the next month to be scrapped to be sure that we don't miss any incidents
+                month_index = -1
+                try:
+                    month_index = MONTHS.index(month)
+                except Exception as e:
+                    pass
+                if int(last_year_scrapped) == int(year) and month_index == last_month_index_scrapped - 1:
+                    condition = False
+                    break
+                
+                # if their is no incidents, we increment the count_empty -> if we have 4 empty pages in a row, we stop the scraping because we are at the end of the incidents
                 if len(incidents) == 0:
                     count_empty += 1
 
@@ -97,9 +127,8 @@ class OgoneScraper:
                     # for every step, we need to extract the right information
                     for incident_step in incident_steps:
                         step_title, step_text, step_time = self._get_n_clean_attributs(incident_step)
-
                         incident_obj.card_datetime = DatetimeUtils.convert_to_date(step_time, self.INPUT_DATETIME_FORMAT)
-                        raw += f"{step_title}({step_text})\n"
+                        raw += f" {step_title} ( {step_text})\n"
 
                         elem_date, times_found = self._search_dates_n_times(step_text, incident_obj)
                         if len(times_found) == 0: # if there is no time found, we need to abort the step
@@ -111,8 +140,9 @@ class OgoneScraper:
 
                     incident_obj.raw = raw
                     
-                    services_cleaned = self.nlp_utils._search_services([incident_obj.raw])
+                    services_cleaned, payment_methods = self.nlp_utils._search_services([incident_obj.raw])
                     incident_obj.services = services_cleaned
+                    incident_obj.payment_methods = payment_methods
                     
                         
                     if steps_aborted != len(incident_steps):
@@ -126,23 +156,6 @@ class OgoneScraper:
 
         print(f"\n\nScraping done in {get_time() - start_time} seconds")
         
-        # print every incidents
-        # for year, months in self.incidents_dict.items():
-        #     for month, incidents in months.items():
-        #         print(f"\n\n{month} {year}")
-        #         for incident in incidents:
-        #             print(incident)        
-
-        # go through every incidents and verify that the variable is of type Incident
-        # for year, months in self.incidents_dict.items():
-        #     for month, incidents in months.items():
-        #         for incident in incidents:
-        #             if not isinstance(incident, Incident):
-        #                 print("Error, the incident is not of type Incident")
-        #                 print(incident)
-        #                 exit()
-
-
         self._export_incidents(data_file)
         
         return -1
@@ -180,7 +193,8 @@ class OgoneScraper:
 
     def _get_n_clean_attributs(self, incident_step: BeautifulSoup):
         step_title = incident_step.find('div', class_='update-title span3 font-large').text
-        step_text = incident_step.find('span', class_='whitespace-pre-wrap').text
+        step_text = incident_step.find('span', class_='whitespace-pre-wrap')
+        step_text = step_text.get_text(separator="\n")
         step_time = incident_step.find('div', class_='update-timestamp font-small color-secondary').text
         # clean the text
         step_title = clean_special_characters(step_title)
@@ -242,12 +256,33 @@ class OgoneScraper:
 
     def _export_incidents(self, data_file: str):
         if self.json_export:
+            print(self.incidents_dict.items())
             # sort the dict by year and month
             self.incidents_dict = dict(sorted(self.incidents_dict.items(), key=lambda x: (x[0], x[1])))
+            # if a year or a month contains no incidents, we remove it
+            # save the year and month in a list to avoid the error "RuntimeError: dictionary changed size during iteration"
+            years_to_remove = []
+            for year, months in self.incidents_dict.items():
+                months_to_remove = []
+                for month, incidents in months.items():
+                    if len(incidents) == 0:
+                        months_to_remove.append(month)
+                for month in months_to_remove:
+                    months.pop(month)
+                if len(months) == 0:
+                    years_to_remove.append(year)
             
             print("Starting exporting data into JSON file.")
             with open(data_file, 'w') as output_file:
                 json.dump(self.incidents_dict, output_file, indent=4, default=Incident._to_dict)
+        else:
+            # print nicely the dict
+            for year, months in self.incidents_dict.items():
+                print(f"\n\nYear {year}")
+                for month, incidents in months.items():
+                    print(f"\nMonth {month}")
+                    for incident in incidents:
+                        print(incident)
 
     def _parse_month_part(self, month_content: BeautifulSoup):
         # the month is contains in the <h4> tag, we need to split the text to get only the month and discard the year

@@ -61,8 +61,16 @@ import spacy
 #     return proper_names
 
 class NLPUtils:
-    def __init__(self):
+    def __init__(self, psp_name):
         self.nlp = spacy.load("en_core_web_sm")
+        self.psp_name = psp_name
+        self.payment_methods_names: List[str] = self._load_payment_methods()
+
+    def _load_payment_methods(self) -> List[str]:
+        with open(f"utils/payment_methods_{self.psp_name}.txt", "r") as f:
+            payment_methods: List[str] = f.readlines()
+        payment_methods = [method.replace("\n", "") for method in payment_methods]
+        return payment_methods
 
     def _extract_proper_names_spacy(self, text: str) -> List[str]:
         '''
@@ -74,8 +82,11 @@ class NLPUtils:
         Returns:
             list<str>: list of all the proper names found
         '''
-        text = text.replace('.', '. ').replace(',', ', ')
+        # print("before", text)
+        # text = text.replace('.', '. ').replace(',', ', ').replace('\n', ' ')
+        # print("after",text)
 
+        # extract entities from the text and keep only the ones that are ORG
         doc = self.nlp(text)
         entities = [(ent.text, ent.label_) for ent in doc.ents]
         specific_entities = [entity[0] for entity in entities if entity[1] == "ORG"]
@@ -83,16 +94,20 @@ class NLPUtils:
         # in the text, extract words that are completely capitalized
         full_capitalized_words: List[str] = [word for word in text.split() if word.isupper()]
         specific_entities.extend(full_capitalized_words)
-            
-        # specific case for some words
-        for specific in ["CET", "CEST", "CET.", "CEST.", "CET,", "CEST,", "RESOLVED", "COMPLETED", "IDENTIFIED", "PRODUCTION", "TEST"]:
+        
+        # specific case for some words that are often found in the description but don't mean anything
+        for specific in ["CET", "CEST", "CET.", "CEST.", "CET,", "CEST,", "RESOLVED", "COMPLETED", "IDENTIFIED", "PRODUCTION", "TEST", "ScheduledWorldline", "Please"]:
             if specific in specific_entities:
                 while specific in specific_entities:
                     specific_entities.remove(specific)
+            for idx_specific, each_specific in enumerate(specific_entities):
+                if specific in each_specific:
+                    specific_entities[idx_specific] = specific_entities[idx_specific].replace(specific, "")
         
         # Keep words that are longer than 2 characters
         specific_entities = [word for word in specific_entities if len(word) > 2]
 
+        # remove special characters
         for i in range(len(specific_entities)):
             specific_entities[i] = specific_entities[i].replace(")", "").replace("(", "").replace(".", "").replace(",", "").replace(":", "").replace(";", "").replace("\n", "")
 
@@ -112,6 +127,7 @@ class NLPUtils:
         cleaned_services: List[str] = []
         seen_services: Set[str] = set()
         
+        # avoid duplicates
         for service in services:
             lowercase_service: str = service.lower()
             if lowercase_service not in seen_services:
@@ -122,6 +138,14 @@ class NLPUtils:
         
         return cleaned_services
 
+    def _search_payment_methods(self, elem_desc_all: List[str]) -> List[str]:
+        payment_methods: List[str] = []
+        for elem_desc in elem_desc_all:
+            elem_desc = elem_desc.replace(".", " ").replace(",", " ").replace(":", " ").replace(";", " ").replace("\n", " ")
+            for method in self.payment_methods_names:
+                if method in elem_desc:
+                    payment_methods.append(method)
+        return payment_methods
 
     def _search_services(self, elem_desc_all: List[str]) -> List[str]:
         '''
@@ -134,12 +158,17 @@ class NLPUtils:
         Returns:
             List[str]: list of all the services found in the description
         '''
+        # extract the proper names from the description
         services: List[str] = []
         for elem_desc in elem_desc_all:
             proper_names: List[str] = self._extract_proper_names_spacy(elem_desc)
             for name in proper_names:
-                services.append(name.strip())
+                services.append(name)
 
+        # clean the services found
         cleaned_services: List[str] = self._clean_services_found(services)
 
-        return cleaned_services
+        payment_methods: List[str] = self._search_payment_methods(elem_desc_all)
+        cleaned_services = [service for service in cleaned_services if service not in payment_methods]
+
+        return cleaned_services, payment_methods

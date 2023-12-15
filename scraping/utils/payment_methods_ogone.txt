@@ -1,0 +1,40 @@
+Alipay+
+American Express
+Apple Pay
+Bancontact
+Bank Transfer by Worldline
+Bimpli CADO
+Bizum
+Cadhoc
+Carte Bancaire
+Cetelem 3x/4x
+Chèque-Vacances Connect
+Cofidis 3x/4x
+Cpay
+Diners Club
+Discover
+EPS
+Google Pay
+iDEAL
+Illicado
+Intersolve
+JCB
+Klarna
+Maestro
+Mastercard
+MB Way
+Mealvouchers
+Multibanco
+Oney 3x-4x
+Oney Bank Card
+Oney Financement Long
+OneyBrandedGiftCard
+P24
+Paypal
+SEPA Direct Debit
+Sofinco 3x/4x
+Gift card
+TWINT
+UPI - UnionPay International
+Visa
+WeChat Pay
