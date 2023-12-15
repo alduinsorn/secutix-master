@@ -21,12 +21,14 @@ from selenium.webdriver.common.by import By
 from time import time as get_time
 from datetime import datetime
 
-from utils.utils import clean_special_characters, Incident
+from utils.utils import clean_special_characters, Incident, setup_driver
 from utils.datetime_utils import DatetimeUtils, OUTPUT_DATETIME_FORMAT, MONTHS
 from utils.nlp_utils import NLPUtils
 
+import boto3
+
 class OgoneScraper:
-    def __init__(self, driver, filename="ogone_incidents.json", json_export=True):
+    def __init__(self, driver, bucket_name, filename="ogone_incidents.json", json_export=True):
         self.driver = driver
         self.incidents_dict = {}
         self.json_export = json_export
@@ -38,6 +40,10 @@ class OgoneScraper:
         self.INPUT_DATETIME_FORMAT = "%b %d, %Y - %H:%M"
 
         self.nlp_utils = NLPUtils("ogone")
+
+        self.s3_bucket_name = bucket_name
+        self.s3 = boto3.client('s3')
+
     
     def _scrap_history(self):
         print("Begin scraping")
@@ -47,13 +53,21 @@ class OgoneScraper:
         data_dir = os.path.join(script_dir, "data")
         data_file = os.path.join(data_dir, self.filename)
         
-        # Search for the file
-        try:
-            with open(data_file, 'r') as f:
-                self.incidents_dict = json.load(f)
-        except Exception as e:
-            print("No JSON file found, start the scrapping from the beginning")
+        if self.s3_bucket_name:
+            try:
+                obj = self.s3.get_object(Bucket=self.s3_bucket_name, Key=self.filename)
+                self.incidents_dict = json.loads(obj['Body'].read().decode('utf-8'))
+            except Exception as e:
+                print(f"No JSON file found in the bucket {self.s3_bucket_name} with key {self.filename}, start the scrapping from the beginning") 
+        else:
+            # Search for the file
+            try:
+                with open(data_file, 'r') as f:
+                    self.incidents_dict = json.load(f)
+            except Exception as e:
+                print("No JSON file found, start the scrapping from the beginning")
 
+        # this part allow us to continue the scraping from the last month scrapped
         last_year_scrapped = -1
         last_month_index_scrapped = -1
         if len(self.incidents_dict) > 0:
@@ -272,9 +286,13 @@ class OgoneScraper:
                 if len(months) == 0:
                     years_to_remove.append(year)
             
-            print("Starting exporting data into JSON file.")
-            with open(data_file, 'w') as output_file:
-                json.dump(self.incidents_dict, output_file, indent=4, default=Incident._to_dict)
+            if self.s3_bucket_name:
+                print("Starting exporting data into S3.")
+                self.s3.put_object(Bucket=self.s3_bucket_name, Key=self.filename, Body=json.dumps(self.incidents_dict, indent=4, default=Incident._to_dict))
+            else:
+                print("Starting exporting data into JSON file.")
+                with open(data_file, 'w') as output_file:
+                    json.dump(self.incidents_dict, output_file, indent=4, default=Incident._to_dict)
         else:
             # print nicely the dict
             for year, months in self.incidents_dict.items():
@@ -306,3 +324,27 @@ class OgoneScraper:
         print(f"\nMonth {month}, year {year} with {len(incidents)} incidents")
 
         return month, year, incidents
+
+def handler_name(event, context):
+    # access the variables given by the invoke
+    if event:
+        bucket_name = event.get('bucket_name', None)
+        filename = event.get('filename', None)
+    else:
+        print("Abort. No event given, please give a bucket name and a filename so the scraper can read and export the data")
+        return {
+            'statusCode': 400,
+            'body': json.dumps("Abort. No event given, please give a bucket name and a filename so the scraper can read and export the data")
+        }
+
+    my_driver = setup_driver(headless=True)
+    ogone_scraper = OgoneScraper(my_driver, bucket_name, filename, json_export=False)
+    incidents = ogone_scraper._scrap_history()
+    my_driver.close()
+    return {
+        'statusCode': 200,
+        'body': json.dumps(incidents, indent=4, default=Incident._to_dict)
+    }
+
+
+
