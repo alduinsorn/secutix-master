@@ -3,9 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import datetime
+import os
+import random
+import pickle
 
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
+
+import warnings
+
+warnings.filterwarnings("ignore", message="X does not have valid feature names, but IsolationForest was fitted with feature names", category=UserWarning)
+
 
 def percent_analysis(unpaid, paid):
     print(f"{(unpaid / (unpaid + paid) * 100):.2f}% ({unpaid+paid})")
@@ -55,11 +63,14 @@ def prepare_data_raw(data, onehot_state=False):
     
     return data
 
-def prepare_data_high_level(fname, percent_only=False, with_date=False):
+def load_data_high_level(fname):
     data = pd.read_csv(fname)
     data['timestamp'] = pd.to_datetime(data['timestamp'])
     data = data.set_index('timestamp')
     data.index = pd.DatetimeIndex(data.index.values, freq=data.index.inferred_freq)
+    return data
+
+def prepare_data_high_level(data, percent_only=False, with_date=False):
 
     if with_date:
         # # convert the date into columns for year, month, day, hour, minute, second
@@ -100,6 +111,29 @@ def prepare_data_high_level(fname, percent_only=False, with_date=False):
 
     return norm_data, test_data, (scaler_percentage, scaler_transaction_count)
 
+def load_anomalies_nicely(fname):
+    ANOMALIES_START_DATE = '2023-07-01 00:00:00'
+    ANOMALIES_END_DATE = '2023-11-28 23:59:59'
+    # Load anomalies dataframe
+    anomalies = pd.read_csv(fname)
+    anomalies['timestamp'] = pd.to_datetime(anomalies['timestamp'])
+    anomalies = anomalies.set_index('timestamp')
+    anomalies.index = pd.DatetimeIndex(anomalies.index.values, freq=anomalies.index.inferred_freq)
+    anomalies = anomalies[ANOMALIES_START_DATE:ANOMALIES_END_DATE]
+    anomalies = anomalies[anomalies['status'] == True]
+    anomalies['status'] = -1
+    # Create non-anomalies dataframe
+    # non_anomalies = pd.DataFrame(pd.date_range(ANOMALIES_START_DATE, ANOMALIES_END_DATE, freq='H'), columns=['timestamp'])
+    # non_anomalies = non_anomalies.set_index('timestamp')
+    # non_anomalies.index = pd.DatetimeIndex(non_anomalies.index.values, freq=non_anomalies.index.inferred_freq)
+    # non_anomalies = non_anomalies.drop(anomalies.index)
+    # non_anomalies['status'] = False
+    # # Concatenate anomalies and non-anomalies
+    # anomalies = pd.concat([anomalies, non_anomalies])
+    anomalies.sort_index(inplace=True)
+    anomalies.rename(columns={'status': 'predictions'}, inplace=True)
+    print(anomalies['predictions'].value_counts())
+    return anomalies
 
 
 def kmeans_transactions(fname, cluster_number, start_datetime, end_datetime, onehot_state=False, savefig=False):
@@ -285,7 +319,7 @@ def elbow_method(data):
     plt.xlabel('Number of Clusters')
     plt.ylabel('Sum of Squared Distances')
     plt.title('Elbow Method based on the transactions data transformed')
-    # plt.savefig('elbow_method.png')
+    plt.savefig('elbow_method.png')
     plt.grid()
     plt.show()
 
@@ -309,57 +343,60 @@ def plot_data_high_level_kmeans(data, savefig=False, percent_only=False):
         plt.savefig(f'kmeans/high_level/{cluster_number}_clusters/{date_text}_kmeans_high_level{percent_only_text}.png')
     plt.show()
 
-def kmeans_high_level(fname, cluster_number, percent_only=False, savefig=False, with_date=False):
-    
-    norm_data, test_data, scalers = prepare_data_high_level(fname, percent_only=percent_only, with_date=with_date)
+def kmeans_high_level(train_data, test_data, scalers, cluster_number, percent_only=True, savefig=False, with_date=False, random_state=42, plot_data=False):
+    ### Old part, before the kfold cross validation ###
+    # data = load_data_high_level(fname)
+    # train_data, test_data, scalers = prepare_data_high_level(data, percent_only=percent_only, with_date=with_date)
 
-    # elbow_method(norm_data)
+    # elbow_method(train_data)
+    # exit()
 
-    kmeans = KMeans(n_clusters=cluster_number, random_state=42)
-    kmeans.fit(norm_data)
+    kmeans = KMeans(n_clusters=cluster_number, random_state=random_state)
+    kmeans.fit(train_data)
 
     # predict the clusters for the data
-    test_data['LABEL'] = kmeans.predict(test_data)
+    test_data['predictions'] = kmeans.predict(test_data)
 
     # convert the percentage and the total_transaction_count to their original value
     test_data['percentage'] = scalers[0].inverse_transform(test_data['percentage'].values.reshape(-1, 1))
     if not percent_only:
         test_data['total_transaction_count'] = scalers[1].inverse_transform(test_data['total_transaction_count'].values.reshape(-1, 1))
 
-    ## Anomalies
-    # 2023-09-06 09:00:00
-    # 2023-09-17 15:00:00
-    # 2023-09-17 16:00:00
-    # 2023-09-19 09:00:00
-    display_data1 = test_data['2023-09-05 00:00:00':'2023-09-07 23:59:59'].copy()
-    display_data2 = test_data['2023-09-16 00:00:00':'2023-09-18 23:59:59'].copy()
-    display_data3 = test_data['2023-09-18 00:00:00':'2023-09-20 23:59:59'].copy()
+    if plot_data:
+        ## Anomalies
+        # 2023-09-06 09:00:00
+        # 2023-09-17 15:00:00
+        # 2023-09-17 16:00:00
+        # 2023-09-19 09:00:00
+        display_data1 = test_data['2023-09-05 00:00:00':'2023-09-07 23:59:59'].copy()
+        display_data2 = test_data['2023-09-16 00:00:00':'2023-09-18 23:59:59'].copy()
+        display_data3 = test_data['2023-09-18 00:00:00':'2023-09-20 23:59:59'].copy()
 
-    plot_data_high_level_kmeans(display_data1, savefig=savefig, percent_only=percent_only)
-    plot_data_high_level_kmeans(display_data2, savefig=savefig, percent_only=percent_only)
-    plot_data_high_level_kmeans(display_data3, savefig=savefig, percent_only=percent_only)
+        plot_data_high_level_kmeans(display_data1, savefig=savefig, percent_only=percent_only)
+        plot_data_high_level_kmeans(display_data2, savefig=savefig, percent_only=percent_only)
+        plot_data_high_level_kmeans(display_data3, savefig=savefig, percent_only=percent_only)
 
-    # plt.figure(figsize=(20, 10))
-    # plt.scatter(test_data['percentage'], test_data['total_transaction_count'], c=test_data['LABEL'], cmap='rainbow')
-    # plt.xlabel('Percentage')
-    # plt.ylabel('Total transaction count')
-    # plt.title(f'Representation of the data points by percentage and total transaction count with different colors for each cluster')
-    # plt.savefig(f'kmeans/high_level/{cluster_number}_clusters/representation_kmeans_high_level.png')
-    # plt.show()
+        # plt.figure(figsize=(20, 10))
+        # plt.scatter(test_data['percentage'], test_data['total_transaction_count'], c=test_data['predictions'], cmap='rainbow')
+        # plt.xlabel('Percentage')
+        # plt.ylabel('Total transaction count')
+        # plt.title(f'Representation of the data points by percentage and total transaction count with different colors for each cluster')
+        # plt.savefig(f'kmeans/high_level/{cluster_number}_clusters/representation_kmeans_high_level.png')
+        # plt.show()
 
+    # print(test_data['predictions'].value_counts())
 
-    print(test_data['LABEL'].value_counts())
     # save into a list the number of data points for each cluster, use the list index as the cluster number
-    cluster_number_list = []
-    for i in range(cluster_number):
-        cluster_number_list.append(len(test_data[test_data['LABEL'] == i]))
+    cluster_number_list = [len(test_data[test_data['predictions'] == i]) for i in range(cluster_number)]
     lowest_cluster_index = cluster_number_list.index(min(cluster_number_list))
+    # change the lowest cluster index to -1
+    test_data['predictions'] = test_data['predictions'].replace(lowest_cluster_index, -1)
 
     # print the values for the lowest cluster
-    anomalies_data = test_data[test_data['LABEL'] == lowest_cluster_index].head(min(cluster_number_list))
-    print(anomalies_data)
+    # anomalies_data = test_data[test_data['predictions'] == lowest_cluster_index].head(min(cluster_number_list))
+    # print(anomalies_data)
 
-    return anomalies_data
+    return test_data
 
 ####### End K-means with high level #######
 
@@ -415,7 +452,6 @@ def isolation_level_transactions(fname, n_estimator, start_datetime, end_datetim
         display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('REFUSED', 3)
         display_data['PAYMENT_STATE_NUM'] = display_data['PAYMENT_STATE_NUM'].replace('ABANDONED', 4)
 
-        # recreate the payment_method fields for the plot
     
     display_data['PAYMENT_METHOD'] = ''
     for index, row in display_data.iterrows():
@@ -478,46 +514,83 @@ def isolation_level_transactions(fname, n_estimator, start_datetime, end_datetim
         if savefig: plt.savefig(f'{folder_name}/isolation_forest_{start_datetime.strftime("%dth_%Hh")}_january_2023.png')
         plt.show()
 
-def isolation_high_level(fname, n_estimator, percent_only=False, savefig=False, with_date=False):
-    data_train, data_test, scalers = prepare_data_high_level(fname, percent_only=percent_only, with_date=with_date)
-
-    print(data_train.shape)
-    print(data_test.shape)
+def isolation_high_level(data_train, data_test, scalers, n_estimator, contamination=0.01, percent_only=True, savefig=False, with_date=False, random_state=42, plot_data=False):
+    ### Old part, before the kfold cross validation ###
+    # data = load_data_high_level(fname)
+    # data_train, data_test, scalers = prepare_data_high_level(data, percent_only=percent_only, with_date=with_date)
 
     # contamination d'environ 0.1% pour les anomalies
-    isolation_forest = IsolationForest(n_estimators=n_estimator, max_samples='auto', contamination=0.025, random_state=42)
+    isolation_forest = IsolationForest(n_estimators=n_estimator, max_samples='auto', contamination=contamination, random_state=random_state)
     isolation_forest.fit(data_train)
-
     data_test['predictions'] = isolation_forest.predict(data_test)
-    print(data_test['predictions'].value_counts())
+    # print(data_test['predictions'].value_counts())
 
     # convert the percentage and the total_transaction_count to their original value
     data_test['percentage'] = scalers[0].inverse_transform(data_test['percentage'].values.reshape(-1, 1))
     if not percent_only:
         data_test['total_transaction_count'] = scalers[1].inverse_transform(data_test['total_transaction_count'].values.reshape(-1, 1))
 
-    plt.figure(figsize=(20, 10))
-    plt.scatter(data_test.index, data_test['percentage'], c=data_test['predictions'], cmap='rainbow')
-    plt.xlabel('Datetime')
-    plt.ylabel('Percentage')
-    plt.title(f'Data points by percentage and date for {n_estimator} trees')
-    if savefig:
-        min_date = data_test.index.min().strftime("%dth")
-        max_date = data_test.index.max().strftime("%dth")
-        date_text = f"{min_date}_to_{max_date}"
-        percent_only_text = "_percent_only" if percent_only else ""
-        with_date_text = "_with_date" if with_date else ""
-        plt.savefig(f'isolation_forest/high_level/{n_estimator}_trees/{date_text}_isolation_forest{percent_only_text}{with_date_text}.png')
-    plt.show()
+    if plot_data:
+        plt.figure(figsize=(20, 10))
+        plt.scatter(data_test.index, data_test['percentage'], c=data_test['predictions'], cmap='rainbow')
+        plt.xlabel('Datetime')
+        plt.ylabel('Percentage')
+        plt.title(f'Data points by percentage and date for {n_estimator} trees')
+        if savefig:
+            min_date = data_test.index.min().strftime("%dth")
+            max_date = data_test.index.max().strftime("%dth")
+            date_text = f"{min_date}_to_{max_date}"
+            percent_only_text = "_percent_only" if percent_only else ""
+            with_date_text = "_with_date" if with_date else ""
+            plt.savefig(f'isolation_forest/high_level/{n_estimator}_trees/{date_text}_isolation_forest{percent_only_text}{with_date_text}.png')
+        plt.show()
 
-    anomalies_data = data_test[data_test['predictions'] == -1]
-    print(anomalies_data)
+    # anomalies_data = data_test[data_test['predictions'] == -1]
+    # print(anomalies_data)
+    # anomalies = load_anomalies_nicely('./data/anomalies_ogone.csv')
+    # val = compute_score(anomalies, data_test)
+    # if val <= 7:
+    #     # save the model
+    #     with open(f'isolation_forest/high_level/{n_estimator}_trees/model.pkl', 'wb') as f:
+    #         pickle.dump(isolation_forest, f)
 
-    return anomalies_data
+    return data_test
 
 
+def compute_score(anomalies, predictions):
+    # test if predictions is empty
+    if len(predictions) == 0:
+        return len(anomalies)
 
+    # check the value 'predictions' of the predictions dataframe to verify that the point is an anomaly or not (check if -1 for anomalies))
+    tp = []; fp = []; fn = []; tn = []
+    score = 0
+    # compute the true positive and false positive
+    for index, row in anomalies.iterrows():
+        try :
+            if predictions.loc[index, 'predictions'] == -1:
+                tp.append(index)
+            else:
+                fp.append(index)
+        except:
+            fp.append(index)
+    
+    # compute the score
+    for fpfp in fp: # check if the false positive is between 1am and 6am -> count 2.5
+        if fpfp.hour >= 1 and fpfp.hour <= 6:
+            score += 2.5
+        else:
+            score += 1
+    
+    # compute the false negative and true negative
+    for index, row in predictions.iterrows():
+        if row['predictions'] == -1 and index not in tp:
+            fn.append(index)
+    score += len(fn)
 
+    return score
+
+### Part for the transaction analysis ###
 # their is an incident the 17th of january 2023 between 10 and 11 am
 incident_start_datetime = datetime.datetime(2023, 1, 17, 10, 0)
 incident_end_datetime = datetime.datetime(2023, 1, 17, 11, 0)
@@ -570,12 +643,196 @@ def analysis_isolation_forest():
         isolation_level_transactions('./data/NEW_PAYMENT_202311171101_alldata.csv', estimator, normal_start_datetime, normal_end_datetime, onehot_state=False, savefig=savefig)
 
 
+def plot_score_for_finding_problems(data):
+    # from the month of july to november, 3 days by 3 days
+    data = data['percentage']
+    days_in_month = [31, 31, 30, 31, 28]
+    months_names = ['july', 'august', 'september', 'october', 'november']
+    for j, days in enumerate(days_in_month):
+        if not os.path.exists(f'search_anomalies/{months_names[j]}'):
+            os.mkdir(f'search_anomalies/{months_names[j]}')
+        # plot 3 days by 3 days
+        for i in range(1, days, 3):
+            print(i, months_names[j])
+            plt.figure(figsize=(20, 10))
+            # check if the i + 2th day is 30 -> if yes plot also the 31th day
+            if i + 3 >= days and days == 31:
+                plt.plot(data[f'2023-{j+7:02}-{i:02}':f'2023-{j+7:02}-{i+3:02}'])
+            else:
+                plt.plot(data[f'2023-{j+7:02}-{i:02}':f'2023-{j+7:02}-{i+2:02}'])
+            plt.xlabel('Datetime')
+            plt.ylabel('Percentage')
+            if i + 3 >= days and days == 31:
+                plt.title(f'Percentage for the {i}th, {i+1}th, {i+2}th and {i+3}th of {months_names[j]} 2023')
+            else:
+                plt.title(f'Percentage for the {i}th, {i+1}th and {i+2}th of {months_names[j]} 2023')
+            
+            # plot a vertical line for each beginning of the day
+            for k in range(4 if (i + 3 >= days and days==31) else 3):
+                plt.axvline(x=datetime.datetime(2023, j+7, i+k, 0, 0), color='red', linestyle='--')
+                plt.axvline(x=datetime.datetime(2023, j+7, i+k, 7, 0), color='green', linestyle='--')
 
-# kmeans_high_level('./data/2years_ogone_noise_reduction.csv', 3, percent_only=True, savefig=True)
+            # plt.savefig(f'search_anomalies/{months_names[j]}/{i}th_{i+1}th_{i+2}th_{months_names[j]}_2023.png')
+            plt.show()
+            plt.close()
+
+
+def kfold_cross_validation(data, anomalies, fold_number, algorithm_name, algorithm_function, function_parameter, random_state=None):
+    fold_score = []
+    for i in range(fold_number):
+        data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+
+        data_train_portion = len(data_train) // fold_number
+        # the dataset is expanding, after each fold -> idea of a time series because the test data is the 5 last month of the dataset
+        if i == fold_number - 1:
+            fold_data_train = data_train
+        else:
+            fold_data_train = data_train[:(i+1)*data_train_portion]
+
+        # results = kmeans_high_level(fold_data_train, data_test, scalers, 3, percent_only=True, savefig=False, with_date=False, random_state=None, plot_data=False)
+        results = algorithm_function(fold_data_train, data_test, scalers, function_parameter, random_state=random_state)
+        # save the score and the number of data points used
+        fold_score.append((compute_score(anomalies, results), len(fold_data_train)))
+
+    text_margin = 0.15
+    plt.figure(figsize=(20, 10))
+    for i in range(fold_number):
+        plt.bar(i+1, fold_score[i][0], label=f'Fold {i+1} ({fold_score[i][0]})')
+        plt.text(i+1-text_margin, fold_score[i][0]+text_margin, f'{fold_score[i][1]}')
+    plt.xlabel('Fold number')
+    plt.ylabel('Score (Extra hours)')
+    plt.title(f'Score for each fold for the {algorithm_name} algorithm with the number of data points used on top of each bar')
+    plt.legend()
+    # plt.savefig(f'kfold_cross_validation/{algorithm_name}.png')
+    plt.show()
+
+def find_best_model_isolation_forest(data, anomalies):
+    data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+
+    isolation_high_level(data_train, data_test, scalers)
+    pass
+
+def algorithms_test_one_versus_one(data, anomalies):
+    # train 5 models of each algorithm and display the score for each model
+    kmeans_cluster = 3
+    iso_trees = 50
+    iso_contamination = 0.01
+
+    kmeans_score = []
+    isolation_score = []
+    for i in range(5):
+        data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+        safe_data_train = data_train.copy()
+        safe_data_test = data_test.copy()
+        res_kmeans = kmeans_high_level(data_train, data_test, scalers, kmeans_cluster, percent_only=True, savefig=False, with_date=False, random_state=None, plot_data=False)
+        res_isolation = isolation_high_level(safe_data_train, safe_data_test, scalers, iso_trees, contamination=iso_contamination, random_state=None, plot_data=False)
+
+        kmeans_score.append(compute_score(anomalies, res_kmeans))
+        isolation_score.append(compute_score(anomalies, res_isolation))
+
+    print("kmeans_score", kmeans_score)
+    print("isolation_score", isolation_score)
+
+    # plot in a bar chart the score for each algorithm, set the x axis as the name of each algorithm + the number of the model
+    plt.figure(figsize=(20, 10))
+    for i in range(5):
+        plt.bar(i+1, kmeans_score[i], label=f'K-means {i+1} ({kmeans_score[i]})', width=0.2, color='orange')
+        plt.bar(i+1+0.2, isolation_score[i], label=f'Isolation Forest {i+1} ({isolation_score[i]})', width=0.2, color='blue')
+
+
+    plt.xlabel('Model number')
+    plt.ylabel('Score (Extra hours)')
+    plt.title(f'Score for each model for the K-means and Isolation Forest algorithm')
+    plt.legend()
+    # plt.savefig(f'kfold_cross_validation/kmeans_vs_isolation.png')
+    plt.show()
+
+
+def threshold_model(data_test, anomalies):
+    results = []
+    for tresh in range(101):
+        data_test_copy = data_test.copy()
+        # create a new column 'predictions' that is -1 if the 'percentage' is below the threshold and 1 if above
+        data_test_copy['predictions'] = data_test_copy['percentage'].apply(lambda x: -1 if x < tresh else 1)
+        # print(data_test_copy.head())
+        # input()
+        results.append(compute_score(anomalies, data_test_copy))
+
+    plt.figure(figsize=(20, 10))
+    plt.plot(range(101), results)
+    plt.xlabel('Threshold')
+    plt.ylabel('Score (Extra hours)')
+    plt.title(f'Score for each threshold for the threshold model')
+    # plt.savefig(f'kfold_cross_validation/threshold_model.png')
+    plt.show()
+
+    print(f"Minimum score {min(results)} for the threshold {results.index(min(results))}")
+    
+
+
+
+### Analysis of the algorithms behavior ###
+# kmeans_high_level('./data/2years_ogone_noise_reduction.csv', 3, percent_only=True, savefig=False)
 # kmeans_high_level('./data/2years_ogone_noise_reduction.csv', 3, savefig=True)
-
 # kmeans_high_level('./data/2years_ogone_noise_reduction.csv', 3,  percent_only=True, with_date=True)
+# isolation_high_level('./data/2years_ogone_noise_reduction.csv', 10, percent_only=False, savefig=False, with_date=True)
+
+### Anomalies searching manually ###
+# data = load_data_high_level('./data/2years_az_noise_reduction.csv')
+# plot_score_for_finding_problems(data)
+# exit()
+
+### Testing algorithms on annoted datasets ###
+# modify _ogone_ to _az_ for the az dataset, in both the data and the anomalies
+data = load_data_high_level('./data/2years_ogone_noise_reduction.csv')
+anomalies = load_anomalies_nicely('./data/anomalies_ogone.csv')
+
+# realize a crossed validation on the kmeans and the isolation forest
+### K-means ###
+# for i in range(5):
+#     kfold_cross_validation(data, anomalies, 10, 'K-means', kmeans_high_level, 3)
+
+### Isolation Forest ###
+# for i in range(5):
+#     kfold_cross_validation(data, anomalies, 10, 'Isolation Forest', isolation_high_level, 10, random_state=None)
+
+# exit()
+
+#### Test du score pour vérifier qu'il fonctionne correctement ####
+# empty_pd = pd.DataFrame()
+# random_pd = data[(data.index.hour >= 1) & (data.index.hour <= 6)][:len(anomalies)]
+# print(type(random_pd))
+# print(random_pd.head())
+# random_pd = random_pd.rename(columns={'status': 'predictions'})
+
+# one_random = random_pd.sample(n=4)
+
+# print("100% trouvé - score =", compute_score(anomalies, anomalies), "\n")
+# print("0% trouvé - score = ", compute_score(anomalies, empty_pd), "\n")
+# print("Test ", compute_score(anomalies, pd.concat([one_random, anomalies])), "\n")
 
 
+# contamination = 0.001
+# for i in range(10):
+#     data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+#     results = isolation_high_level(data_train, data_test, scalers, 50, contamination=contamination, random_state=None, plot_data=False)
+#     print(contamination, compute_score(anomalies, results))
+#     contamination += 0.003
 
-isolation_high_level('./data/2years_ogone_noise_reduction.csv', 10, percent_only=False, savefig=True, with_date=True)
+
+# load the model from the pickle file
+# with open('isolation_forest/high_level/50_trees/model.pkl', 'rb') as f:
+#     isolation_forest = pickle.load(f)
+
+# data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+# data_test['predictions'] = isolation_forest.predict(data_test)
+
+# score = compute_score(anomalies, data_test)
+# print(score)
+
+data_train, data_test, scalers = prepare_data_high_level(data, percent_only=True, with_date=False)
+# convert back the percentage to their original value
+data_test['percentage'] = scalers[0].inverse_transform(data_test['percentage'].values.reshape(-1, 1))
+threshold_model(data_test, anomalies)
+
+

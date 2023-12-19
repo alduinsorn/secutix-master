@@ -8,6 +8,7 @@ import re
 import matplotlib.pyplot as plt
 # plt.style.use('seaborn-v0_8-darkgrid')
 import time
+import os
 
 # pmdarima
 from pmdarima import ARIMA, auto_arima
@@ -28,6 +29,8 @@ from sklearn.metrics import mean_absolute_error
 from skforecast.ForecasterAutoreg import ForecasterAutoreg
 
 import warnings
+
+
 
 
 def load_data(fn, exog=False):
@@ -484,7 +487,7 @@ def analyse_2years_data(fname):
     plot_decomposition(data, data_diff_1)
     adfuller_test(data)
 
-def grid_search_2years(fname):
+def grid_search_2years(fname, the_p_value, output_folder, special=False):
     data = pd.read_csv(fname)
     data['timestamp'] = pd.to_datetime(data['timestamp'])
     data = data.set_index('timestamp')
@@ -492,18 +495,28 @@ def grid_search_2years(fname):
     
     data = data['percentage']
 
-    data_train = data.loc['2022-08-01':'2023-07-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
+    data_train = data.loc['2021-12-01':'2023-07-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
     data_test = data.loc['2023-08-01':] # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
 
     # print(len(data_train))
     # print(len(data_test))
 
-    for p in [2]: # should be changed after each run
+    backup_print = ""
+
+    possibilities = [2,1,0] # [1, 0]
+
+    for p in [the_p_value]: # should be changed after each run
         for d in [1,0]:
-            for q in [2, 1,0]:
-                for P in [2, 1,0]:
+            for q in possibilities:
+                for P in possibilities:
                     for D in [1,0]:
-                        for Q in [2,1,0]:
+                        for Q in possibilities:
+                            # if special:
+                            #     if (q != 2 and P != 2 and  Q != 2):
+                            #         continue
+                            # else:
+                            #     if (q == 2 and P != 2 and  Q != 2) or (q != 2 and P == 2 and  Q != 2) or (q != 2 and P != 2 and  Q == 2) or (q == 2 and P == 2 and  Q == 2):
+                            #         continue
                             try:
                                 start_time = time.time()
                                 model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
@@ -513,11 +526,20 @@ def grid_search_2years(fname):
                                 predictions_pdmarima = pd.concat([data_test, predictions_pdmarima], axis=1)
 
                                 # print the MSE and AIC
-                                print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={model.aic()}, MSE={mean_absolute_error(data_test, predictions_pdmarima['predictions_pdmarima'])}, Time={time.time() - start_time:.2f}s")
+                                the_text = f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={model.aic()}, MSE={mean_absolute_error(data_test, predictions_pdmarima['predictions_pdmarima'])}, Time={time.time() - start_time:.2f}s"
+                                print(the_text)
+                                backup_print += the_text + "\n"
 
                             except Exception as e:
-                                # print("p=-1, d=-1, q=-1, P=-1, D=-1, Q=-1 - AIC: -1 - MSE: -1 - Time: -1s")
-                                print(f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={float('inf')}, MSE={float('inf')}, Time={int('inf')}s\n {e}")
+                                the_text = f"p={p}, d={d}, q={q}, P={P}, D={D}, Q={Q}, AIC={float('inf')}, MSE={float('inf')}, Time={2**31-1}s\n {e}"
+                                print(the_text)
+                                backup_print += the_text + "\n"
+
+    # save the output to a file
+    with open(f'gridsearch/{output_folder}/output_gridsearch_p{the_p_value}.txt', 'w') as f:
+        f.write(backup_print)
+
+
 
 def plot_by_month(pred, month_name):
     days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 28, 31] # november isn't complete in the dataset so we take 28 days
@@ -535,10 +557,9 @@ def plot_by_month(pred, month_name):
     plt.savefig(f'pred_arima_{month_name}.png')
     plt.show()
 
-
 def sarima_2years(fname):
 
-    p,d,q,P,D,Q = 1,0,1,1,1,1
+    p,d,q,P,D,Q = 1,1,1,0,1,1
 
     data = pd.read_csv(fname)
     data['timestamp'] = pd.to_datetime(data['timestamp'])
@@ -547,8 +568,9 @@ def sarima_2years(fname):
     
     data = data['percentage']
 
-    data_train = data.loc['2022-08-01':'2023-07-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
-    data_test = data.loc['2023-08-01':] # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
+    data_train = data.loc['2021-12-01':'2022-12-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
+    data_test = data.loc['2023-01-01':'2023-01-31']
+     # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
 
     timestart = time.time()    
     model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
@@ -561,10 +583,24 @@ def sarima_2years(fname):
     mse = mean_absolute_error(data_test, predictions['predictions'])
     print(f"MAE: {mse}")
 
-    plot_by_month(predictions, 'august')
-    plot_by_month(predictions, 'september')
-    plot_by_month(predictions, 'october')
-    plot_by_month(predictions, 'november')
+    # plot_by_month(predictions, 'august')
+    # plot_by_month(predictions, 'september')
+    # plot_by_month(predictions, 'october')
+    # plot_by_month(predictions, 'november')
+
+    # create a plot for every 3 days
+    for i in range(1, 31, 3):
+        fig, ax = plt.subplots(figsize=(20, 10))
+        predictions.loc[f'2023-01-{i:02}':f'2023-01-{i+2:02}'].plot(ax=ax, label='pred')
+        ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th january')
+        ax.legend()
+        plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+        plt.autoscale(enable=True, axis='x', tight=True)
+        plt.tight_layout()
+        plt.savefig(f'pred_january_{i}.png')
+        plt.show()
+
+
 
 def open_file(file):
     # create a dataframe that will contains the data from the file
@@ -605,32 +641,51 @@ def open_file(file):
     # return the dataframe
     return data_pd
 
-
 def grid_search_analysis(folder):
 
-    data1 = open_file(f'{folder}/output_gridsearch_p0.txt')
-    data2 = open_file(f'{folder}/output_gridsearch_p1.txt')
-    # data3 = open_file(f'{folder}/output_gridsearch_p2.txt')
-    data = pd.concat([data1, data2])#, data3])
-    # save the dataframe to a csv file
-    data.to_csv('output_gridsearch.csv', index=False)
+    # files = os.listdir(folder)
 
-    data = pd.read_csv('output_gridsearch.csv')
+    # global_data = pd.DataFrame(columns=['p', 'd', 'q', 'P', 'D', 'Q', 'AIC', 'MSE', 'Time', 'score'])
+    # for f in files:
+    #     data_spec = open_file(f'{folder}/{f}')
+    #     global_data = pd.concat([global_data, data_spec])
 
-    # data = data.sort_values(by=['AIC'])
-    # print("AIC")
-    # print(data.head(10))
+    # # remove the duplicates that have the same p, d, q, P, D, Q
+    # global_data = global_data.drop_duplicates(subset=['p', 'd', 'q', 'P', 'D', 'Q'])
 
-    # data = data.sort_values(by=['MSE'])
-    # print("MSE")
-    # print(data.head(10))
+    # # save the dataframe to a csv file
+    # global_data.to_csv(f'{folder}/output_gridsearch.csv', index=False)
 
+    data = pd.read_csv(f'{folder}/output_gridsearch.csv')
+    data = data[data['AIC'] != -1]
+    data = data.drop(['score'], axis=1)
 
-    # sort the data using 50% AIC and 50% MSE
-    data['score'] = (data['AIC'] + data['MSE']) / 2
-    data = data.sort_values(by=['score'])
-    print("SCORE")
+    print(f"SCORE {folder}")
+
+    data = data.sort_values(by=['AIC'])
+    print("AIC")
     print(data.head(10))
+
+    data = data.sort_values(by=['MSE'])
+    print("MSE")
+    print(data.head(10))
+
+    weight_aic = 0.7
+    weight_mse = 0.3
+
+    # get the max aic that is not inf
+    max_aic = data['AIC'].max() if data['AIC'].max() != float('inf') else data[data['AIC'] != float('inf')]['AIC'].max()
+    max_mse = data['MSE'].max() if data['MSE'].max() != float('inf') else data[data['MSE'] != float('inf')]['MSE'].max()
+    # normalize the data so the AIC and MSE to be between 0 and 1
+    norm_aic = (data['AIC'] - data['AIC'].min()) / (max_aic - data['AIC'].min())
+    norm_mse = (data['MSE'] - data['MSE'].min()) / (max_mse - data['MSE'].min())
+    
+    data['score'] = weight_aic * norm_aic + weight_mse * norm_mse
+
+    data = data.sort_values(by=['score'])
+    print(f"{weight_aic*100:00}% AIC {weight_mse*100:00}% MSE")
+    print(data.head(10))
+    
     ### RESULT ###
     #      p  d  q  P  D  Q           AIC       MSE    Time         score
     # 148  1  0  2  0  1  1  25629.983562  2.201917   54.37  12816.092740
@@ -644,18 +699,34 @@ def grid_search_analysis(folder):
     # 244  2  0  1  1  1  1  25634.105795  2.197561   63.90  12818.151678
     # 263  2  0  2  1  1  2  25634.272720  2.190599  181.97  12818.231660
 
- 
+
+
+
+
 
 
 # analyse_2years_data('./data/2years_ogone_noise_reduction.csv')
 # analyse_2years_data('./data/2years_az_noise_reduction.csv')
 # analyse_2years_data('./data/2years_datatrans_noise_reduction.csv')
 
-# grid_search_2years('./data/2years_ogone_noise_reduction.csv')
+# grid_search_2years('./data/2years_ogone_noise_reduction.csv', 0, special=True)
+# grid_search_2years('./data/2years_ogone_noise_reduction.csv', 0)
+# grid_search_2years('./data/2years_ogone_noise_reduction.csv', 1)
+# grid_search_2years('./data/2years_ogone_noise_reduction.csv', 2)
+
+# grid_search_2years('./data/2years_az_noise_reduction.csv', 0, '2years_az')
+# grid_search_2years('./data/2years_az_noise_reduction.csv', 1, '2years_az')
+# grid_search_2years('./data/2years_az_noise_reduction.csv', 2, '2years_az')
+
+# grid_search_2years('./data/2years_datatrans_noise_reduction.csv', 0, '2years_datatrans')
+# grid_search_2years('./data/2years_datatrans_noise_reduction.csv', 1, '2years_datatrans')
+# grid_search_2years('./data/2years_datatrans_noise_reduction.csv', 2, '2years_datatrans')
 
 sarima_2years('./data/2years_ogone_noise_reduction.csv')
 
 # grid_search_analysis('./gridsearch/2years_ogone')
+# grid_search_analysis('./gridsearch/2years_az')
+# grid_search_analysis('./gridsearch/2years_datatrans')
 
 exit()
 
@@ -883,26 +954,26 @@ def launch_grid_search(data):
 
 
 
-from sklearn.model_selection import TimeSeriesSplit
-# train a model with this 2 possible parameters
-# 1  0  2  0  1  1
-# 2  0  1  0  1  1
+# from sklearn.model_selection import TimeSeriesSplit
+# # train a model with this 2 possible parameters
+# # 1  0  2  0  1  1
+# # 2  0  1  0  1  1
 
-tscv = TimeSeriesSplit(n_splits=5)
+# tscv = TimeSeriesSplit(n_splits=5)
 
-for train_idx, test_idx in tscv.split(data['paid_rate']):
-    train_data = data.iloc[train_idx]['paid_rate']
-    test_data = data.iloc[test_idx]['paid_rate']
+# for train_idx, test_idx in tscv.split(data['paid_rate']):
+#     train_data = data.iloc[train_idx]['paid_rate']
+#     test_data = data.iloc[test_idx]['paid_rate']
 
-    print(f"Train dates      : {train_data.index.min()} --- {train_data.index.max()}  "
-          f"(n={len(train_data)})")
-    print(f"Test dates       : {test_data.index.min()} --- {test_data.index.max()}  "
-            f"(n={len(test_data)})")
+#     print(f"Train dates      : {train_data.index.min()} --- {train_data.index.max()}  "
+#           f"(n={len(train_data)})")
+#     print(f"Test dates       : {test_data.index.min()} --- {test_data.index.max()}  "
+#             f"(n={len(test_data)})")
 
-    model = ARIMA(order=(1,1,1), seasonal_order=(1,1,1,24))
-    model.fit(y=train_data)
+#     model = ARIMA(order=(1,1,1), seasonal_order=(1,1,1,24))
+#     model.fit(y=train_data)
 
-    predictions = model.predict(len(test_data))
+#     predictions = model.predict(len(test_data))
 
-    print(f"MAE: {mean_absolute_error(test_data, predictions)}")
+#     print(f"MAE: {mean_absolute_error(test_data, predictions)}")
 

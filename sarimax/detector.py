@@ -73,14 +73,14 @@ days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 months_names = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 
                 'september', 'october', 'november', 'december']
 
-real_anomalies = load_data('./anomalies.csv')
+real_anomalies = load_data('./data/anomalies.csv')
 
 # model = load_model()
-data = load_data('./data_ogone_norm_morning.csv')
+data = load_data('./data/data_ogone_norm_morning.csv')
 data_train = data[:'2023-06-30']['paid_rate']
 data_test = data['2023-07-01':]['paid_rate']
 
-anomalies_threshold = threshold_model(data_test, threshold=75)
+# anomalies_threshold = threshold_model(data_test, threshold=75)
 
 
 model = train_model(data_train)
@@ -88,11 +88,16 @@ df = detect_anomalies(model, data_test)
 # add the 'total_transactions' column to the dataframe
 df['total_transaction'] = data['total_transaction']
 
+df.to_csv('./data/sarima_pred.csv')
+
 anomalies = df[df['residuals'] <= -4.5]
-anomalies = anomalies[anomalies.index.hour > 6] # during the night it's not that relevant because there are not a lot of transactions
+# anomalies = anomalies[anomalies.index.hour > 6] # during the night it's not that relevant because there are not a lot of transactions
 # print(anomalies[anomalies['paid_rate'] <= 70])
 print(anomalies)
 
+# anomalies.to_csv('./data/sarima_morning_anomalies.csv')
+
+exit()
 
 # convert the threshold model anomalies to a dataframe, keep the index (timestamp) and the paid_rate
 anomalies_threshold = pd.DataFrame({'paid_rate': anomalies_threshold})
