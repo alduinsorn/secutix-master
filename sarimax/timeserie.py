@@ -29,6 +29,8 @@ from sklearn.metrics import mean_absolute_error
 from skforecast.ForecasterAutoreg import ForecasterAutoreg
 
 import warnings
+import pickle
+import random
 
 
 
@@ -568,14 +570,20 @@ def sarima_2years(fname):
     
     data = data['percentage']
 
-    data_train = data.loc['2021-12-01':'2022-12-31'] # 2021-12-01 -> 2023-07-31 = 608 days (1 year and 8 months)
-    data_test = data.loc['2023-01-01':'2023-01-31']
-     # 2023-08-01 -> 2023-11-28 = 120 days (4 months and 28 days)
+    data_train = data.loc['2021-12-01':'2023-06-30'] # 2021-12-01 -> 2023-06-30 = 577 days (1 year and 7 months)
+    data_test = data.loc['2023-07-01':'2023-11-28'] # 2023-07-01 -> 2023-11-28 = 151 days (5 months and 28 days)
 
-    timestart = time.time()    
-    model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
-    model.fit(y=data_train)
-    print(f"Time to fit the model: {time.time() - timestart:.2f}s")
+    if os.path.isfile('model.pkl'):
+        with open('model.pkl', 'rb') as pkl:
+            model = pickle.load(pkl)
+    else:
+        timestart = time.time()    
+        model = ARIMA(order=(p,d,q), seasonal_order=(P,D,Q,24))
+        model.fit(y=data_train)
+        print(f"Time to fit the model: {time.time() - timestart:.2f}s")
+        with open('model.pkl', 'wb') as pkl:
+            pickle.dump(model, pkl)
+
     predictions = model.predict(len(data_test))
     predictions.name = 'predictions'
     predictions = pd.concat([data_test, predictions], axis=1)
@@ -588,17 +596,74 @@ def sarima_2years(fname):
     # plot_by_month(predictions, 'october')
     # plot_by_month(predictions, 'november')
 
-    # create a plot for every 3 days
-    for i in range(1, 31, 3):
-        fig, ax = plt.subplots(figsize=(20, 10))
-        predictions.loc[f'2023-01-{i:02}':f'2023-01-{i+2:02}'].plot(ax=ax, label='pred')
-        ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th january')
-        ax.legend()
-        plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
-        plt.autoscale(enable=True, axis='x', tight=True)
-        plt.tight_layout()
-        plt.savefig(f'pred_january_{i}.png')
-        plt.show()
+    # # create a plot for every 3 days
+    # for i in range(1, 31, 3):
+    #     fig, ax = plt.subplots(figsize=(20, 10))
+    #     predictions.loc[f'2023-01-{i:02}':f'2023-01-{i+2:02}'].plot(ax=ax, label='pred')
+    #     ax.set_title(f'Predictions with ARIMA models for the {i}th to {i+2}th january')
+    #     ax.legend()
+    #     plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+    #     plt.autoscale(enable=True, axis='x', tight=True)
+    #     plt.tight_layout()
+    #     plt.savefig(f'pred_january_{i}.png')
+    #     plt.show()
+
+    return predictions
+
+
+
+def compute_score(anomalies, predictions):
+    # test if predictions is empty
+    if len(predictions) == 0:
+        return len(anomalies)
+
+    # check the value 'predictions' of the predictions dataframe to verify that the point is an anomaly or not (check if -1 for anomalies))
+    tp = []; fp = []; fn = []; tn = []
+    score = 0
+    # compute the true positive and false positive
+    for index, row in anomalies.iterrows():
+        try :
+            if predictions.loc[index, 'predictions'] == -1:
+                tp.append(index)
+            else:
+                fp.append(index)
+        except:
+            fp.append(index)
+    
+    # compute the score
+    for fpfp in fp: # check if the false positive is between 1am and 6am -> count 2.5
+        if fpfp.hour >= 1 and fpfp.hour <= 6:
+            score += 2.5
+        else:
+            score += 1
+    
+    # compute the false negative and true negative
+    for index, row in predictions.iterrows():
+        if row['predictions'] == -1 and index not in tp:
+            fn.append(index)
+    score += len(fn)
+
+    return score
+
+def label_prediction_as_anomalies(predictions, threshold=-3.5):
+    my_predictions = predictions.copy()
+    my_predictions['residuals'] = my_predictions['percentage'] - my_predictions['predictions']
+    my_predictions['predictions'] = my_predictions['residuals'].apply(lambda x: -1 if x < threshold else 1)
+
+    # if the anomaly is between 1am and 6am -> set the value to 1
+    for index, row in my_predictions.iterrows():
+        if row['predictions'] == -1 and index.hour >= 1 and index.hour <= 6:
+            # in 0.1% of the cases their is truly an anomaly between 1am and 6am else it's a false positive
+            if not random.random() < 0.01:
+                my_predictions.loc[index, 'predictions'] = 1
+
+    print(my_predictions['predictions'].value_counts())
+    # print(my_predictions[my_predictions['predictions'] == -1])
+
+    # count the values that are considered as anomalies but that have a percentage > 70
+    # print(my_predictions[(my_predictions['predictions'] == -1) & (my_predictions['percentage'] > 70)])
+
+    return my_predictions
 
 
 
@@ -701,6 +766,32 @@ def grid_search_analysis(folder):
 
 
 
+def load_anomalies_nicely(fname):
+    ANOMALIES_START_DATE = '2023-07-01 00:00:00'
+    ANOMALIES_END_DATE = '2023-11-28 23:59:59'
+    # Load anomalies dataframe
+    anomalies = pd.read_csv(fname)
+    anomalies['timestamp'] = pd.to_datetime(anomalies['timestamp'])
+    anomalies = anomalies.set_index('timestamp')
+    anomalies.index = pd.DatetimeIndex(anomalies.index.values, freq=anomalies.index.inferred_freq)
+    anomalies = anomalies[ANOMALIES_START_DATE:ANOMALIES_END_DATE]
+    anomalies = anomalies[anomalies['status'] == True]
+    anomalies['status'] = -1
+    # Create non-anomalies dataframe
+    # non_anomalies = pd.DataFrame(pd.date_range(ANOMALIES_START_DATE, ANOMALIES_END_DATE, freq='H'), columns=['timestamp'])
+    # non_anomalies = non_anomalies.set_index('timestamp')
+    # non_anomalies.index = pd.DatetimeIndex(non_anomalies.index.values, freq=non_anomalies.index.inferred_freq)
+    # non_anomalies = non_anomalies.drop(anomalies.index)
+    # non_anomalies['status'] = False
+    # # Concatenate anomalies and non-anomalies
+    # anomalies = pd.concat([anomalies, non_anomalies])
+    anomalies.sort_index(inplace=True)
+    anomalies.rename(columns={'status': 'predictions'}, inplace=True)
+    # print(anomalies['predictions'].value_counts())
+    print(anomalies)
+
+    return anomalies
+
 
 
 
@@ -722,7 +813,37 @@ def grid_search_analysis(folder):
 # grid_search_2years('./data/2years_datatrans_noise_reduction.csv', 1, '2years_datatrans')
 # grid_search_2years('./data/2years_datatrans_noise_reduction.csv', 2, '2years_datatrans')
 
-sarima_2years('./data/2years_ogone_noise_reduction.csv')
+anomalies = load_anomalies_nicely('./data/anomalies_ogone.csv')
+pred = sarima_2years('./data/2years_ogone_noise_reduction.csv')
+
+
+# start = 1
+# end = 15
+# scores = []
+# for i in np.arange(start, end, 0.1):
+#     the_pred = label_prediction_as_anomalies(pred, -i)
+#     score = compute_score(anomalies, the_pred)
+#     print(f"Threshold : {i} -> Score: {score}")
+#     print(the_pred[the_pred['predictions'] == -1])
+#     scores.append(score)
+#     print()
+
+# plt.figure(figsize=(20, 10))
+# plt.plot(np.arange(start, end, 0.1), scores, label='test')
+# plt.title(f'Score of the SARIMA model for different residual thresholds')
+# plt.xlabel('Residual threshold')
+# plt.ylabel('Score')
+# plt.legend()
+# plt.tight_layout()
+# plt.savefig(f'score_sarima_by_threshold.png')
+# plt.show()
+
+
+the_pred = label_prediction_as_anomalies(pred, -6)
+print(the_pred[the_pred['predictions'] == -1])
+score = compute_score(anomalies, the_pred)
+print(f"Threshold : -6 -> Score: {score}")
+
 
 # grid_search_analysis('./gridsearch/2years_ogone')
 # grid_search_analysis('./gridsearch/2years_az')

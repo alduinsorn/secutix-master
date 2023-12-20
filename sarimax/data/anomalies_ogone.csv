@@ -1,0 +1,16 @@
+timestamp,description,status
+2023-01-17 10:00:00,OK,1
+2023-07-14 23:00:00,KO Si on enlève 25 tentatives de la meme personnes on arrive à 73% P et 21% UNP,0
+2023-07-18 18:00:00,OK Issue on 3DS impacting several countries,1
+2023-07-19 08:00:00,OK Ogone general issue during 15 mins between 8:21 to 8:27 without downtime (60% of ref),1
+2023-07-25 15:00:00,UNKOWN their is an issue but no information,1
+2023-08-01 09:00:00,OK Issue during 20 min at 9:30,1
+2023-08-04 10:00:00,Not sure (high 3DS failure but not sure as it was 66%),0
+2023-08-11 16:00:00,Not sure (high 3DS failure between 16h15 and 16h25 but not sure as it was 68%),0
+2023-08-12 13:00:00,Not sure (high 3DS failure between 13h15 and 13h25 but not sure as it was 64%),0
+2023-08-12 17:00:00,Not sure (high 3DS failure between 17h and 17h15 but not sure as it was 66%),0
+2023-08-25 13:00:00,UNKNOWN 32% of refused between 13h15 and 13h45,1
+2023-08-28 10:00:00,OK Big Issue (90% of refused) 40001138 - Authentication temporary unavailable. Please try again later or choose another payment method.,1
+2023-09-06 09:00:00,OK Issue 30002503,1
+2023-09-19 09:00:00,OK 40001138 Authentication temporary unavailable during around 10 min,1
+2023-11-14 12:00:00,OK EPC issues to check with SGB Seems that Saferpay was down and impacted EPC,1
