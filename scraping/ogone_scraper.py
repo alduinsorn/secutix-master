@@ -24,6 +24,7 @@ from datetime import datetime
 from utils.utils import clean_special_characters, Incident, setup_driver
 from utils.datetime_utils import DatetimeUtils, OUTPUT_DATETIME_FORMAT, MONTHS
 from utils.nlp_utils import NLPUtils
+import re
 
 import boto3
 
@@ -133,6 +134,7 @@ class OgoneScraper:
                     
                     # for every incidents, there is one or more <div> tag with a class called "row update-row" that contains the steps of the incident (Resolved, Monitoring, Identified, Investigating). We need to get them all in a list and then go through them
                     incident_steps = incident_soup.find_all('div', class_='row update-row')
+                    incident_affected_elements = incident_soup.find('div', class_='components-affected font-small color-secondary border-color')
                     
                     incident_obj = Incident(title=incident_title, identified_datetime="", resolved_datetime="", services=[], payment_methods=[])
                     raw = ""
@@ -154,7 +156,10 @@ class OgoneScraper:
 
                     incident_obj.raw = raw
                     
-                    services_cleaned, payment_methods = self.nlp_utils._search_services([incident_obj.raw])
+                    ## Other version only based on NLP methods but with Worldline they provide the data in a specific element ##
+                    # services_cleaned, payment_methods = self.nlp_utils._search_services([incident_obj.raw])
+                    payment_methods, services_cleaned = self._extract_affected_elements(incident_affected_elements)
+
                     incident_obj.services = services_cleaned
                     incident_obj.payment_methods = payment_methods
                     
@@ -324,6 +329,24 @@ class OgoneScraper:
         print(f"\nMonth {month}, year {year} with {len(incidents)} incidents")
 
         return month, year, incidents
+
+    def _extract_affected_elements(self, element: BeautifulSoup) -> tuple[list[str], list[str]]:
+        if not element:
+            return None, None
+        
+        affected_text = element.text
+        pattern_payment = re.compile(r"Payment methods solutions \(((?:[^()]*|\([^()]*\))*)\)")
+        pattern_acquiring = re.compile(r"Acquiring solutions \(((?:[^()]*|\([^()]*\))*)\)")
+        
+        match_payment = pattern_payment.search(affected_text)
+        match_acquiring = pattern_acquiring.search(affected_text)
+
+        payment = match_payment.group(1) if match_payment else None
+        acquiring = match_acquiring.group(1) if match_acquiring else None
+
+        payment = [x.strip() for x in payment.split(',')] if payment else None
+        acquiring = [x.strip() for x in acquiring.split(',')] if acquiring else None
+        return payment, acquiring
 
 def handler_name(event, context):
     # access the variables given by the invoke

@@ -28,5 +28,5 @@ my_driver = setup_driver(headless=True)
 
 
 
-ogone_scrapper = OgoneScraper(my_driver, json_export=True)
+ogone_scrapper = OgoneScraper(my_driver, None, json_export=True)
 ogone_scrapper._scrap_history()
