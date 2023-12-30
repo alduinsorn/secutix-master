@@ -103,28 +103,26 @@ def extract_word(text_list: List[str], id_start: int, id_end: int) -> str:
 def setup_driver(headless: bool = True) -> webdriver.Chrome:
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    # options.add_argument('--disable-infobars')
-    # options.add_argument('--disable-extensions')
-    # options.add_argument('--no-sandbox')
-    # options.add_argument('--disable-dev-shm-usage')
-    # options.add_argument('--disable-gpu')
-    # options.add_argument('--disable-logging')
-    # options.add_argument('--disable-notifications')
-    # options.add_argument('--disable-dev-tools')
-    # options.add_argument('--single-process')
-    # options.add_argument('--ignore-certificate-errors')
-    # options.add_argument('--window-size=1920,1080')
-    # options.add_argument('--no-zygote')
-    # options.add_argument(f'--user-data-dir={mkdtemp()}')
-    # options.add_argument(f'--data-path={mkdtemp()}')
-    # options.add_argument(f'--disk-cache-dir={mkdtemp()}')
+    options.add_argument('--disable-infobars')
+    options.add_argument('--disable-extensions')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-logging')
+    options.add_argument('--disable-notifications')
+    options.add_argument('--disable-dev-tools')
+    options.add_argument('--single-process')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--window-size=1920,1080')
+    options.add_argument('--no-zygote')
+    options.add_argument(f'--user-data-dir={mkdtemp()}')
+    options.add_argument(f'--data-path={mkdtemp()}')
+    options.add_argument(f'--disk-cache-dir={mkdtemp()}')
 
-    # options.binary_location = '/opt/chrome/chrome'
-    # service = webdriver.ChromeService('/opt/chromedriver')
-    # driver = webdriver.Chrome(service=service, options=options)
-
-    driver = webdriver.Chrome(options=options)
-
+    options.binary_location = '/opt/chrome/chrome'
+    service = webdriver.ChromeService('/opt/chromedriver')
+    driver = webdriver.Chrome(service=service, options=options)
+    
     return driver
 
 def clean_special_characters(text: str) -> str:
